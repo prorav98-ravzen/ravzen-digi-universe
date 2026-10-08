@@ -1,0 +1,636 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   RAVZEN DIGI UNIVERSE — Global Design System
+   All CSS variables here are the single source of truth for the visual
+   identity. Components reference these tokens; they never hard-code values.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer base {
+
+  /* ── Design tokens ──────────────────────────────────────────────────── */
+  :root {
+    /* Universe background scale */
+    --color-void:   #03040a;   /* body background — deepest dark */
+    --color-deep:   #060918;   /* card/panel backgrounds */
+    --color-mid:    #0a0f2e;   /* surface overlays */
+    --color-accent: #1a2060;   /* subtle background highlights */
+
+    /* Energy spectrum — primary interaction palette */
+    --color-energy-white:  #f8faff;
+    --color-energy-blue:   #4d7fff;
+    --color-energy-violet: #7c5cfc;
+    --color-energy-cyan:   #00d4ff;
+    --color-energy-green:  #00ff87;
+    --color-energy-gold:   #ffb800;
+    --color-energy-orange: #ff6b35;
+    --color-energy-pink:   #ff4d9d;
+    --color-energy-purple: #b44dff;
+
+    /* Zone identity gradients (CSS custom properties for gradient stops) */
+    --zone-design-from:   #b44dff;
+    --zone-design-to:     #ff4d9d;
+    --zone-android-from:  #00ff87;
+    --zone-android-to:    #00d4ff;
+    --zone-software-from: #4d7fff;
+    --zone-software-to:   #7c5cfc;
+    --zone-system-from:   #ffb800;
+    --zone-system-to:     #ff6b35;
+
+    /* Glass morphism surfaces */
+    --glass-bg:       rgba(255, 255, 255, 0.04);
+    --glass-bg-hover: rgba(255, 255, 255, 0.08);
+    --glass-border:   rgba(255, 255, 255, 0.09);
+    --glass-shadow:   0 8px 32px rgba(0, 0, 0, 0.4),
+                      inset 0 1px 0 rgba(255, 255, 255, 0.08);
+
+    /* Animation easing curves */
+    --ease-cinematic: cubic-bezier(0.25, 0.46, 0.45, 0.94);
+    --ease-spring:    cubic-bezier(0.34, 1.56, 0.64, 1);
+    --ease-portal:    cubic-bezier(0.76, 0, 0.24, 1);
+    --ease-smooth:    cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Fluid typography scale (clamp: min, preferred, max) */
+    --text-hero:    clamp(2.5rem,  8vw, 7rem);
+    --text-display: clamp(1.75rem, 4vw, 4rem);
+    --text-title:   clamp(1.25rem, 2.5vw, 2rem);
+    --text-body:    clamp(0.875rem, 1.5vw, 1.125rem);
+    --text-small:   clamp(0.75rem,  1vw, 0.875rem);
+
+    /* Z-index layers — explicit stacking context */
+    --z-base:     0;
+    --z-universe: 10;
+    --z-portal:   20;
+    --z-zone:     30;
+    --z-modal:    40;
+    --z-overlay:  50;
+    --z-hud:      60;
+    --z-toast:    70;
+  }
+
+  /* ── Base reset ─────────────────────────────────────────────────────── */
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+
+  html {
+    scroll-behavior: smooth;
+    /* Prevent font size inflation on mobile */
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  body {
+    background-color: var(--color-void);
+    color: var(--color-energy-white);
+    font-family: var(--font-inter), system-ui, sans-serif;
+    /* Prevent horizontal scroll from animations */
+    overflow-x: hidden;
+    min-height: 100dvh;
+  }
+
+  /* Canvas elements fill their containers */
+  canvas {
+    display: block;
+  }
+
+  /* Accessible focus ring — visible, premium */
+  :focus-visible {
+    outline: 2px solid var(--color-energy-blue);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  /* Remove focus ring for mouse users */
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  /* Custom scrollbar (Webkit) */
+  ::-webkit-scrollbar {
+    width: 5px;
+    height: 5px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: var(--color-void);
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: rgba(77, 127, 255, 0.3);
+    border-radius: 3px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: rgba(77, 127, 255, 0.55);
+  }
+
+  /* Text selection */
+  ::selection {
+    background-color: rgba(77, 127, 255, 0.25);
+    color: var(--color-energy-white);
+  }
+
+  /* Image defaults */
+  img,
+  video {
+    max-width: 100%;
+    height: auto;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Component classes — reusable design patterns
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer components {
+
+  /* ── Glass card surface ─────────────────────────────────────────────── */
+  .glass-card {
+    @apply backdrop-blur-md;
+    background: var(--glass-bg);
+    border: 1px solid var(--glass-border);
+    border-radius: 1rem;
+    box-shadow: var(--glass-shadow);
+    transition:
+      background 300ms var(--ease-smooth),
+      box-shadow 300ms var(--ease-smooth);
+  }
+
+  .glass-card:hover {
+    background: var(--glass-bg-hover);
+    box-shadow:
+      0 16px 48px rgba(0, 0, 0, 0.5),
+      inset 0 1px 0 rgba(255, 255, 255, 0.13);
+  }
+
+  /* ── Universe button ────────────────────────────────────────────────── */
+  .btn-universe {
+    @apply relative inline-flex items-center justify-center gap-2
+           px-6 py-3 font-display font-semibold text-sm
+           tracking-widest uppercase cursor-pointer;
+    background: transparent;
+    border: 1px solid rgba(77, 127, 255, 0.35);
+    color: var(--color-energy-white);
+    border-radius: 0.5rem;
+    overflow: hidden;
+    transition:
+      border-color 300ms var(--ease-smooth),
+      box-shadow   300ms var(--ease-smooth),
+      color        300ms var(--ease-smooth);
+  }
+
+  .btn-universe::before {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      135deg,
+      rgba(77, 127, 255, 0.1)  0%,
+      rgba(124, 92, 252, 0.1) 100%
+    );
+    opacity: 0;
+    transition: opacity 300ms var(--ease-smooth);
+  }
+
+  .btn-universe:hover::before,
+  .btn-universe:focus-visible::before {
+    opacity: 1;
+  }
+
+  .btn-universe:hover,
+  .btn-universe:focus-visible {
+    border-color: rgba(77, 127, 255, 0.75);
+    box-shadow: 0 0 20px rgba(77, 127, 255, 0.25);
+    color: var(--color-energy-blue);
+  }
+
+  /* ── Energy ripple (applied to interactive elements) ────────────────── */
+  .energy-ripple {
+    position: relative;
+    overflow: hidden;
+  }
+
+  .energy-ripple::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(
+      circle at var(--ripple-x, 50%) var(--ripple-y, 50%),
+      rgba(77, 127, 255, 0.25) 0%,
+      transparent 65%
+    );
+    opacity: 0;
+    transition: opacity 400ms ease;
+    pointer-events: none;
+  }
+
+  .energy-ripple:active::after {
+    opacity: 1;
+  }
+
+  /* ── Fluid typography helpers ───────────────────────────────────────── */
+  .type-hero {
+    font-size: var(--text-hero);
+    font-family: var(--font-orbitron), var(--font-inter), system-ui;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    line-height: 1.1;
+  }
+
+  .type-display {
+    font-size: var(--text-display);
+    font-family: var(--font-orbitron), var(--font-inter), system-ui;
+    font-weight: 600;
+    letter-spacing: 0.035em;
+    line-height: 1.2;
+  }
+
+  .type-title {
+    font-size: var(--text-title);
+    font-family: var(--font-orbitron), var(--font-inter), system-ui;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    line-height: 1.3;
+  }
+
+  .type-label {
+    font-size: var(--text-small);
+    font-family: var(--font-jetbrains-mono), monospace;
+    font-weight: 500;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+  }
+
+  /* ── Glow text effects ──────────────────────────────────────────────── */
+  .glow-blue {
+    text-shadow:
+      0 0 20px rgba(77, 127, 255, 0.6),
+      0 0 60px rgba(77, 127, 255, 0.2);
+  }
+
+  .glow-white {
+    text-shadow:
+      0 0 20px rgba(248, 250, 255, 0.4),
+      0 0 60px rgba(248, 250, 255, 0.1);
+  }
+
+  /* ── Skeleton / loading shimmer ─────────────────────────────────────── */
+  .skeleton {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.04) 25%,
+      rgba(255, 255, 255, 0.09) 50%,
+      rgba(255, 255, 255, 0.04) 75%
+    );
+    background-size: 200% 100%;
+    animation: shimmer 2s linear infinite;
+    border-radius: 4px;
+  }
+
+  /* ── Futuristic grid background ─────────────────────────────────────── */
+  .grid-bg {
+    background-image:
+      linear-gradient(rgba(77, 127, 255, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(77, 127, 255, 0.04) 1px, transparent 1px);
+    background-size: 60px 60px;
+  }
+
+  /* ── GPU-promoted layer (apply to animated elements) ───────────────── */
+  .gpu-layer {
+    transform: translateZ(0);
+    will-change: transform;
+    backface-visibility: hidden;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Utility overrides
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@layer utilities {
+
+  /* Controlled line clamping */
+  .clamp-1 {
+    display: -webkit-box;
+    -webkit-line-clamp: 1;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .clamp-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  .clamp-3 {
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+  }
+
+  /* Hide scrollbar visually but keep scrollability */
+  .scrollbar-none {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-none::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Reduced-motion — OS-level preference is respected globally here.
+   GSAP, Framer Motion, and Three.js also check this individually via hooks.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Explicit @keyframes declarations.
+   Tailwind's animation utilities generate the animation shorthand but the
+   keyframe bodies must be present in the CSS. Tailwind's config `keyframes`
+   section emits these during build — this block adds the ones that are also
+   used directly in inline `style` props (PortalIcon, PortalDoor, etc.)
+   where Tailwind class scanning does NOT apply.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+@keyframes pulse-glow {
+  0%, 100% { opacity: 0.5; }
+  50%      { opacity: 1;   }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg);   }
+  to   { transform: rotate(360deg); }
+}
+
+@keyframes spin-reverse {
+  from { transform: rotate(360deg); }
+  to   { transform: rotate(0deg);   }
+}
+
+@keyframes shimmer {
+  0%   { background-position: -200% 0; }
+  100% { background-position:  200% 0; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0);    }
+  50%      { transform: translateY(-10px); }
+}
+
+@keyframes float-slow {
+  0%, 100% { transform: translateY(0);   }
+  50%      { transform: translateY(-5px); }
+}
+
+@keyframes fade-in {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+/* animate-ping — Tailwind includes this but we declare it explicitly
+   so it works in inline animation strings too. */
+@keyframes ping {
+  75%, 100% { transform: scale(2); opacity: 0; }
+}
+
+/* Ambient particle drift — used by AmbientParticles component.
+   --max-op CSS custom property is set per-particle inline. */
+@keyframes ambientDrift {
+  0%   { opacity: 0;                transform: translateY(0);    }
+  15%  { opacity: var(--max-op, 0.35); }
+  80%  { opacity: var(--max-op, 0.35); transform: translateY(-50px); }
+  100% { opacity: 0;                transform: translateY(-70px); }
+}
+
+/* ═══════════════════════════════════════════════════════════════════════════
+   Phase 9 — Production Polish
+   Micro-interactions, enhanced glass, refined typography, accessibility.
+   ═══════════════════════════════════════════════════════════════════════════ */
+
+/* ── Energy pulse micro-interaction ────────────────────────────────────── */
+
+@keyframes energyPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(77, 127, 255, 0.4);  }
+  60%  { box-shadow: 0 0 0 12px rgba(77, 127, 255, 0);  }
+  100% { box-shadow: 0 0 0 0 rgba(77, 127, 255, 0);    }
+}
+
+@keyframes whatsappPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0.45); }
+  60%  { box-shadow: 0 0 0 12px rgba(37, 211, 102, 0);  }
+  100% { box-shadow: 0 0 0 0 rgba(37, 211, 102, 0);    }
+}
+
+@keyframes downloadConfirm {
+  0%   { transform: scale(1);    }
+  25%  { transform: scale(1.06); }
+  50%  { transform: scale(0.97); }
+  75%  { transform: scale(1.02); }
+  100% { transform: scale(1);    }
+}
+
+@keyframes portalOpen {
+  0%   { clip-path: circle(0% at 50% 50%);   opacity: 0; }
+  40%  { clip-path: circle(30% at 50% 50%);  opacity: 1; }
+  100% { clip-path: circle(100% at 50% 50%); opacity: 1; }
+}
+
+/* ── Logo micro-interaction ─────────────────────────────────────────────── */
+
+.logo-react:hover {
+  text-shadow: 0 0 20px rgba(77, 127, 255, 0.6), 0 0 40px rgba(77, 127, 255, 0.2);
+  transition: text-shadow 200ms ease;
+}
+
+/* ── Enhanced glass card ────────────────────────────────────────────────── */
+/* Improved specular highlight on top edge */
+
+.glass-premium {
+  background:      var(--glass-bg);
+  border:          1px solid var(--glass-border);
+  border-radius:   1rem;
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  box-shadow:
+    0 8px 32px rgba(0, 0, 0, 0.45),
+    0 2px 8px rgba(0, 0, 0, 0.2),
+    inset 0 1px 0 rgba(255, 255, 255, 0.09),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.1);
+  transition:
+    background  300ms var(--ease-smooth),
+    box-shadow  300ms var(--ease-smooth),
+    transform   200ms var(--ease-spring);
+}
+
+.glass-premium:hover {
+  background: var(--glass-bg-hover);
+  box-shadow:
+    0 16px 48px rgba(0, 0, 0, 0.55),
+    0 4px 12px rgba(0, 0, 0, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.13),
+    inset 0 -1px 0 rgba(0, 0, 0, 0.12);
+}
+
+/* ── Zone card magnetic press ───────────────────────────────────────────── */
+
+.card-magnetic {
+  transition:
+    transform   150ms var(--ease-spring),
+    box-shadow  200ms var(--ease-smooth);
+}
+
+.card-magnetic:active {
+  transform: scale(0.97) translateY(1px);
+}
+
+/* ── Energy ripple on click ─────────────────────────────────────────────── */
+
+.energy-click {
+  position: relative;
+  overflow: hidden;
+}
+
+.energy-click::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(77, 127, 255, 0.22);
+  transform: translate(-50%, -50%);
+  transition: width 500ms ease, height 500ms ease, opacity 500ms ease;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.energy-click:active::before {
+  width:   200%;
+  height:  200%;
+  opacity: 0;
+  transition: width 400ms ease, height 400ms ease, opacity 400ms ease;
+}
+
+/* ── WhatsApp CTA pulse ─────────────────────────────────────────────────── */
+
+.whatsapp-cta:hover,
+.whatsapp-cta:focus-visible {
+  animation: whatsappPulse 0.6s ease-out;
+}
+
+/* ── Download confirmation ─────────────────────────────────────────────── */
+
+.download-confirm {
+  animation: downloadConfirm 0.5s ease-out;
+}
+
+/* ── Skip link accessibility ────────────────────────────────────────────── */
+
+.skip-link {
+  position: fixed;
+  top: -999px;
+  left: 1rem;
+  z-index: 999;
+  padding: 0.5rem 1rem;
+  background: var(--color-energy-blue);
+  color: #fff;
+  border-radius: 0 0 6px 6px;
+  font-family: var(--font-jetbrains-mono), monospace;
+  font-size: 0.75rem;
+  text-decoration: none;
+  outline: none;
+  transition: top 0.1s ease;
+}
+
+.skip-link:focus {
+  top: 0;
+}
+
+/* ── Image loading skeleton ─────────────────────────────────────────────── */
+
+.img-skeleton {
+  background: linear-gradient(
+    110deg,
+    rgba(255, 255, 255, 0.04) 30%,
+    rgba(255, 255, 255, 0.08) 50%,
+    rgba(255, 255, 255, 0.04) 70%
+  );
+  background-size: 200% 100%;
+  animation: shimmer 1.8s linear infinite;
+}
+
+/* ── Better empty state ─────────────────────────────────────────────────── */
+
+.empty-state {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  padding: 4rem 1rem;
+  text-align: center;
+  opacity: 0.6;
+}
+
+/* ── Transition overlay ─────────────────────────────────────────────────── */
+
+.transition-overlay {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: var(--z-overlay);
+}
+
+/* ── Mobile tap highlight removal ──────────────────────────────────────── */
+
+button,
+a,
+[role="button"] {
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* ── Touch-safe minimum touch targets ───────────────────────────────────── */
+
+@media (pointer: coarse) {
+  button,
+  a,
+  [role="button"] {
+    min-height: 44px;
+    min-width:  44px;
+  }
+}
+
+/* ── Print ─────────────────────────────────────────────────────────────── */
+
+@media print {
+  .fixed,
+  .sticky,
+  [aria-hidden="true"] {
+    display: none !important;
+  }
+}

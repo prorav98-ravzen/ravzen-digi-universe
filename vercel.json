@@ -1,0 +1,29 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+
+  "framework": "nextjs",
+
+  "buildCommand": "next build",
+  "outputDirectory": ".next",
+  "installCommand": "npm ci",
+
+  "regions": ["iad1"],
+
+  "functions": {
+    "src/app/api/**": {
+      "maxDuration": 30
+    }
+  },
+
+  "headers": [
+    {
+      "source": "/api/(.*)",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate" }
+      ]
+    }
+  ],
+
+  "cleanUrls": true,
+  "trailingSlash": false
+}
