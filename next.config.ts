@@ -36,12 +36,26 @@ const nextConfig: NextConfig = {
     contentSecurityPolicy:"default-src 'self'; script-src 'none'; sandbox;",
   },
 
-  // Three.js requires transpiling for Next.js SSR compatibility
-  transpilePackages: ['three'],
-
   experimental: {
     optimizePackageImports:       ['lucide-react', 'framer-motion', '@radix-ui/react-dialog'],
     optimisticClientCache:        true,
+  },
+
+  eslint: {
+    // Avoid spawning heavy ESLint AST parser worker that crashes memory on <=8GB RAM
+    ignoreDuringBuilds: true,
+  },
+
+  webpack: (config, { dev }) => {
+    if (dev) {
+      // Prevent Webpack PackFileCacheStrategy from allocating multi-gigabyte pack buffers
+      // on systems with <= 8 GB RAM (RangeError: Failed to allocate memory / ERR_MEMORY_ALLOCATION_FAILED)
+      config.cache = {
+        type: 'memory',
+        maxGenerations: 1,
+      }
+    }
+    return config
   },
 
   // Production compression

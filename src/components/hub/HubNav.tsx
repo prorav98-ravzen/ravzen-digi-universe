@@ -69,34 +69,50 @@ export default function HubNav({ activeZone = null }: HubNavProps) {
           aria-label="Return to Universe Hub"
         >
           <ArrowLeft size={13} aria-hidden="true" />
+          <img
+            src="/images/ravzen-logo.png"
+            alt="RAVZEN"
+            width={16}
+            height={16}
+            className="w-4 h-4 object-contain opacity-75 group-hover:opacity-100 transition-opacity"
+          />
           <span className="hover:text-[rgba(248,250,255,0.9)] transition-colors duration-200">
             Universe
           </span>
         </button>
       ) : (
-        /* On hub — show wordmark */
+        /* On hub — show official logo + wordmark */
         <button
           type="button"
           onClick={handleWordmark}
           className={cn(
-            'flex items-baseline gap-1.5 cursor-pointer group',
+            'flex items-center gap-2 cursor-pointer group',
             'focus-visible:outline-2 focus-visible:outline-[var(--color-energy-blue)]',
             'focus-visible:outline-offset-4 focus-visible:rounded',
           )}
           aria-label="RAVZEN — return to intro"
         >
-          <span
-            className="font-display font-bold text-sm tracking-[0.22em] uppercase transition-colors duration-200"
-            style={{ color: 'var(--color-energy-white)' }}
-          >
-            RAVZEN
-          </span>
-          <span
-            className="font-mono text-[9px] tracking-widest uppercase opacity-50 group-hover:opacity-80 transition-opacity duration-200"
-            style={{ color: 'var(--color-energy-blue)' }}
-          >
-            DIGI
-          </span>
+          <img
+            src="/images/ravzen-logo.png"
+            alt="RAVZEN Logo"
+            width={24}
+            height={24}
+            className="w-6 h-6 object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_0_12px_rgba(77,127,255,0.3)]"
+          />
+          <div className="flex items-baseline gap-1.5">
+            <span
+              className="font-display font-bold text-sm tracking-[0.22em] uppercase transition-colors duration-200"
+              style={{ color: 'var(--color-energy-white)' }}
+            >
+              RAVZEN
+            </span>
+            <span
+              className="font-mono text-[9px] tracking-widest uppercase opacity-50 group-hover:opacity-80 transition-opacity duration-200"
+              style={{ color: 'var(--color-energy-blue)' }}
+            >
+              DIGI
+            </span>
+          </div>
         </button>
       )}
 

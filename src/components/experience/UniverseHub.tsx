@@ -43,9 +43,7 @@ import { useReducedMotion }   from '@/hooks/useReducedMotion'
 import { useExperience }      from '@/store/experienceStore'
 import { ZONES }              from '@/config/zones'
 import { cn }                 from '@/lib/utils/cn'
-import StarField              from '@/components/hub/StarField'
-import AmbientParticles       from '@/components/hub/AmbientParticles'
-import NebulaLayer            from '@/components/hub/NebulaLayer'
+import CosmicUniverse3D       from '@/components/hub/CosmicUniverse3D'
 import ZoneCard               from '@/components/hub/ZoneCard'
 import UniverseActivity       from '@/components/hub/UniverseActivity'
 import HubNav                 from '@/components/hub/HubNav'
@@ -78,6 +76,7 @@ export default function UniverseHub() {
       const el = containerRef.current
       if (!el) return
 
+      const logoMark = el.querySelector<HTMLElement>('.hub-brand-logo')
       const label    = el.querySelector<HTMLElement>('.hub-ravzen-label')
       const title    = el.querySelector<HTMLElement>('.hub-title')
       const subtitle = el.querySelector<HTMLElement>('.hub-subtitle')
@@ -86,8 +85,9 @@ export default function UniverseHub() {
 
       const tl = gsap.timeline({ defaults: { ease: 'power3.out' } })
 
-      tl.fromTo(label,    { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5 }, 0.15)
-      tl.fromTo(title,    { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.30)
+      tl.fromTo(logoMark, { opacity: 0, y: 14, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.55 }, 0.08)
+      tl.fromTo(label,    { opacity: 0, y: 14 }, { opacity: 1, y: 0, duration: 0.5 }, 0.20)
+      tl.fromTo(title,    { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.6 }, 0.34)
       tl.fromTo(subtitle, { opacity: 0, y: 10 }, { opacity: 1, y: 0, duration: 0.5 }, 0.45)
       tl.fromTo(
         cards,
@@ -134,18 +134,29 @@ export default function UniverseHub() {
       {/* ── Navigation ──────────────────────────────────────────────── */}
       <HubNav activeZone={null} />
 
-      {/* ── Space environment (behind everything) ───────────────────── */}
-      <NebulaLayer />
-      <StarField />
-      <AmbientParticles />
+      {/* ── Realistic 3D Space environment (behind everything) ──────── */}
+      <CosmicUniverse3D />
 
       {/* ── Content ─────────────────────────────────────────────────── */}
       <div
         ref={containerRef}
         className="relative z-10 flex flex-col items-center min-h-screen px-4 py-8 pt-20 gap-10 md:gap-12"
       >
-        {/* ── Title ─────────────────────────────────────────────────── */}
-        <header className="text-center space-y-2 mt-4 md:mt-8">
+        {/* ── Title & Official Brand Mark ──────────────────────────── */}
+        <header className="text-center flex flex-col items-center space-y-2 mt-4 md:mt-8">
+          <div
+            className="hub-brand-logo mb-1"
+            style={{ opacity: reduced ? 1 : 0 }}
+          >
+            <img
+              src="/images/ravzen-logo.png"
+              alt="RAVZEN Official Emblem"
+              width={56}
+              height={56}
+              className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-[0_0_24px_rgba(77,127,255,0.4)] select-none"
+            />
+          </div>
+
           <p
             className="hub-ravzen-label font-mono text-[10px] tracking-[0.5em] uppercase"
             style={{

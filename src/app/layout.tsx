@@ -85,6 +85,11 @@ export const metadata: Metadata = {
   alternates: {
     canonical: SITE_CONFIG.url,
   },
+  icons: {
+    icon: '/images/ravzen-logo.png',
+    shortcut: '/images/ravzen-logo.png',
+    apple: '/images/ravzen-logo.png',
+  },
   // Prevent browser translation prompts — this is a branded experience
   other: {
     'google':        'notranslate',

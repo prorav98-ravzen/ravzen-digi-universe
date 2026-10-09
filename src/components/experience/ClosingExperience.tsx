@@ -59,6 +59,7 @@ export default function ClosingExperience() {
       const el = containerRef.current
       if (!el) return
 
+      const logo    = el.querySelector<HTMLElement>('.cl-logo')
       const line2   = el.querySelector<HTMLElement>('.cl-line2')
       const line3   = el.querySelector<HTMLElement>('.cl-line3')
       const buttons = el.querySelector<HTMLElement>('.cl-buttons')
@@ -70,6 +71,9 @@ export default function ClosingExperience() {
 
       // Background stars drift in
       tl.fromTo(stars, { opacity: 0 }, { opacity: 1, duration: 1.2 }, 0)
+
+      // Official Logo fade and scale in
+      tl.fromTo(logo, { opacity: 0, y: 14, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.6 }, 0.1)
 
       // Line 1 — character stagger from centre
       const chars1 = el.querySelectorAll('.cl-char1')
@@ -176,7 +180,18 @@ export default function ClosingExperience() {
         }}
       />
 
-      <div className="relative z-10 flex flex-col items-center text-center gap-8 max-w-3xl w-full">
+      <div className="relative z-10 flex flex-col items-center text-center gap-6 md:gap-8 max-w-3xl w-full">
+
+        {/* Brand Logo Emblem */}
+        <div className="cl-logo" style={{ ...ready(0) }}>
+          <img
+            src="/images/ravzen-logo.png"
+            alt="RAVZEN Official Emblem"
+            width={56}
+            height={56}
+            className="w-12 h-12 md:w-14 md:h-14 object-contain drop-shadow-[0_0_24px_rgba(77,127,255,0.4)] select-none"
+          />
+        </div>
 
         {/* Line 1 */}
         <div className="cl-line1 space-y-1" style={{ ...ready(0) }}>

@@ -135,6 +135,7 @@ export default function IntroScreen() {
       const el = containerRef.current
       if (!el) return
 
+      const logo = el.querySelector<HTMLElement>('.intro-logo')
       const grid = el.querySelector<HTMLElement>('.intro-grid')
       const particles = el.querySelectorAll<HTMLElement>('.intro-particle')
       const letters = el.querySelectorAll<HTMLElement>('.letter')
@@ -148,6 +149,9 @@ export default function IntroScreen() {
 
       // 0: grid fades in
       tl.fromTo(grid, { opacity: 0 }, { opacity: 1, duration: 1.4 }, 0)
+
+      // 0.2: logo emblem fades and scales in
+      tl.fromTo(logo, { opacity: 0, y: 16, scale: 0.9 }, { opacity: 1, y: 0, scale: 1, duration: 0.8 }, 0.2)
 
       // 0.3: particles drift up
       tl.fromTo(
@@ -297,7 +301,21 @@ export default function IntroScreen() {
       ))}
 
       {/* ── Main content ───────────────────────────────────────────── */}
-      <div className="relative z-10 flex flex-col items-center gap-8 px-6 text-center max-w-4xl w-full">
+      <div className="relative z-10 flex flex-col items-center gap-6 md:gap-8 px-6 text-center max-w-4xl w-full">
+
+        {/* Official Brand Emblem */}
+        <div
+          className="intro-logo"
+          style={{ opacity: reduced ? 1 : 0 }}
+        >
+          <img
+            src="/images/ravzen-logo.png"
+            alt="RAVZEN"
+            width={72}
+            height={72}
+            className="w-16 h-16 md:w-20 md:h-20 object-contain drop-shadow-[0_4px_24px_rgba(77,127,255,0.25)] select-none"
+          />
+        </div>
 
         {/* Title */}
         <div className="relative overflow-visible">
