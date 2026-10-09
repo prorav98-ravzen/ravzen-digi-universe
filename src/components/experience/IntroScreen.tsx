@@ -27,7 +27,6 @@ import {
   useEffect,
   useRef,
   useCallback,
-  useState,
   type KeyboardEvent,
 } from 'react'
 import { useExperience } from '@/store/experienceStore'
@@ -99,8 +98,6 @@ export default function IntroScreen() {
   const containerRef = useRef<HTMLDivElement>(null)
   const timelineRef = useRef<gsap.core.Timeline | null>(null)
 
-  // For reduced motion: show everything immediately
-  const [reducedReady, setReducedReady] = useState(false)
 
   // ── Entry handler ───────────────────────────────────────────────────────
 
@@ -128,7 +125,6 @@ export default function IntroScreen() {
 
   useEffect(() => {
     if (reduced) {
-      setReducedReady(true)
       return
     }
 

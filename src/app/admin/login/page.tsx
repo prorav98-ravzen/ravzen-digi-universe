@@ -1,3 +1,4 @@
+import { Suspense } from 'react'
 import AdminLoginForm from '@/components/admin/AdminLoginForm'
 
 export const metadata = {
@@ -15,7 +16,9 @@ export default function AdminLoginPage() {
       className="min-h-screen flex items-center justify-center px-4"
       style={{ background: 'radial-gradient(ellipse at center, #060918 0%, #03040a 100%)' }}
     >
-      <AdminLoginForm />
+      <Suspense fallback={null}>
+        <AdminLoginForm />
+      </Suspense>
     </div>
   )
 }
