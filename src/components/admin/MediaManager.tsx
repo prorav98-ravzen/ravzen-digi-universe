@@ -29,35 +29,53 @@ interface MediaManagerProps {
 export default function MediaManager({ items: initialItems }: MediaManagerProps) {
   const [items, setItems]     = useState(initialItems)
   const [uploading, setUploading] = useState(false)
+  const [uploadError, setUploadError] = useState('')
+  const [uploadProgress, setUploadProgress] = useState('')
   const [deletingId, setDeletingId] = useState<string | null>(null)
   const fileRef = useRef<HTMLInputElement>(null)
 
   const handleUpload = useCallback(async (files: FileList) => {
     setUploading(true)
+    setUploadError('')
     const uploaded: MediaItem[] = []
-
-    for (const file of Array.from(files)) {
-      const formData = new FormData()
-      formData.append('file', file)
-      formData.append('entity_type', 'general')
-
-      const res = await fetch('/api/admin/upload', { method: 'POST', body: formData })
-      if (res.ok) {
-        const json = await res.json() as { publicUrl: string; filename: string; mimeType: string }
-        uploaded.push({
-          id: crypto.randomUUID(),
-          public_url: json.publicUrl,
-          filename:   json.filename,
-          mime_type:   json.mimeType,
-          alt_text:    null,
-          created_at:  new Date().toISOString(),
-        })
+    const failures: string[] = []
+    const selected = Array.from(files)
+    try {
+      for (const [index, file] of selected.entries()) {
+        setUploadProgress(`Uploading ${index + 1} of ${selected.length}: ${file.name}`)
+        if (file.size > 4 * 1024 * 1024) {
+          failures.push(`${file.name}: exceeds 4 MB limit`)
+          continue
+        }
+        try {
+          const formData = new FormData()
+          formData.append('file', file)
+          formData.append('entity_type', 'design')
+          const res = await fetch('/api/admin/upload', { method: 'POST', body: formData })
+          const json = await res.json() as { id?: string; publicUrl?: string; filename?: string; mimeType?: string; createdAt?: string; error?: string }
+          if (!res.ok || !json.id || !json.publicUrl) {
+            failures.push(`${file.name}: ${json.error ?? `HTTP ${res.status}`}`)
+            continue
+          }
+          uploaded.push({
+            id: json.id,
+            public_url: json.publicUrl,
+            filename: json.filename ?? file.name,
+            mime_type: json.mimeType ?? file.type,
+            alt_text: null,
+            created_at: json.createdAt ?? new Date().toISOString(),
+          })
+        } catch {
+          failures.push(`${file.name}: network error`)
+        }
       }
+      setItems(prev => [...uploaded, ...prev])
+      if (failures.length) setUploadError(failures.join(' | '))
+    } finally {
+      setUploading(false)
+      setUploadProgress('')
+      if (fileRef.current) fileRef.current.value = ''
     }
-
-    setItems((prev) => [...uploaded, ...prev])
-    setUploading(false)
-    if (fileRef.current) fileRef.current.value = ''
   }, [])
 
   const handleDelete = useCallback(async (id: string) => {
@@ -97,6 +115,8 @@ export default function MediaManager({ items: initialItems }: MediaManagerProps)
         </label>
       </div>
 
+      {uploadProgress && <p role="status" className="text-sm text-cyan-300">{uploadProgress}</p>}
+      {uploadError && <p role="alert" className="text-sm text-red-400 break-words">Upload issues: {uploadError}</p>}
       {items.length === 0 ? (
         <div className="py-16 text-center text-sm" style={{ color: 'rgba(248,250,255,0.35)' }}>
           No media uploaded yet. Click Upload to add images or videos.
