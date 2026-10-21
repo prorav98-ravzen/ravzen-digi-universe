@@ -7,10 +7,10 @@
 
 export const SITE_CONFIG = {
   name:        'RAVZEN DIGI UNIVERSE',
-  tagline:     'Where Ideas Come Alive.',
+  tagline:     'Premium Creative Studio',
   description:
-    "An interactive digital universe where RAVZEN's creative work, Android apps, software, and systems come alive through cinematic experiences.",
-  url:          process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ravzen.com',
+    "RAVZEN Creative Studio creates distinctive logos, branding, premium packaging and visual design for ambitious brands.",
+  url:          process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ravzen-digi-universe.vercel.app',
   locale:       'en',
   themeColor:   '#03040a',
   ogImage:      '/images/og-image.jpg',
