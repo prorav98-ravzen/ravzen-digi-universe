@@ -20,7 +20,7 @@ export async function PATCH(
     const parsed = SiteSettingsUpdateSchema.safeParse({ ...body, key })
     if (!parsed.success) return NextResponse.json({ error: 'Invalid input' }, { status: 400 })
 
-    const { error } = await supabase.from('site_settings').update({ value: parsed.data.value, updated_by: user.id }).eq('key', parsed.data.key)
+    const { error } = await supabase.from('site_settings').upsert({ key: parsed.data.key, value: parsed.data.value, updated_by: user.id }, { onConflict: 'key' })
     if (error) return NextResponse.json({ error: error.message }, { status: 500 })
     return NextResponse.json({ ok: true })
   } catch {
