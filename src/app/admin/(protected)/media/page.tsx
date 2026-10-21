@@ -11,5 +11,6 @@ export default async function AdminMediaPage() {
     .order('created_at', { ascending: false })
     .limit(60)
 
-  return <MediaManager items={media ?? []} />
+  const { data: projects } = await supabase.from('design_projects').select('id,title').order('title')
+  return <MediaManager items={media ?? []} projects={projects ?? []} />
 }
