@@ -12,7 +12,7 @@ export async function PATCH(
 ) {
   const { user, supabase } = await requireEditor()
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
-  if (user.role === 'EDITOR') return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 })
+  if (user.role !== 'SUPER_ADMIN') return NextResponse.json({ error: 'Only the site owner can change appearance settings' }, { status: 403 })
 
   const { key } = await params
   try {
