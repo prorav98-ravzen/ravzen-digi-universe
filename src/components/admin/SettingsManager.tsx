@@ -15,28 +15,45 @@ interface Setting {
   description: string | null
 }
 
+const APPEARANCE_DEFAULTS = [
+  { key: 'studio_hero_title', value: 'Design that makes an impression.', description: 'Main headline on the public homepage' },
+  { key: 'studio_hero_description', value: 'Distinctive identities, premium packaging and striking visuals for brands ready to stand apart.', description: 'Hero supporting description' },
+  { key: 'studio_accent_color', value: '#e879f9', description: 'Studio accent color (hex)' },
+  { key: 'studio_background_color', value: '#090910', description: 'Studio background color (hex)' },
+  { key: 'studio_font_scale', value: '100', description: 'Public homepage font size percentage (80–125)' },
+]
+
 interface Props {
   settings: Setting[]
 }
 
-export default function SettingsManager({ settings: initial }: Props) {
+export default function SettingsManager({ settings }: Props) {
+  const initial = [...settings, ...APPEARANCE_DEFAULTS.filter(d => !settings.some(s => s.key === d.key)).map(d => ({ ...d, id: d.key }))]
   const [values, setValues] = useState<Record<string, string>>(
     Object.fromEntries(initial.map((s) => [s.key, s.value]))
   )
   const [saving, setSaving] = useState(false)
   const [saved, setSaved]   = useState(false)
+  const [saveError, setSaveError] = useState('')
 
   const handleSave = useCallback(async () => {
     setSaving(true)
+    setSaved(false)
+    setSaveError('')
     const updates = Object.entries(values).filter(
       ([key, val]) => val !== initial.find((s) => s.key === key)?.value
     )
     for (const [key, value] of updates) {
-      await fetch(`/api/admin/settings/${key}`, {
+      const response = await fetch(`/api/admin/settings/${encodeURIComponent(key)}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ key, value }),
       })
+      if (!response.ok) {
+        setSaveError(`Could not save ${key} (HTTP ${response.status})`)
+        setSaving(false)
+        return
+      }
     }
     setSaving(false)
     setSaved(true)
@@ -72,6 +89,7 @@ export default function SettingsManager({ settings: initial }: Props) {
         ))}
       </div>
 
+      {saveError && <p role="alert" className="text-sm text-red-400">{saveError}</p>}
       <button
         type="button"
         onClick={handleSave}
