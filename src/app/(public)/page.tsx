@@ -24,8 +24,14 @@ export default async function HomePage() {
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false })
   const projects = error ? [] : (data ?? []) as unknown as Project[]
+  const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', ['studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary'])
+  const settings = Object.fromEntries((settingRows ?? []).map(row => [row.key, row.value]))
+  const hex = (value: string | undefined, fallback: string) => value && /^#[0-9a-fA-F]{6}$/.test(value) ? value : fallback
+  const accent = hex(settings.studio_accent_color, '#e879f9')
+  const background = hex(settings.studio_background_color, '#090910')
+  const fontScale = Math.max(80, Math.min(125, Number(settings.studio_font_scale) || 100))
   return (
-    <main className="min-h-screen bg-[#090910] text-white selection:bg-fuchsia-500/40">
+    <main className="min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, fontSize: `${fontScale}%`, ["--studio-accent" as string]: accent }}>
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#090910]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5 md:px-10" aria-label="Main navigation">
           <a href="#home" className="text-base font-black tracking-[.2em]">RAVZEN<span className="text-fuchsia-400">.</span></a>
@@ -41,10 +47,10 @@ export default async function HomePage() {
         <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-fuchsia-700/15 blur-3xl" aria-hidden="true" />
         <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-fuchsia-300">Independent creative studio · Sri Lanka</p>
         <h1 className="max-w-5xl text-5xl font-black leading-[1.08] tracking-tight md:text-7xl lg:text-8xl">
-          Design that makes <span className="bg-gradient-to-r from-fuchsia-400 via-violet-400 to-cyan-300 bg-clip-text text-transparent">an impression.</span>
+          {settings.studio_hero_title ?? "Design that makes an impression."}
         </h1>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
-          Distinctive identities, premium packaging and striking visuals for brands ready to stand apart.
+          {settings.studio_hero_description ?? "Distinctive identities, premium packaging and striking visuals for brands ready to stand apart."}
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
           <a href="#work" className="rounded-full bg-white px-7 py-3 text-sm font-bold text-black hover:bg-fuchsia-100">Explore the work ↗</a>
@@ -101,8 +107,8 @@ export default async function HomePage() {
           <p className="text-xs uppercase tracking-[.3em] text-fuchsia-300">Have a project in mind?</p>
           <h2 className="mt-4 text-4xl font-black md:text-6xl">Let's make it memorable.</h2>
           <div className="mt-8 flex flex-wrap gap-5 text-sm">
-            {SITE_CONFIG.email && <a className="underline underline-offset-4" href={`mailto:${SITE_CONFIG.email}`}>Email the studio ↗</a>}
-            {SITE_CONFIG.whatsapp && <a className="underline underline-offset-4" href={`https://wa.me/${SITE_CONFIG.whatsapp.replace(/\D/g, '')}`}>WhatsApp ↗</a>}
+            {(settings.email_primary || SITE_CONFIG.email) && <a className="underline underline-offset-4" href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email the studio ↗</a>}
+            {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a className="underline underline-offset-4" href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\D/g, '')}`}>WhatsApp ↗</a>}
           </div>
           <p className="mt-16 text-xs text-white/40">© {new Date().getFullYear()} RAVZEN Creative Studio. All rights reserved.</p>
         </div>
