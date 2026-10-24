@@ -18,7 +18,7 @@ export default function ArtworkReviews({ artworkId, imageIndex = 0 }: { artworkI
   const [message,setMessage] = useState('')
   const [busy,setBusy] = useState(false)
   const load = useCallback(async () => {
-    try { const res = await fetch('/api/reviews?artworkId='+encodeURIComponent(artworkId)+'&imageIndex='+imageIndex); if(res.ok) setReviews((await res.json()).reviews) } catch { /* optional reviews unavailable */ }
+    try { const res = await fetch('/api/reviews?artworkId='+encodeURIComponent(artworkId)+'&imageIndex='+imageIndex); if(res.ok) setReviews((await res.json()).reviews) } catch { setMessage('Reviews could not be loaded right now.') }
   },[artworkId,imageIndex])
   useEffect(() => { void load(); void supabase.auth.getUser().then(({data}) => { if(data.user?.email_confirmed_at && !data.user.is_anonymous) { setVerified(true); setEmail(data.user.email ?? '') } }) },[load])
   async function sendCode() {
@@ -45,10 +45,10 @@ export default function ArtworkReviews({ artworkId, imageIndex = 0 }: { artworkI
     e.preventDefault(); if (!consent || !verified) return; setBusy(true); setMessage('')
     try {
       const response = await fetch('/api/reviews',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({artworkId,imageIndex,name,phone,rating,body}) })
-      const result = await response.json()
-      setMessage(result.message || result.error || 'Request failed')
+      const result = await response.json().catch(()=>null)
+      setMessage(result?.message || result?.error || (response.ok ? 'Review submitted.' : 'Server error ('+response.status+'). Please retry.'))
       if(response.ok) setBody('')
-    } catch { setMessage('Network error. Please retry.') }
+    } catch { setMessage('Connection interrupted. Check your internet and try again.') }
     setBusy(false)
   }
   const average = reviews.length ? (reviews.reduce((s,r)=>s+r.rating,0)/reviews.length).toFixed(1) : null
