@@ -27,7 +27,7 @@ export async function PATCH(req: NextRequest) {
   const parsed = schema.safeParse(input)
   if (!parsed.success) return NextResponse.json({ error: 'Invalid update' }, { status: 400 })
   const { id, status, adminReply, verifiedClient } = parsed.data
-  const { error } = await getAdminClient().from('artwork_reviews').update({ status, admin_reply: adminReply, verified_client: verifiedClient, updated_at: new Date().toISOString() }).eq('id', id)
+  const { error } = await (await createClient()).from('artwork_reviews').update({ status, admin_reply: adminReply, verified_client: verifiedClient, updated_at: new Date().toISOString() }).eq('id', id)
   if (error) return NextResponse.json({ error: 'Update failed' }, { status: 500 })
   return NextResponse.json({ ok: true })
 }
