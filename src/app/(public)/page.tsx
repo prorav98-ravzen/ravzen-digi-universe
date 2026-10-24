@@ -3,6 +3,7 @@ import { createClient } from '@/lib/supabase/server'
 import { SITE_CONFIG } from '@/config/site'
 import Image from 'next/image'
 import GalleryFeedback from '@/components/reviews/GalleryFeedback'
+import VisitorCounters from '@/components/analytics/VisitorCounters'
 
 export const metadata: Metadata = {
   title: 'RAVZEN — Premium Creative Studio',
@@ -79,6 +80,8 @@ export default async function HomePage() {
           <p className="mt-3 text-sm text-white/60">{stat.label}</p>
         </div>)}
       </section>}
+
+      <VisitorCounters />
 
       <section id="services" className="border-y border-white/10 bg-white/[.025]">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
