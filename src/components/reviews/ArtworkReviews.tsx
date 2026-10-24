@@ -5,7 +5,7 @@ import { createBrowserClient } from '@supabase/ssr'
 type Review = { id:string; reviewer_name:string; rating:number; body:string; admin_reply:string|null; verified_client:boolean; created_at:string }
 const supabase = createBrowserClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!)
 
-export default function ArtworkReviews({ artworkId }: { artworkId:string }) {
+export default function ArtworkReviews({ artworkId, imageIndex = 0 }: { artworkId:string; imageIndex?:number }) {
   const [reviews,setReviews] = useState<Review[]>([])
   const [name,setName] = useState('')
   const [email,setEmail] = useState('')
@@ -18,8 +18,8 @@ export default function ArtworkReviews({ artworkId }: { artworkId:string }) {
   const [message,setMessage] = useState('')
   const [busy,setBusy] = useState(false)
   const load = useCallback(async () => {
-    try { const res = await fetch('/api/reviews?artworkId='+encodeURIComponent(artworkId)); if(res.ok) setReviews((await res.json()).reviews) } catch { /* optional reviews unavailable */ }
-  },[artworkId])
+    try { const res = await fetch('/api/reviews?artworkId='+encodeURIComponent(artworkId)+'&imageIndex='+imageIndex); if(res.ok) setReviews((await res.json()).reviews) } catch { /* optional reviews unavailable */ }
+  },[artworkId,imageIndex])
   useEffect(() => { void load(); void supabase.auth.getUser().then(({data}) => { if(data.user?.email_confirmed_at && !data.user.is_anonymous) { setVerified(true); setEmail(data.user.email ?? '') } }) },[load])
   async function sendCode() {
     if (!name.trim() || !email.includes('@')) { setMessage('Enter your name and valid email first.'); return }
@@ -38,7 +38,7 @@ export default function ArtworkReviews({ artworkId }: { artworkId:string }) {
   async function submit(e:React.FormEvent) {
     e.preventDefault(); if (!consent || !verified) return; setBusy(true); setMessage('')
     try {
-      const response = await fetch('/api/reviews',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({artworkId,name,phone,rating,body}) })
+      const response = await fetch('/api/reviews',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({artworkId,imageIndex,name,phone,rating,body}) })
       const result = await response.json()
       setMessage(result.message || result.error || 'Request failed')
       if(response.ok) setBody('')
@@ -47,7 +47,7 @@ export default function ArtworkReviews({ artworkId }: { artworkId:string }) {
   }
   const average = reviews.length ? (reviews.reduce((s,r)=>s+r.rating,0)/reviews.length).toFixed(1) : null
   return <section className="mt-6 border-t border-white/10 pt-5 text-sm">
-    <h4 className="font-bold text-fuchsia-200">Artwork reviews {average && <span aria-label="Average rating">★ {average}/5</span>} <span className="text-white/50">({reviews.length})</span></h4>
+    <h4 className="font-bold text-fuchsia-200">{imageIndex ? 'Image '+imageIndex+' reviews' : 'Project reviews'} {average && <span aria-label="Average rating">★ {average}/5</span>} <span className="text-white/50">({reviews.length})</span></h4>
     <div className="mt-4 space-y-4">{reviews.map(r=><div key={r.id} className="rounded-xl bg-white/5 p-4">
       <p className="text-fuchsia-300" aria-label={r.rating+' out of 5 stars'}>{'★'.repeat(r.rating)}{'☆'.repeat(5-r.rating)}</p>
       <p className="mt-1 font-semibold">{r.reviewer_name} {r.verified_client && <span className="text-xs text-emerald-300">✓ Verified client</span>}</p>
