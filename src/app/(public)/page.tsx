@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { SITE_CONFIG } from '@/config/site'
 import Image from 'next/image'
-import ArtworkReviews from '@/components/reviews/ArtworkReviews'
+import GalleryFeedback from '@/components/reviews/GalleryFeedback'
 
 export const metadata: Metadata = {
   title: 'RAVZEN — Premium Creative Studio',
@@ -111,12 +111,7 @@ export default async function HomePage() {
                     <h3 className="mt-2 text-xl font-bold">{project.title}</h3>
                     {project.short_description && <p className="mt-3 text-sm leading-6 text-white/55">{project.short_description}</p>}
                     {project.price !== null && <p className="mt-4 text-sm font-semibold text-white/80">{project.currency ?? 'LKR'} {Number(project.price).toLocaleString('en-LK')}</p>}
-                    {images.length > 1 && (
-                      <div className="mt-5 flex snap-x gap-2 overflow-x-auto pb-2" aria-label={project.title + ' gallery'}>
-                        {images.map((url, index) => <div key={url + index} className="relative h-20 w-24 shrink-0 snap-start overflow-hidden rounded-lg bg-white/10"><Image src={url} alt={project.title + ' image ' + (index + 1)} fill unoptimized className="object-cover" sizes="96px" /></div>)}
-                      </div>
-                    )}
-                    <ArtworkReviews artworkId={project.id} />
+                    <GalleryFeedback artworkId={project.id} title={project.title} images={images} />
                   </div>
                 </article>
               )
