@@ -21,9 +21,9 @@ const APPEARANCE_DEFAULTS = [
   { key: 'studio_accent_color', value: '#e879f9', description: 'Studio accent color (hex)' },
   { key: 'studio_background_color', value: '#090910', description: 'Studio background color (hex)' },
   { key: 'studio_font_scale', value: '100', description: 'Public homepage font size percentage (80–125)' },
-  { key: 'studio_completed_projects', value: '600+', description: 'Completed projects across your career; leave blank to hide' },
-  { key: 'studio_experience_years', value: '9+', description: 'Years of design experience; leave blank to hide' },
-  { key: 'studio_client_count', value: '', description: 'Verified client count; leave blank to hide' },
+  { key: 'studio_completed_projects', value: '600+', description: 'Projects completed shown on homepage; edit at any time, leave blank to hide' },
+  { key: 'studio_experience_years', value: '9+', description: 'Years of experience shown on homepage; edit at any time, leave blank to hide' },
+  { key: 'studio_client_count', value: '75+', description: 'Satisfied clients shown on homepage; edit at any time, leave blank to hide' },
   { key: 'studio_upcoming_projects', value: '', description: 'Upcoming projects — one item per line; leave blank to hide' },
   { key: 'studio_upcoming_features', value: '', description: 'Upcoming website features — one item per line; leave blank to hide' },
   ...[1, 2, 3].flatMap(i => [
