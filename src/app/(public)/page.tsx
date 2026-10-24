@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { SITE_CONFIG } from '@/config/site'
 import Image from 'next/image'
+import ArtworkReviews from '@/components/reviews/ArtworkReviews'
 
 export const metadata: Metadata = {
   title: 'RAVZEN — Premium Creative Studio',
@@ -115,6 +116,7 @@ export default async function HomePage() {
                         {images.map((url, index) => <div key={url + index} className="relative h-20 w-24 shrink-0 snap-start overflow-hidden rounded-lg bg-white/10"><Image src={url} alt={project.title + ' image ' + (index + 1)} fill unoptimized className="object-cover" sizes="96px" /></div>)}
                       </div>
                     )}
+                    <ArtworkReviews artworkId={project.id} />
                   </div>
                 </article>
               )
