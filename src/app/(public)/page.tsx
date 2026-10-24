@@ -35,7 +35,7 @@ export default async function HomePage() {
   const stats = [
     { label: 'Projects completed', value: settings.studio_completed_projects ?? '600+' },
     { label: 'Years of experience', value: settings.studio_experience_years ?? '9+' },
-    { label: 'Clients served', value: settings.studio_client_count ?? '' },
+    { label: 'Satisfied clients', value: settings.studio_client_count ?? '75+' },
   ].filter(stat => stat.value.trim())
   const reviews = [1, 2, 3].map(i => ({
     name: settings[`studio_review_${i}_name`]?.trim(),
