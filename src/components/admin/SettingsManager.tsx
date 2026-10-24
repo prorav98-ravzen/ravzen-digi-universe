@@ -21,6 +21,16 @@ const APPEARANCE_DEFAULTS = [
   { key: 'studio_accent_color', value: '#e879f9', description: 'Studio accent color (hex)' },
   { key: 'studio_background_color', value: '#090910', description: 'Studio background color (hex)' },
   { key: 'studio_font_scale', value: '100', description: 'Public homepage font size percentage (80–125)' },
+  { key: 'studio_completed_projects', value: '600+', description: 'Completed projects across your career; leave blank to hide' },
+  { key: 'studio_experience_years', value: '9+', description: 'Years of design experience; leave blank to hide' },
+  { key: 'studio_client_count', value: '', description: 'Verified client count; leave blank to hide' },
+  { key: 'studio_upcoming_projects', value: '', description: 'Upcoming projects — one item per line; leave blank to hide' },
+  { key: 'studio_upcoming_features', value: '', description: 'Upcoming website features — one item per line; leave blank to hide' },
+  ...[1, 2, 3].flatMap(i => [
+    { key: `studio_review_${i}_name`, value: '', description: `Client feedback ${i}: client name (publish only with permission)` },
+    { key: `studio_review_${i}_quote`, value: '', description: `Client feedback ${i}: genuine client comment; shown only with a name` },
+    { key: `studio_review_${i}_rating`, value: '', description: `Client feedback ${i}: actual rating from 1 to 5; optional` },
+  ]),
 ]
 
 interface Props {
@@ -79,9 +89,9 @@ export default function SettingsManager({ settings }: Props) {
             {s.description && (
               <p className="text-[10px]" style={{ color: 'rgba(248,250,255,0.3)' }}>{s.description}</p>
             )}
-            <input
+            <textarea
+              rows={s.key.includes("upcoming") || s.key.endsWith("_quote") ? 3 : 1}
               id={`setting-${s.key}`}
-              type="text"
               value={values[s.key] ?? ''}
               onChange={(e) => setValues((v) => ({ ...v, [s.key]: e.target.value }))}
               className="w-full px-3 py-2 rounded-lg text-sm font-mono"

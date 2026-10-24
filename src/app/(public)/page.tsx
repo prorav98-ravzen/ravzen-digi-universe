@@ -24,12 +24,26 @@ export default async function HomePage() {
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false })
   const projects = error ? [] : (data ?? []) as unknown as Project[]
-  const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', ['studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary'])
+  const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', ['studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary','studio_completed_projects','studio_experience_years','studio_client_count','studio_upcoming_projects','studio_upcoming_features', ...[1, 2, 3].flatMap(i => [`studio_review_${i}_name`, `studio_review_${i}_quote`, `studio_review_${i}_rating`])])
   const settings = Object.fromEntries((settingRows ?? []).map(row => [row.key, row.value]))
   const hex = (value: string | undefined, fallback: string) => value && /^#[0-9a-fA-F]{6}$/.test(value) ? value : fallback
   const accent = hex(settings.studio_accent_color, '#e879f9')
   const background = hex(settings.studio_background_color, '#090910')
   const fontScale = Math.max(80, Math.min(125, Number(settings.studio_font_scale) || 100))
+  const stats = [
+    { label: 'Projects completed', value: settings.studio_completed_projects ?? '600+' },
+    { label: 'Years of experience', value: settings.studio_experience_years ?? '9+' },
+    { label: 'Clients served', value: settings.studio_client_count ?? '' },
+  ].filter(stat => stat.value.trim())
+  const reviews = [1, 2, 3].map(i => ({
+    name: settings[`studio_review_${i}_name`]?.trim(),
+    quote: settings[`studio_review_${i}_quote`]?.trim(),
+    rating: Number(settings[`studio_review_${i}_rating`]),
+  })).filter(review => review.name && review.quote)
+  const upcoming = [
+    { title: 'Upcoming projects', value: settings.studio_upcoming_projects },
+    { title: 'Coming to the studio', value: settings.studio_upcoming_features },
+  ].map(group => ({ ...group, items: (group.value ?? '').split('\n').map((item: string) => item.trim()).filter(Boolean) })).filter(group => group.items.length)
   return (
     <main className="studio-home min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#090910]/90 backdrop-blur-xl">
@@ -57,6 +71,13 @@ export default async function HomePage() {
           <a href="#contact" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-fuchsia-400">Start a project</a>
         </div>
       </section>
+
+      {stats.length > 0 && <section aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 sm:grid-cols-3 md:px-10">
+        {stats.map(stat => <div key={stat.label} className="border-l border-fuchsia-400/50 pl-6">
+          <p className="text-4xl font-black text-fuchsia-300 md:text-5xl">{stat.value}</p>
+          <p className="mt-3 text-sm text-white/60">{stat.label}</p>
+        </div>)}
+      </section>}
 
       <section id="services" className="border-y border-white/10 bg-white/[.025]">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
@@ -101,6 +122,24 @@ export default async function HomePage() {
           </div>
         ) : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
+
+      {reviews.length > 0 && <section aria-labelledby="feedback-title" className="mx-auto max-w-7xl px-5 pb-24 md:px-10">
+        <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Client feedback</p>
+        <h2 id="feedback-title" className="mt-4 text-4xl font-black">In their words.</h2>
+        <div className="mt-10 grid gap-6 md:grid-cols-3">{reviews.map((review, index) => <figure key={index} className="rounded-2xl border border-white/10 bg-white/[.025] p-7">
+          {Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5 && <p aria-label={`${review.rating} out of 5 stars`} className="text-fuchsia-300">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>}
+          <blockquote className="mt-4 whitespace-pre-line text-base leading-8 text-white/80">{review.quote}</blockquote>
+          <figcaption className="mt-6 text-sm font-bold">{review.name}</figcaption>
+        </figure>)}</div>
+      </section>}
+
+      {upcoming.length > 0 && <section aria-label="What's next" className="mx-auto grid max-w-7xl gap-7 px-5 pb-24 md:grid-cols-2 md:px-10">
+        {upcoming.map(group => <div key={group.title} className="rounded-2xl border border-white/10 p-8">
+          <p className="text-xs uppercase tracking-[.3em] text-fuchsia-300">On the horizon</p>
+          <h2 className="mt-4 text-2xl font-bold">{group.title}</h2>
+          <ul className="mt-6 space-y-4 text-white/65">{group.items.map((item: string, index: number) => <li key={index} className="border-t border-white/10 pt-4">{item}</li>)}</ul>
+        </div>)}
+      </section>}
 
       <footer id="contact" className="border-t border-white/10 bg-[#101018] px-5 py-20 md:px-10">
         <div className="mx-auto max-w-7xl">
