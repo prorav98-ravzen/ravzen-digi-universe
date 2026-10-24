@@ -634,3 +634,24 @@ a,
     display: none !important;
   }
 }
+
+/* Owner appearance controls must affect the rendered studio, including rem-based text. */
+.studio-home .text-fuchsia-300, .studio-home .text-fuchsia-400 { color: var(--studio-accent); }
+.studio-home .border-fuchsia-400\/50 { border-color: var(--studio-accent); }
+.studio-home .bg-fuchsia-700\/15 { background-color: var(--studio-accent); opacity: .15; }
+.studio-home .text-xs { font-size: calc(.75rem * var(--studio-font-scale)); }
+.studio-home .text-sm { font-size: calc(.875rem * var(--studio-font-scale)); }
+.studio-home .text-base { font-size: calc(1rem * var(--studio-font-scale)); }
+.studio-home .text-lg { font-size: calc(1.125rem * var(--studio-font-scale)); }
+.studio-home .text-xl { font-size: calc(1.25rem * var(--studio-font-scale)); }
+.studio-home .text-4xl { font-size: calc(2.25rem * var(--studio-font-scale)); }
+.studio-home .text-5xl { font-size: calc(3rem * var(--studio-font-scale)); }
+@media (min-width: 768px) {
+ .studio-home .md\:text-lg { font-size: calc(1.125rem * var(--studio-font-scale)); }
+ .studio-home .md\:text-5xl { font-size: calc(3rem * var(--studio-font-scale)); }
+ .studio-home .md\:text-6xl { font-size: calc(3.75rem * var(--studio-font-scale)); }
+ .studio-home .md\:text-7xl { font-size: calc(4.5rem * var(--studio-font-scale)); }
+}
+@media (min-width: 1024px) {
+ .studio-home .lg\:text-8xl { font-size: calc(6rem * var(--studio-font-scale)); }
+}

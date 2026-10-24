@@ -31,7 +31,7 @@ export default async function HomePage() {
   const background = hex(settings.studio_background_color, '#090910')
   const fontScale = Math.max(80, Math.min(125, Number(settings.studio_font_scale) || 100))
   return (
-    <main className="min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, fontSize: `${fontScale}%`, ["--studio-accent" as string]: accent }}>
+    <main className="studio-home min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#090910]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5 md:px-10" aria-label="Main navigation">
           <a href="#home" className="text-base font-black tracking-[.2em]">RAVZEN<span className="text-fuchsia-400">.</span></a>
@@ -78,7 +78,7 @@ export default async function HomePage() {
         {projects.length ? (
           <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
             {projects.map(project => {
-              const images = [project.cover_image_url, ...(project.gallery_urls ?? [])].filter((x): x is string => Boolean(x))
+              const images = [...new Set([project.cover_image_url, ...(project.gallery_urls ?? [])].filter((x): x is string => Boolean(x)))]
               return (
                 <article key={project.id} className="overflow-hidden rounded-2xl border border-white/10 bg-[#15151e]">
                   <div className="relative aspect-[4/3] bg-[#242431]">
@@ -105,7 +105,7 @@ export default async function HomePage() {
       <footer id="contact" className="border-t border-white/10 bg-[#101018] px-5 py-20 md:px-10">
         <div className="mx-auto max-w-7xl">
           <p className="text-xs uppercase tracking-[.3em] text-fuchsia-300">Have a project in mind?</p>
-          <h2 className="mt-4 text-4xl font-black md:text-6xl">Let's make it memorable.</h2>
+          <h2 className="mt-4 text-4xl font-black md:text-6xl">Let&apos;s make it memorable.</h2>
           <div className="mt-8 flex flex-wrap gap-5 text-sm">
             {(settings.email_primary || SITE_CONFIG.email) && <a className="underline underline-offset-4" href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email the studio ↗</a>}
             {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a className="underline underline-offset-4" href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\D/g, '')}`}>WhatsApp ↗</a>}

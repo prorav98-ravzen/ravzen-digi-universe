@@ -38,9 +38,9 @@ export const metadata: Metadata = {
   description: SITE_CONFIG.description,
   metadataBase: new URL(SITE_CONFIG.url),
   keywords: [
-    'RAVZEN', 'digital universe', 'interactive portfolio', 'Android apps',
-    'software development', 'system development', 'UI/UX design', 'branding',
-    'Nigeria tech', 'custom software', 'mobile apps', 'web systems',
+    'RAVZEN', 'creative studio', 'graphic design', 'logo design',
+    'brand identity', 'packaging design', 'UI/UX design', 'branding',
+    'Sri Lanka', 'product advertising', 'social media design',
   ],
   authors: [{ name: 'RAVZEN', url: SITE_CONFIG.url }],
   creator: 'RAVZEN',
@@ -56,10 +56,10 @@ export const metadata: Metadata = {
     images: [
       {
         url:    SITE_CONFIG.ogImage,
-        width:  1200,
-        height: 630,
+        width:  1024,
+        height: 801,
         alt:    `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
-        type:   'image/jpeg',
+        type:   'image/png',
       },
     ],
   },

@@ -32,6 +32,7 @@ export default function SettingsManager({ settings }: Props) {
   const [values, setValues] = useState<Record<string, string>>(
     Object.fromEntries(initial.map((s) => [s.key, s.value]))
   )
+  const [baseline, setBaseline] = useState<Record<string, string>>(() => Object.fromEntries(initial.map(s => [s.key, s.value])))
   const [saving, setSaving] = useState(false)
   const [saved, setSaved]   = useState(false)
   const [saveError, setSaveError] = useState('')
@@ -40,25 +41,25 @@ export default function SettingsManager({ settings }: Props) {
     setSaving(true)
     setSaved(false)
     setSaveError('')
-    const updates = Object.entries(values).filter(
-      ([key, val]) => val !== initial.find((s) => s.key === key)?.value
-    )
-    for (const [key, value] of updates) {
-      const response = await fetch(`/api/admin/settings/${encodeURIComponent(key)}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ key, value }),
-      })
-      if (!response.ok) {
-        setSaveError(`Could not save ${key} (HTTP ${response.status})`)
-        setSaving(false)
-        return
+    const updates = Object.entries(values).filter(([key, val]) => val !== baseline[key])
+    try {
+      for (const [key, value] of updates) {
+        const response = await fetch(`/api/admin/settings/${encodeURIComponent(key)}`, {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ key, value }),
+        })
+        if (!response.ok) throw new Error(`Could not save ${key} (HTTP ${response.status})`)
+        setBaseline(previous => ({ ...previous, [key]: value }))
       }
+      setSaved(true)
+      setTimeout(() => setSaved(false), 2000)
+    } catch (error) {
+      setSaveError(error instanceof Error ? error.message : 'Could not save settings. Please try again.')
+    } finally {
+      setSaving(false)
     }
-    setSaving(false)
-    setSaved(true)
-    setTimeout(() => setSaved(false), 2000)
-  }, [values, initial])
+  }, [values, baseline])
 
   return (
     <div className="space-y-6 max-w-2xl">
@@ -67,7 +68,7 @@ export default function SettingsManager({ settings }: Props) {
       <div className="space-y-4">
         {initial.map((s) => (
           <div key={s.key} className="space-y-1.5">
-            <label className="block text-xs font-mono tracking-wider uppercase" style={{ color: 'rgba(248,250,255,0.5)' }}>
+            <label htmlFor={`setting-${s.key}`} className="block text-xs font-mono tracking-wider uppercase" style={{ color: 'rgba(248,250,255,0.5)' }}>
               {s.key.replace(/_/g, ' ')}
               {s.key === 'activity_multiplier' && (
                 <span className="ml-2" style={{ color: 'rgba(255,184,0,0.7)' }}>
@@ -79,6 +80,7 @@ export default function SettingsManager({ settings }: Props) {
               <p className="text-[10px]" style={{ color: 'rgba(248,250,255,0.3)' }}>{s.description}</p>
             )}
             <input
+              id={`setting-${s.key}`}
               type="text"
               value={values[s.key] ?? ''}
               onChange={(e) => setValues((v) => ({ ...v, [s.key]: e.target.value }))}

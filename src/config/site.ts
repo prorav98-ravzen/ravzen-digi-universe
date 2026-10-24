@@ -13,7 +13,7 @@ export const SITE_CONFIG = {
   url:          process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ravzen-digi-universe.vercel.app',
   locale:       'en',
   themeColor:   '#03040a',
-  ogImage:      '/images/og-image.jpg',
+  ogImage:      '/images/ravzen-logo.png',
   twitterHandle:'@ravzen',
 
   // Contact — override via environment or DB settings in later phases
