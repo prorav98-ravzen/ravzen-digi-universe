@@ -14,6 +14,7 @@ export default function ArtworkReviews({ artworkId }: { artworkId:string }) {
   const [body,setBody] = useState('')
   const [otp,setOtp] = useState('')
   const [verified,setVerified] = useState(false)
+  const [consent,setConsent] = useState(false)
   const [message,setMessage] = useState('')
   const [busy,setBusy] = useState(false)
   const load = useCallback(async () => {
@@ -35,7 +36,7 @@ export default function ArtworkReviews({ artworkId }: { artworkId:string }) {
     setBusy(false)
   }
   async function submit(e:React.FormEvent) {
-    e.preventDefault(); setBusy(true); setMessage('')
+    e.preventDefault(); if (!consent || !verified) return; setBusy(true); setMessage('')
     try {
       const response = await fetch('/api/reviews',{ method:'POST', headers:{'Content-Type':'application/json'}, body:JSON.stringify({artworkId,name,phone,rating,body}) })
       const result = await response.json()
@@ -61,7 +62,8 @@ export default function ArtworkReviews({ artworkId }: { artworkId:string }) {
       {!verified && <div className="flex flex-wrap gap-2"><button type="button" disabled={busy} onClick={sendCode} className="rounded-lg bg-fuchsia-700 px-4 py-2">Email verification code</button><input aria-label="Verification code" value={otp} onChange={e=>setOtp(e.target.value)} placeholder="6-digit code" className="min-w-0 flex-1 rounded-lg bg-white/10 p-2" /><button type="button" disabled={busy||!otp} onClick={verify} className="rounded-lg bg-white/20 px-4 py-2">Verify</button></div>}
       {verified && <><label className="block">Rating <select aria-label="Rating" value={rating} onChange={e=>setRating(Number(e.target.value))} className="ml-3 rounded bg-[#242431] p-2">{[5,4,3,2,1].map(n=><option key={n} value={n}>{n} stars</option>)}</select></label>
       <textarea aria-label="Review" required minLength={10} maxLength={2000} value={body} onChange={e=>setBody(e.target.value)} placeholder="Your review (10–2000 characters)" className="min-h-24 w-full rounded-lg bg-white/10 p-3"/>
-      <button disabled={busy||!name.trim()||body.trim().length<10} className="rounded-lg bg-fuchsia-600 px-5 py-3 font-bold disabled:opacity-50">Submit for approval</button></>}
+      <label className="block text-xs text-white/60"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)} required className="mr-2"/>I agree to publish my name, rating and review after moderation.</label>
+      <button disabled={busy||!consent||!name.trim()||body.trim().length<10} className="rounded-lg bg-fuchsia-600 px-5 py-3 font-bold disabled:opacity-50">Submit for approval</button></>}
       {message && <p role="status" className="text-fuchsia-200">{message}</p>}
       <p className="text-xs text-white/40">Your name, rating and review may be published after moderation. Your email and phone remain private.</p>
     </form>
