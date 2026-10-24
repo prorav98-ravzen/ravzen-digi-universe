@@ -1,0 +1,47 @@
+import { NextRequest, NextResponse } from 'next/server'
+import { z } from 'zod'
+import { createClient } from '@/lib/supabase/server'
+import { getAdminClient } from '@/lib/supabase/admin'
+
+export const dynamic = 'force-dynamic'
+const schema = z.object({
+  artworkId: z.string().uuid(), name: z.string().trim().min(2).max(100),
+  phone: z.string().trim().max(25).optional(), rating: z.number().int().min(1).max(5),
+  body: z.string().trim().min(10).max(2000)
+})
+const safeFields = 'id,artwork_id,reviewer_name,rating,body,admin_reply,verified_client,created_at'
+
+export async function GET(req: NextRequest) {
+  const id = req.nextUrl.searchParams.get('artworkId')
+  if (!id || !z.string().uuid().safeParse(id).success) return NextResponse.json({ error: 'Invalid artwork' }, { status: 400 })
+  const db = getAdminClient()
+  const { data, error } = await db.from('artwork_reviews').select(safeFields)
+    .eq('artwork_id', id).eq('status', 'approved').order('created_at', { ascending: false }).limit(100)
+  if (error) return NextResponse.json({ error: 'Unable to load reviews' }, { status: 500 })
+  return NextResponse.json({ reviews: data ?? [] }, { headers: { 'Cache-Control': 'no-store' } })
+}
+
+export async function POST(req: NextRequest) {
+  const origin = req.headers.get('origin')
+  if (origin && origin !== req.nextUrl.origin) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
+  const supabase = await createClient()
+  const { data: { user }, error: authError } = await supabase.auth.getUser()
+  if (authError || !user || !user.email || !user.email_confirmed_at || user.is_anonymous)
+    return NextResponse.json({ error: 'Verify your email before submitting a review.' }, { status: 401 })
+  let json: unknown
+  try { json = await req.json() } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
+  const parsed = schema.safeParse(json)
+  if (!parsed.success) return NextResponse.json({ error: 'Invalid review details' }, { status: 400 })
+  const input = parsed.data
+  const db = getAdminClient()
+  const { data: artwork } = await db.from('design_projects').select('id').eq('id', input.artworkId).eq('status', 'published').maybeSingle()
+  if (!artwork) return NextResponse.json({ error: 'Artwork unavailable' }, { status: 404 })
+  const { error } = await db.from('artwork_reviews').insert({
+    artwork_id: input.artworkId, reviewer_id: user.id, reviewer_email: user.email,
+    reviewer_name: input.name, reviewer_phone: input.phone || null, rating: input.rating,
+    body: input.body, status: 'pending'
+  })
+  if (error?.code === '23505') return NextResponse.json({ error: 'You have already reviewed this artwork.' }, { status: 409 })
+  if (error) return NextResponse.json({ error: 'Unable to submit review' }, { status: 500 })
+  return NextResponse.json({ message: 'Review submitted for moderation.' }, { status: 201 })
+}
