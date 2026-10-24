@@ -25,8 +25,14 @@ export default function ArtworkReviews({ artworkId, imageIndex = 0 }: { artworkI
     if (!name.trim() || !email.includes('@')) { setMessage('Enter your name and valid email first.'); return }
     setBusy(true); setMessage('')
     const {error} = await supabase.auth.signInWithOtp({ email:email.trim(), options:{ shouldCreateUser:true } })
-    setMessage(error ? error.message : 'Check your email for the verification code.')
+    setMessage(error ? error.message : 'Check your email for a verification link or code. After opening a link, return here and press Check verification.')
     setBusy(false)
+  }
+  async function checkVerification() {
+    const {data} = await supabase.auth.getUser()
+    const ok = Boolean(data.user?.email_confirmed_at && !data.user?.is_anonymous && data.user?.email?.toLowerCase() === email.trim().toLowerCase())
+    setVerified(ok)
+    setMessage(ok ? 'Email verified.' : 'Not verified yet. Open the email link or enter the code.')
   }
   async function verify() {
     setBusy(true)
@@ -59,7 +65,7 @@ export default function ArtworkReviews({ artworkId, imageIndex = 0 }: { artworkI
       <input aria-label="Full name" required minLength={2} maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="Full name *" className="w-full rounded-lg bg-white/10 p-3" />
       <input aria-label="Email" required type="email" value={email} disabled={verified} onChange={e=>setEmail(e.target.value)} placeholder="Email *" className="w-full rounded-lg bg-white/10 p-3" />
       <input aria-label="Phone (optional)" value={phone} onChange={e=>setPhone(e.target.value)} maxLength={25} placeholder="Phone (optional, private)" className="w-full rounded-lg bg-white/10 p-3" />
-      {!verified && <div className="flex flex-wrap gap-2"><button type="button" disabled={busy} onClick={sendCode} className="rounded-lg bg-fuchsia-700 px-4 py-2">Email verification code</button><input aria-label="Verification code" value={otp} onChange={e=>setOtp(e.target.value)} placeholder="6-digit code" className="min-w-0 flex-1 rounded-lg bg-white/10 p-2" /><button type="button" disabled={busy||!otp} onClick={verify} className="rounded-lg bg-white/20 px-4 py-2">Verify</button></div>}
+      {!verified && <div className="flex flex-wrap gap-2"><button type="button" disabled={busy} onClick={sendCode} className="rounded-lg bg-fuchsia-700 px-4 py-2">Email verification code</button><input aria-label="Verification code" value={otp} onChange={e=>setOtp(e.target.value)} placeholder="6-digit code" className="min-w-0 flex-1 rounded-lg bg-white/10 p-2" /><button type="button" disabled={busy||!otp} onClick={verify} className="rounded-lg bg-white/20 px-4 py-2">Verify code</button><button type="button" disabled={busy} onClick={()=>void checkVerification()} className="rounded-lg bg-white/10 px-4 py-2">Check verification</button></div>}
       {verified && <><label className="block">Rating <select aria-label="Rating" value={rating} onChange={e=>setRating(Number(e.target.value))} className="ml-3 rounded bg-[#242431] p-2">{[5,4,3,2,1].map(n=><option key={n} value={n}>{n} stars</option>)}</select></label>
       <textarea aria-label="Review" required minLength={10} maxLength={2000} value={body} onChange={e=>setBody(e.target.value)} placeholder="Your review (10–2000 characters)" className="min-h-24 w-full rounded-lg bg-white/10 p-3"/>
       <label className="block text-xs text-white/60"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)} required className="mr-2"/>I agree to publish my name, rating and review after moderation.</label>
