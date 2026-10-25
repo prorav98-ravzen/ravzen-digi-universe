@@ -4,6 +4,7 @@ import { SITE_CONFIG } from '@/config/site'
 import Image from 'next/image'
 import GalleryFeedback from '@/components/reviews/GalleryFeedback'
 import VisitorCounters from '@/components/analytics/VisitorCounters'
+import ShareArtwork from '@/components/portfolio/ShareArtwork'
 
 export const metadata: Metadata = {
   title: 'RAVZEN — Premium Creative Studio',
@@ -105,7 +106,7 @@ export default async function HomePage() {
             {projects.map(project => {
               const images = [...new Set([project.cover_image_url, ...(project.gallery_urls ?? [])].filter((x): x is string => Boolean(x)))]
               return (
-                <article key={project.id} className="overflow-hidden rounded-2xl border border-white/10 bg-[#15151e]">
+                <article key={project.id} id={`artwork-${project.id}`} className="scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-[#15151e]">
                   <div className="relative aspect-[4/3] bg-[#242431]">
                     {images[0] && <Image src={images[0]} alt={project.title} fill unoptimized className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />}
                   </div>
@@ -114,6 +115,7 @@ export default async function HomePage() {
                     <h3 className="mt-2 text-xl font-bold">{project.title}</h3>
                     {project.short_description && <p className="mt-3 text-sm leading-6 text-white/55">{project.short_description}</p>}
                     {project.price !== null && <p className="mt-4 text-sm font-semibold text-white/80">{project.currency ?? 'LKR'} {Number(project.price).toLocaleString('en-LK')}</p>}
+                    <ShareArtwork artworkId={project.id} title={project.title} />
                     <GalleryFeedback artworkId={project.id} title={project.title} images={images} />
                   </div>
                 </article>
