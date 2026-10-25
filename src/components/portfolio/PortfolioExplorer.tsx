@@ -32,7 +32,7 @@ export default function PortfolioExplorer({projects,whatsapp}:{projects:Project[
   }
   const selected=projects.filter(p=>favorites.includes(p.id))
   const phone=whatsapp.replace(/\D/g,'')
-  const moodboardText='Hello RAVZEN! I like these portfolio projects and would like to discuss a design:\n'+selected.map((p,i)=>(i+1)+'. '+p.title+' — '+location.origin+'/projects/'+encodeURIComponent(p.slug)).join('\n')
+  const moodboardText='Hello RAVZEN! I like these portfolio projects and would like to discuss a design:\n'+selected.map((p,i)=>(i+1)+'. '+p.title+' — '+'https://ravzen-digi-universe.vercel.app/projects/'+encodeURIComponent(p.slug)).join('\n')
   return <div>
     <div className="mb-8 rounded-2xl border border-fuchsia-400/20 bg-white/[.035] p-4 sm:p-6">
       <div className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
