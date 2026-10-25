@@ -6,7 +6,22 @@ import { useEffect } from 'react'
 export default function StudioMotion() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('.studio-home')
-    if (!root || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
+    if (!root) return
+    const progress = document.createElement('div')
+    progress.className = 'studio-scroll-progress'
+    progress.setAttribute('aria-hidden', 'true')
+    document.body.appendChild(progress)
+    let raf = 0
+    const updateProgress = () => {
+      raf = 0
+      const max = document.documentElement.scrollHeight - window.innerHeight
+      progress.style.transform = `scaleX(${max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0})`
+    }
+    const onScroll = () => { if (!raf) raf = window.requestAnimationFrame(updateProgress) }
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll, { passive: true })
+    updateProgress()
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); window.cancelAnimationFrame(raf); progress.remove() }
 
     const items = Array.from(root.querySelectorAll<HTMLElement>('[data-studio-reveal]'))
     const observer = 'IntersectionObserver' in window
@@ -37,7 +52,7 @@ export default function StudioMotion() {
       return () => card.removeEventListener('pointermove', move)
     })
 
-    return () => { observer?.disconnect(); cleanups.forEach(cleanup => cleanup()) }
+    return () => { observer?.disconnect(); cleanups.forEach(cleanup => cleanup()); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); window.cancelAnimationFrame(raf); progress.remove() }
   }, [])
   return null
 }
