@@ -31,6 +31,20 @@ export default function CredentialsSection() {
           <h3 className="mt-4 text-lg font-bold">{item.title}</h3><p className="mt-3 text-sm leading-7 text-white/60">{item.description}</p>
         </article>)}
       </div>
+      <div className="mt-12 rounded-2xl border border-white/10 bg-[#15151e] p-7 md:p-9">
+        <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Academic foundation</p>
+        <h3 className="mt-3 text-2xl font-bold">General Education Qualifications</h3>
+        <div className="mt-6 grid gap-5 md:grid-cols-3">
+          {[
+            { title: 'Grade 5 Scholarship Examination', description: 'Successfully passed the Sri Lankan Grade 5 Scholarship Examination.' },
+            { title: 'G.C.E. Ordinary Level (O/L)', description: 'Successfully completed the General Certificate of Education Ordinary Level Examination with excellent results.' },
+            { title: 'G.C.E. Advanced Level (A/L) — Commerce', description: 'Successfully passed the General Certificate of Education Advanced Level Examination in the Commerce stream.' },
+          ].map(item => <div key={item.title} className="border-l border-fuchsia-400/50 pl-5">
+            <h4 className="font-semibold text-white/90">{item.title}</h4>
+            <p className="mt-2 text-sm leading-7 text-white/60">{item.description}</p>
+          </div>)}
+        </div>
+      </div>
       <div className="mt-10 rounded-2xl border border-fuchsia-400/20 bg-fuchsia-400/[.045] p-7 md:p-9">
         <p className="text-xs font-bold uppercase tracking-[.25em] text-fuchsia-300">The person behind RAVZEN</p>
         <p className="mt-4 max-w-4xl text-lg leading-9 text-white/80">More than a designer, the creator behind RAVZEN is a curious visual storyteller — equally drawn to the discipline of design, the possibilities of technology and the emotion of the written word. This blend of artistic sensitivity, hands-on learning and technical ambition shapes a studio focused on thoughtful, distinctive creative work.</p>
