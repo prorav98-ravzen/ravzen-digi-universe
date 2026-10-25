@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { SITE_CONFIG } from '@/config/site'
 import Image from 'next/image'
+import Link from 'next/link'
 import GalleryFeedback from '@/components/reviews/GalleryFeedback'
 import VisitorCounters from '@/components/analytics/VisitorCounters'
 import ShareArtwork from '@/components/portfolio/ShareArtwork'
@@ -127,6 +128,7 @@ export default async function HomePage() {
                     <h3 className="mt-2 text-xl font-bold">{project.title}</h3>
                     {project.short_description && <p className="mt-3 text-sm leading-6 text-white/55">{project.short_description}</p>}
                     {project.price !== null && <p className="mt-4 text-sm font-semibold text-white/80">{project.currency ?? 'LKR'} {Number(project.price).toLocaleString('en-LK')}</p>}
+                    <Link href={`/projects/${encodeURIComponent(project.slug)}`} className="mt-5 inline-flex rounded-full border border-fuchsia-400/35 px-4 py-2 text-xs font-semibold text-fuchsia-200 transition hover:border-fuchsia-300 hover:bg-fuchsia-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">View project details ↗</Link>
                     <ShareArtwork artworkId={project.id} title={project.title} />
                     <GalleryFeedback artworkId={project.id} title={project.title} images={images} />
                   </div>
