@@ -47,7 +47,7 @@ export default function GalleryFeedback({ artworkId, title, images }: { artworkI
       <button type="button" onClick={()=>setSelected(0)} aria-pressed={selected===0}
         className={'rounded-full px-3 py-2 text-xs '+(selected===0?'bg-fuchsia-700 text-white':'bg-white/10 text-white/70')}>Whole project reviews</button>
       {selected>0 && <span className="rounded-full bg-white/10 px-3 py-2 text-xs text-white/70">Reviewing image {selected}</span>}
-    </div>
+    </div>}
     {showReviews && <ArtworkReviews key={artworkId+'-'+selected} artworkId={artworkId} imageIndex={selected}/>}
     {mounted && open && images.length>0 && createPortal(<div role="dialog" aria-modal="true" aria-label={title+' full size gallery'}
       onTouchStart={event=>{touchStart.current=event.touches[0]?.clientX ?? null}} onTouchEnd={event=>{if(touchStart.current===null || images.length<2)return;const delta=(event.changedTouches[0]?.clientX ?? touchStart.current)-touchStart.current;touchStart.current=null;if(Math.abs(delta)>55){const next=(active+(delta<0?1:-1)+images.length)%images.length;setActive(next);setSelected(next+1)}}} className="fixed inset-0 z-[2147483647] flex flex-col items-center justify-center bg-[#050509] px-3 py-4 text-white" style={{ height: "100dvh", width: "100vw", touchAction: "pan-y" }}>
