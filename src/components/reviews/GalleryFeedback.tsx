@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import ArtworkReviews from './ArtworkReviews'
 
@@ -7,17 +7,23 @@ export default function GalleryFeedback({ artworkId, title, images }: { artworkI
   const [selected,setSelected] = useState(0)
   const [open,setOpen] = useState(false)
   const [active,setActive] = useState(0)
+  const touchStart = useRef<number | null>(null)
+  const closeButton = useRef<HTMLButtonElement>(null)
+  const opener = useRef<HTMLElement | null>(null)
   useEffect(() => {
     if (!open) return
+    const previousOverflow = document.body.style.overflow
+    document.body.style.overflow = 'hidden'
+    closeButton.current?.focus()
     const onKey = (event:KeyboardEvent) => {
       if (event.key==='Escape') setOpen(false)
       if (event.key==='ArrowRight') setActive(v=>(v+1)%images.length)
       if (event.key==='ArrowLeft') setActive(v=>(v-1+images.length)%images.length)
     }
     document.addEventListener('keydown',onKey)
-    return ()=>document.removeEventListener('keydown',onKey)
+    return ()=>{document.removeEventListener('keydown',onKey);document.body.style.overflow=previousOverflow;opener.current?.focus()}
   },[open,images.length])
-  const show=(index:number)=>{setActive(index);setSelected(index+1);setOpen(true)}
+  const show=(index:number)=>{opener.current=document.activeElement as HTMLElement;setActive(index);setSelected(index+1);setOpen(true)}
   return <div className="mt-5">
     {images.length>0 && <button type="button" onClick={()=>show(0)}
       className="relative mb-3 block aspect-video w-full overflow-hidden rounded-xl bg-white/10"
@@ -39,10 +45,10 @@ export default function GalleryFeedback({ artworkId, title, images }: { artworkI
     </div>
     <ArtworkReviews key={artworkId+'-'+selected} artworkId={artworkId} imageIndex={selected}/>
     {open && images.length>0 && <div role="dialog" aria-modal="true" aria-label={title+' full size gallery'}
-      className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 p-3 text-white">
+      onTouchStart={event=>{touchStart.current=event.touches[0]?.clientX ?? null}} onTouchEnd={event=>{if(touchStart.current===null || images.length<2)return;const delta=(event.changedTouches[0]?.clientX ?? touchStart.current)-touchStart.current;touchStart.current=null;if(Math.abs(delta)>55){const next=(active+(delta<0?1:-1)+images.length)%images.length;setActive(next);setSelected(next+1)}}} className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 p-3 text-white">
       <div className="absolute left-3 right-3 top-3 z-10 flex items-center justify-between">
         <span className="rounded bg-black/70 px-3 py-2 text-sm">{active+1} / {images.length}</span>
-        <button type="button" onClick={()=>setOpen(false)} aria-label="Close gallery" className="rounded-lg bg-white/20 px-4 py-3 text-lg">✕</button>
+        <button ref={closeButton} type="button" onClick={()=>setOpen(false)} aria-label="Close gallery" className="rounded-lg bg-white/20 px-4 py-3 text-lg">✕</button>
       </div>
       <div className="relative h-[78vh] w-full max-w-6xl">
         <Image src={images[active]} alt={title+' full size image '+(active+1)} fill unoptimized className="object-contain" sizes="100vw"/>
