@@ -40,16 +40,40 @@ export default function StudioMotion() {
       else item.classList.add('studio-revealed')
     })
 
-    const cards = Array.from(root.querySelectorAll<HTMLElement>('.studio-glow-card'))
+    const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const cards = finePointer ? Array.from(root.querySelectorAll<HTMLElement>('.studio-glow-card')) : []
     const cleanups = cards.map(card => {
-      const move = (event: PointerEvent) => {
-        if (event.pointerType === 'touch') return
-        const rect = card.getBoundingClientRect()
-        card.style.setProperty('--glow-x', `${event.clientX - rect.left}px`)
-        card.style.setProperty('--glow-y', `${event.clientY - rect.top}px`)
+      let pointerFrame = 0
+      let x = 50
+      let y = 50
+      const render = () => {
+        pointerFrame = 0
+        card.style.setProperty('--glow-x', x + '%')
+        card.style.setProperty('--glow-y', y + '%')
+        card.style.setProperty('--magnet-x', ((x - 50) / 50 * 4).toFixed(2) + 'px')
+        card.style.setProperty('--magnet-y', ((y - 50) / 50 * 4).toFixed(2) + 'px')
       }
+      const move = (event: PointerEvent) => {
+        const rect = card.getBoundingClientRect()
+        x = Math.max(0, Math.min(100, (event.clientX - rect.left) / rect.width * 100))
+        y = Math.max(0, Math.min(100, (event.clientY - rect.top) / rect.height * 100))
+        if (!pointerFrame) pointerFrame = window.requestAnimationFrame(render)
+      }
+      const enter = () => card.classList.add('studio-glow-active')
+      const leave = () => {
+        card.classList.remove('studio-glow-active')
+        card.style.removeProperty('--magnet-x')
+        card.style.removeProperty('--magnet-y')
+      }
+      card.addEventListener('pointerenter', enter)
       card.addEventListener('pointermove', move, { passive: true })
-      return () => card.removeEventListener('pointermove', move)
+      card.addEventListener('pointerleave', leave)
+      return () => {
+        window.cancelAnimationFrame(pointerFrame)
+        card.removeEventListener('pointerenter', enter)
+        card.removeEventListener('pointermove', move)
+        card.removeEventListener('pointerleave', leave)
+      }
     })
 
     return () => { observer?.disconnect(); cleanups.forEach(cleanup => cleanup()); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); window.cancelAnimationFrame(raf); progress.remove() }
