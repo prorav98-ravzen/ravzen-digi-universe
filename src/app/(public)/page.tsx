@@ -2,10 +2,10 @@ import type { Metadata } from 'next'
 import { createClient } from '@/lib/supabase/server'
 import { SITE_CONFIG } from '@/config/site'
 import Image from 'next/image'
-import Link from 'next/link'
-import GalleryFeedback from '@/components/reviews/GalleryFeedback'
+import PortfolioExplorer from '@/components/portfolio/PortfolioExplorer'
 import VisitorCounters from '@/components/analytics/VisitorCounters'
-import ShareArtwork from '@/components/portfolio/ShareArtwork'
+import ProjectInquiry from '@/components/portfolio/ProjectInquiry'
+import StudioFAQ from '@/components/portfolio/StudioFAQ'
 import CredentialsSection from '@/components/portfolio/CredentialsSection'
 import StudioMotion from '@/components/portfolio/StudioMotion'
 
@@ -65,6 +65,7 @@ export default async function HomePage() {
             <a className="whitespace-nowrap hover:text-white" href="#work">Work</a>
             <a className="whitespace-nowrap hover:text-white" href="#services">Services</a>
             <a className="whitespace-nowrap hover:text-white" href="#credentials">Credentials</a>
+            <a className="whitespace-nowrap hover:text-white" href="#faq">FAQ</a>
             <a className="whitespace-nowrap hover:text-white" href="#contact">Contact</a>
           </div>
         </nav>
@@ -81,7 +82,7 @@ export default async function HomePage() {
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
           <a href="#work" className="rounded-full bg-white px-7 py-3 text-sm font-bold text-black hover:bg-fuchsia-100">Explore the work ↗</a>
-          <a href="#contact" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-fuchsia-400">Start a project</a>
+          <a href="#inquiry" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-fuchsia-400">Start a project</a>
         </div>
       </section>
 
@@ -114,29 +115,7 @@ export default async function HomePage() {
           <h2 className="text-4xl font-black md:text-5xl">The portfolio<span className="text-fuchsia-400">.</span></h2>
           <p className="text-sm text-white/50">{projects.length} published projects</p>
         </div>
-        {projects.length ? (
-          <div className="grid gap-7 md:grid-cols-2 lg:grid-cols-3">
-            {projects.map(project => {
-              const images = [...new Set([project.cover_image_url, ...(project.gallery_urls ?? [])].filter((x): x is string => Boolean(x)))]
-              return (
-                <article key={project.id} id={`artwork-${project.id}`} data-studio-reveal className="studio-glow-card scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-[#15151e]">
-                  <div className="relative aspect-[4/3] bg-[#242431]">
-                    {images[0] && <Image src={images[0]} alt={project.title} fill unoptimized className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />}
-                  </div>
-                  <div className="p-6">
-                    <p className="text-xs uppercase tracking-widest text-fuchsia-300">{project.category?.name ?? 'Creative design'}</p>
-                    <h3 className="mt-2 text-xl font-bold">{project.title}</h3>
-                    {project.short_description && <p className="mt-3 text-sm leading-6 text-white/55">{project.short_description}</p>}
-                    {project.price !== null && <p className="mt-4 text-sm font-semibold text-white/80">{project.currency ?? 'LKR'} {Number(project.price).toLocaleString('en-LK')}</p>}
-                    <Link href={`/projects/${encodeURIComponent(project.slug)}`} className="mt-5 inline-flex rounded-full border border-fuchsia-400/35 px-4 py-2 text-xs font-semibold text-fuchsia-200 transition hover:border-fuchsia-300 hover:bg-fuchsia-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">View project details ↗</Link>
-                    <ShareArtwork artworkId={project.id} title={project.title} />
-                    <GalleryFeedback artworkId={project.id} title={project.title} images={images} />
-                  </div>
-                </article>
-              )
-            })}
-          </div>
-        ) : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
+        {projects.length ? <PortfolioExplorer projects={projects} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
 
       <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
@@ -152,8 +131,8 @@ export default async function HomePage() {
 
       <CredentialsSection />
 
-      {reviews.length > 0 && <section aria-labelledby="feedback-title" className="mx-auto max-w-7xl px-5 pb-24 md:px-10">
-        <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Client feedback</p>
+      {reviews.length > 0 && <section id="testimonials" aria-labelledby="feedback-title" className="mx-auto max-w-7xl px-5 pb-24 md:px-10">
+        <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Featured client testimonials</p>
         <h2 id="feedback-title" className="mt-4 text-4xl font-black">In their words.</h2>
         <div className="mt-10 grid gap-6 md:grid-cols-3">{reviews.map((review, index) => <figure key={index} className="rounded-2xl border border-white/10 bg-white/[.025] p-7">
           {Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5 && <p aria-label={`${review.rating} out of 5 stars`} className="text-fuchsia-300">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>}
@@ -169,6 +148,9 @@ export default async function HomePage() {
           <ul className="mt-6 space-y-4 text-white/65">{group.items.map((item: string, index: number) => <li key={index} className="border-t border-white/10 pt-4">{item}</li>)}</ul>
         </div>)}
       </section>}
+
+      <StudioFAQ />
+      <ProjectInquiry whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ""} email={settings.email_primary || SITE_CONFIG.email || ""} />
 
       <div className="studio-contact-dock" aria-label="Quick contact">
         <details className="studio-contact-menu">
