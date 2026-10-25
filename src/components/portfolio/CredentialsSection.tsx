@@ -1,5 +1,6 @@
 type Credential = { year: string; title: string; description: string; tag: string }
 const credentials: Credential[] = [
+  { year: '2016', title: 'Beginning of a Creative Career', description: 'Entered the graphic design industry in 2016, beginning a professional journey shaped by hands-on practice, independent learning and a passion for visual communication.', tag: 'Career milestone' },
   { year: '2018', title: 'International Creative Recognition', description: 'Placed among the top three in a Creative Photo Manipulation competition organized by a private graphic design academy in France.', tag: 'International recognition' },
   { year: '2019', title: 'Advanced Graphic & Vector Design — Dansky', description: 'Completed an online advanced graphics and vector design program with a High Pass distinction.', tag: 'Professional training' },
   { year: '2019–2021', title: 'Advanced Raster & Vector Design Studies', description: 'Developed advanced proficiency in photo manipulation, raster graphics and vector illustration through intensive independent study.', tag: 'Self-directed expertise' },
