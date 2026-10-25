@@ -28,6 +28,10 @@ export default async function HomePage() {
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false })
   const projects = error ? [] : (data ?? []) as unknown as Project[]
+  const { data: approvedRatings } = await supabase.from('artwork_reviews').select('rating').eq('status', 'approved')
+  const ratings = (approvedRatings ?? []).map(row => Number(row.rating)).filter(rating => Number.isFinite(rating) && rating >= 1 && rating <= 5)
+  const averageRating = ratings.length ? ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length : null
+
   const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', ['studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary','social_instagram','social_fiverr','social_facebook','studio_completed_projects','studio_experience_years','studio_client_count','studio_upcoming_projects','studio_upcoming_features', ...[1, 2, 3].flatMap(i => [`studio_review_${i}_name`, `studio_review_${i}_quote`, `studio_review_${i}_rating`])])
   const settings = Object.fromEntries((settingRows ?? []).map(row => [row.key, row.value]))
   const hex = (value: string | undefined, fallback: string) => value && /^#[0-9a-fA-F]{6}$/.test(value) ? value : fallback
@@ -85,6 +89,20 @@ export default async function HomePage() {
       </section>}
 
       <VisitorCounters />
+      <section aria-label="Overall client rating" className="mx-auto max-w-7xl px-5 pb-12 md:px-10">
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-fuchsia-400/20 bg-white/[.035] px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[.25em] text-fuchsia-300">Overall client rating</p>
+            <p className="mt-2 text-sm text-white/55">{ratings.length ? `Based on ${ratings.length} approved ${ratings.length === 1 ? 'review' : 'reviews'}` : 'No approved ratings yet'}</p>
+          </div>
+          {averageRating !== null ? <div className="flex flex-col items-center gap-1 sm:items-end">
+            <p className="text-3xl font-black tabular-nums text-white">{averageRating.toFixed(1)} <span className="text-lg font-semibold text-white/50">/ 5.0</span></p>
+            <div className="flex gap-1" role="img" aria-label={`${averageRating.toFixed(1)} out of 5 stars`}>
+              {[1, 2, 3, 4, 5].map(star => <span key={star} className="relative inline-block text-2xl leading-none text-white/20" aria-hidden="true">★<span className="absolute inset-0 overflow-hidden text-amber-400" style={{ width: `${Math.max(0, Math.min(1, averageRating - star + 1)) * 100}%` }}>★</span></span>)}
+            </div>
+          </div> : <p className="text-sm text-white/50">Ratings will appear after reviews are approved.</p>}
+        </div>
+      </section>
 
       <section id="work" className="mx-auto max-w-7xl px-5 py-24 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Selected work</p>
