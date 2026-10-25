@@ -151,7 +151,13 @@ export default async function HomePage() {
             {(settings.email_primary || SITE_CONFIG.email) && <a className="underline underline-offset-4" href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email the studio ↗</a>}
             {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a className="underline underline-offset-4" href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\D/g, '')}`}>WhatsApp ↗</a>}
           </div>
-          <p className="mt-16 text-xs text-white/40">© {new Date().getFullYear()} RAVZEN Creative Studio. All rights reserved.</p>
+          <div className="mt-16 flex flex-col items-center gap-3 border-t border-white/10 pt-9 text-center">
+            <Image src="/images/ravzen-logo.png" alt="RAVZEN studio logo" width={46} height={46} className="h-12 w-12 object-contain" />
+            <p className="text-sm font-bold tracking-[.16em] text-white/90">RAVZEN CREATIVE STUDIO</p>
+            <p className="text-xs text-white/55">Crafted with passion. Powered by creativity.</p>
+            <p className="text-xs text-white/55">Designed, Developed &amp; Deployed by <span className="font-semibold text-fuchsia-300">Ravindu Zekara</span></p>
+            <p className="text-[11px] text-white/35">A RAVZEN Professional Creation · © {new Date().getFullYear()} · All rights reserved.</p>
+          </div>
         </div>
       </footer>
     </main>
