@@ -6,6 +6,7 @@ import PortfolioExplorer from '@/components/portfolio/PortfolioExplorer'
 import VisitorCounters from '@/components/analytics/VisitorCounters'
 import ProjectInquiry from '@/components/portfolio/ProjectInquiry'
 import StudioFAQ from '@/components/portfolio/StudioFAQ'
+import ClientStories, { type ClientStory } from '@/components/portfolio/ClientStories'
 import CredentialsSection from '@/components/portfolio/CredentialsSection'
 import StudioMotion from '@/components/portfolio/StudioMotion'
 
@@ -33,6 +34,25 @@ export default async function HomePage() {
   const { data: approvedRatings } = await supabase.from('artwork_reviews').select('rating').eq('status', 'approved')
   const ratings = (approvedRatings ?? []).map(row => Number(row.rating)).filter(rating => Number.isFinite(rating) && rating >= 1 && rating <= 5)
   const averageRating = ratings.length ? ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length : null
+
+  const { data: approvedStories } = await supabase.from('artwork_reviews')
+    .select('id,reviewer_name,rating,body,admin_reply,verified_client,created_at,artwork_id')
+    .eq('status', 'approved')
+    .order('created_at', { ascending: false })
+    .limit(18)
+  const projectById = new Map(projects.map(project => [project.id, project]))
+  const clientStories: ClientStory[] = (approvedStories ?? [])
+    .filter(review => typeof review.body === 'string' && review.body.trim().length > 0)
+    .map(review => {
+      const related = projectById.get(review.artwork_id)
+      return {
+        id: review.id, name: review.reviewer_name || 'Client',
+        quote: review.body, rating: Number(review.rating) || 5,
+        verified: review.verified_client === true,
+        projectTitle: related?.title ?? null, projectSlug: related?.slug ?? null,
+        adminReply: review.admin_reply ?? null, date: review.created_at ?? null,
+      }
+    })
 
   const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', ['studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary','social_instagram','social_fiverr','social_facebook','studio_completed_projects','studio_experience_years','studio_client_count','studio_upcoming_projects','studio_upcoming_features', ...[1, 2, 3].flatMap(i => [`studio_review_${i}_name`, `studio_review_${i}_quote`, `studio_review_${i}_rating`])])
   const settings = Object.fromEntries((settingRows ?? []).map(row => [row.key, row.value]))
@@ -109,6 +129,8 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <ClientStories stories={clientStories} />
+
       <section id="work" data-studio-reveal className="mx-auto max-w-7xl px-5 py-24 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Selected work</p>
         <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
@@ -131,15 +153,6 @@ export default async function HomePage() {
 
       <CredentialsSection />
 
-      {reviews.length > 0 && <section id="testimonials" aria-labelledby="feedback-title" className="mx-auto max-w-7xl px-5 pb-24 md:px-10">
-        <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Featured client testimonials</p>
-        <h2 id="feedback-title" className="mt-4 text-4xl font-black">In their words.</h2>
-        <div className="mt-10 grid gap-6 md:grid-cols-3">{reviews.map((review, index) => <figure key={index} className="rounded-2xl border border-white/10 bg-white/[.025] p-7">
-          {Number.isInteger(review.rating) && review.rating >= 1 && review.rating <= 5 && <p aria-label={`${review.rating} out of 5 stars`} className="text-fuchsia-300">{'★'.repeat(review.rating)}{'☆'.repeat(5 - review.rating)}</p>}
-          <blockquote className="mt-4 whitespace-pre-line text-base leading-8 text-white/80">{review.quote}</blockquote>
-          <figcaption className="mt-6 text-sm font-bold">{review.name}</figcaption>
-        </figure>)}</div>
-      </section>}
 
       {upcoming.length > 0 && <section aria-label="What's next" className="mx-auto grid max-w-7xl gap-7 px-5 pb-24 md:grid-cols-2 md:px-10">
         {upcoming.map(group => <div key={group.title} className="rounded-2xl border border-white/10 p-8">
