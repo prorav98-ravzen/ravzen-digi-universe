@@ -5,6 +5,7 @@ import Image from 'next/image'
 import GalleryFeedback from '@/components/reviews/GalleryFeedback'
 import VisitorCounters from '@/components/analytics/VisitorCounters'
 import ShareArtwork from '@/components/portfolio/ShareArtwork'
+import CredentialsSection from '@/components/portfolio/CredentialsSection'
 
 export const metadata: Metadata = {
   title: 'RAVZEN — Premium Creative Studio',
@@ -55,6 +56,7 @@ export default async function HomePage() {
           <div className="flex items-center gap-5 text-xs font-semibold uppercase tracking-wider text-white/65 md:gap-8">
             <a className="hover:text-white" href="#work">Work</a>
             <a className="hover:text-white" href="#services">Services</a>
+            <a className="hover:text-white" href="#credentials">Credentials</a>
             <a className="hover:text-white" href="#contact">Contact</a>
           </div>
         </nav>
@@ -94,6 +96,8 @@ export default async function HomePage() {
           ))}
         </div>
       </section>
+
+      <CredentialsSection />
 
       <section id="work" className="mx-auto max-w-7xl px-5 py-24 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Selected work</p>
