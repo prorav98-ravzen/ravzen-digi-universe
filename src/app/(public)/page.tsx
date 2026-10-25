@@ -86,19 +86,6 @@ export default async function HomePage() {
 
       <VisitorCounters />
 
-      <section id="services" className="border-y border-white/10 bg-white/[.025]">
-        <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
-          {['Brand Identity & Logos', 'Packaging & Product Labels', 'Social & Marketing Design'].map((name, i) => (
-            <div key={name} className="border-l border-fuchsia-400/50 pl-5">
-              <span className="text-xs text-fuchsia-300">0{i + 1}</span>
-              <h2 className="mt-2 text-lg font-semibold">{name}</h2>
-            </div>
-          ))}
-        </div>
-      </section>
-
-      <CredentialsSection />
-
       <section id="work" className="mx-auto max-w-7xl px-5 py-24 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Selected work</p>
         <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
@@ -128,6 +115,19 @@ export default async function HomePage() {
           </div>
         ) : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
+
+      <section id="services" className="border-y border-white/10 bg-white/[.025]">
+        <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
+          {['Brand Identity & Logos', 'Packaging & Product Labels', 'Social & Marketing Design'].map((name, i) => (
+            <div key={name} className="border-l border-fuchsia-400/50 pl-5">
+              <span className="text-xs text-fuchsia-300">0{i + 1}</span>
+              <h2 className="mt-2 text-lg font-semibold">{name}</h2>
+            </div>
+          ))}
+        </div>
+      </section>
+
+      <CredentialsSection />
 
       {reviews.length > 0 && <section aria-labelledby="feedback-title" className="mx-auto max-w-7xl px-5 pb-24 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Client feedback</p>
