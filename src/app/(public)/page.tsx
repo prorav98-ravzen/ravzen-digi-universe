@@ -28,7 +28,7 @@ export default async function HomePage() {
     .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false })
   const projects = error ? [] : (data ?? []) as unknown as Project[]
-  const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', ['studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary','studio_completed_projects','studio_experience_years','studio_client_count','studio_upcoming_projects','studio_upcoming_features', ...[1, 2, 3].flatMap(i => [`studio_review_${i}_name`, `studio_review_${i}_quote`, `studio_review_${i}_rating`])])
+  const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', ['studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary','social_instagram','social_fiverr','social_facebook','studio_completed_projects','studio_experience_years','studio_client_count','studio_upcoming_projects','studio_upcoming_features', ...[1, 2, 3].flatMap(i => [`studio_review_${i}_name`, `studio_review_${i}_quote`, `studio_review_${i}_rating`])])
   const settings = Object.fromEntries((settingRows ?? []).map(row => [row.key, row.value]))
   const hex = (value: string | undefined, fallback: string) => value && /^#[0-9a-fA-F]{6}$/.test(value) ? value : fallback
   const accent = hex(settings.studio_accent_color, '#e879f9')
@@ -154,6 +154,18 @@ export default async function HomePage() {
           <div className="mt-8 flex flex-wrap gap-5 text-sm">
             {(settings.email_primary || SITE_CONFIG.email) && <a className="underline underline-offset-4" href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email the studio ↗</a>}
             {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a className="underline underline-offset-4" href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\D/g, '')}`}>WhatsApp ↗</a>}
+          </div>
+          <div className="mt-12">
+            <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Social &amp; Professional Profiles</p>
+            <div className="mt-5 flex flex-wrap gap-3">
+              {[
+                { label: 'Fiverr', url: settings.social_fiverr || 'https://www.fiverr.com/s/611ZzBB' },
+                { label: 'Instagram', url: settings.social_instagram || 'https://www.instagram.com/ravzen_graphic/' },
+                { label: 'Facebook', url: settings.social_facebook || 'https://www.facebook.com/share/1DmiMk4N5Q/' },
+              ].filter(link => /^https:\/\//i.test(link.url)).map(link => <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[.045] px-5 py-3 text-sm font-semibold text-white/85 transition hover:border-fuchsia-400 hover:bg-fuchsia-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">
+                <span aria-hidden="true" className="text-fuchsia-300">↗</span>{link.label}
+              </a>)}
+            </div>
           </div>
           <div className="mt-16 flex flex-col items-center gap-3 border-t border-white/10 pt-9 text-center">
             <Image src="/images/ravzen-logo.png" alt="RAVZEN studio logo" width={46} height={46} className="h-12 w-12 object-contain" />
