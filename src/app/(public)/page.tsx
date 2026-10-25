@@ -51,13 +51,13 @@ export default async function HomePage() {
   return (
     <main className="studio-home min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#090910]/90 backdrop-blur-xl">
-        <nav className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-5 py-5 md:px-10" aria-label="Main navigation">
-          <a href="#home" className="text-base font-black tracking-[.2em]">RAVZEN<span className="text-fuchsia-400">.</span></a>
-          <div className="flex items-center gap-5 text-xs font-semibold uppercase tracking-wider text-white/65 md:gap-8">
-            <a className="hover:text-white" href="#work">Work</a>
-            <a className="hover:text-white" href="#services">Services</a>
-            <a className="hover:text-white" href="#credentials">Credentials</a>
-            <a className="hover:text-white" href="#contact">Contact</a>
+        <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-3 px-5 py-4 md:flex-nowrap md:px-10 md:py-5" aria-label="Main navigation">
+          <a href="#home" className="shrink-0 whitespace-nowrap text-base font-black tracking-[.2em]">RAVZEN<span className="text-fuchsia-400">.</span></a>
+          <div className="flex w-full flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-white/10 pt-3 text-[11px] font-semibold uppercase tracking-wider text-white/65 sm:gap-x-7 md:w-auto md:justify-end md:border-t-0 md:pt-0 md:text-xs">
+            <a className="whitespace-nowrap hover:text-white" href="#work">Work</a>
+            <a className="whitespace-nowrap hover:text-white" href="#services">Services</a>
+            <a className="whitespace-nowrap hover:text-white" href="#credentials">Credentials</a>
+            <a className="whitespace-nowrap hover:text-white" href="#contact">Contact</a>
           </div>
         </nav>
       </header>
