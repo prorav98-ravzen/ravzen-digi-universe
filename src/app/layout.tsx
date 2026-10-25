@@ -143,6 +143,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <body
         className="bg-[var(--color-void)] text-[var(--color-energy-white)] antialiased"
       >
+        {/* Lightweight, accessible global click/touch ripple */}
+        <script dangerouslySetInnerHTML={{ __html: `(function(){
+          if(window.matchMedia('(prefers-reduced-motion: reduce)').matches)return;
+          document.addEventListener('pointerdown',function(e){
+            if(e.button!==0 || e.isPrimary===false)return;
+            var x=e.clientX,y=e.clientY;
+            var ripple=document.createElement('span');
+            ripple.setAttribute('aria-hidden','true');
+            ripple.style.cssText='position:fixed;left:'+x+'px;top:'+y+'px;width:12px;height:12px;border:1.5px solid rgba(232,121,249,.6);border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:.8;';
+            document.body.appendChild(ripple);
+            var animation=ripple.animate([{transform:'translate(-50%,-50%) scale(.2)',opacity:.8},{transform:'translate(-50%,-50%) scale(9)',opacity:0}],{duration:650,easing:'cubic-bezier(.15,.65,.2,1)'});
+            animation.onfinish=function(){ripple.remove()};
+          },{passive:true});
+        })();` }} />
         {/* Global skip link for keyboard accessibility */}
         <a href="#main-content" className="skip-link">
           Skip to main content
