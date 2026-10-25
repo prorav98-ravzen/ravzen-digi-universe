@@ -39,12 +39,12 @@ export default function ArtworkReviews({ artworkId, imageIndex = 0 }: { artworkI
       <h5 className="font-semibold">Leave a review</h5>
       <input aria-label="Full name" required minLength={2} maxLength={100} value={name} onChange={e=>setName(e.target.value)} placeholder="Full name *" className="w-full rounded-lg bg-white/10 p-3" />
       <input aria-label="Phone number" required minLength={9} value={phone} onChange={e=>setPhone(e.target.value)} maxLength={25} placeholder="Phone number *" className="w-full rounded-lg bg-white/10 p-3" />
-      <><label className="block">Rating <select aria-label="Rating" value={rating} onChange={e=>setRating(Number(e.target.value))} className="ml-3 rounded bg-[#242431] p-2">{[5,4,3,2,1].map(n=><option key={n} value={n}>{n} stars</option>)}</select></label>
+      <label className="block">Rating <select aria-label="Rating" value={rating} onChange={e=>setRating(Number(e.target.value))} className="ml-3 rounded bg-[#242431] p-2">{[5,4,3,2,1].map(n=><option key={n} value={n}>{n} stars</option>)}</select></label>
       <textarea aria-label="Review" required minLength={10} maxLength={2000} value={body} onChange={e=>setBody(e.target.value)} placeholder="Your review (10–2000 characters)" className="min-h-24 w-full rounded-lg bg-white/10 p-3"/>
       <label className="block text-xs text-white/60"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)} required className="mr-2"/>I agree to publish my name, rating and review after moderation.</label>
-      <button disabled={busy||!consent||!name.trim()||body.trim().length<10} className="rounded-lg bg-fuchsia-600 px-5 py-3 font-bold disabled:opacity-50">Submit for approval</button></>}
+      <button disabled={busy||!consent||!name.trim()||body.trim().length<10} className="rounded-lg bg-fuchsia-600 px-5 py-3 font-bold disabled:opacity-50">Submit for approval</button>
       {message && <p role="status" className="text-fuchsia-200">{message}</p>}
-      <p className="text-xs text-white/40">Your name, rating and review may be published after moderation. Your email and phone remain private.</p>
+      <p className="text-xs text-white/40">Your name, rating and review may be published after moderation. Your phone number remains private.</p>
     </form>
   </section>
 }
