@@ -1,11 +1,14 @@
 'use client'
 import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
+import { createPortal } from 'react-dom'
 import ArtworkReviews from './ArtworkReviews'
 
 export default function GalleryFeedback({ artworkId, title, images }: { artworkId:string; title:string; images:string[] }) {
   const [selected,setSelected] = useState(0)
   const [open,setOpen] = useState(false)
+  const [mounted,setMounted] = useState(false)
+  useEffect(() => { setMounted(true) }, [])
   const [active,setActive] = useState(0)
   const touchStart = useRef<number | null>(null)
   const closeButton = useRef<HTMLButtonElement>(null)
@@ -44,19 +47,19 @@ export default function GalleryFeedback({ artworkId, title, images }: { artworkI
       {selected>0 && <span className="rounded-full bg-white/10 px-3 py-2 text-xs text-white/70">Reviewing image {selected}</span>}
     </div>
     <ArtworkReviews key={artworkId+'-'+selected} artworkId={artworkId} imageIndex={selected}/>
-    {open && images.length>0 && <div role="dialog" aria-modal="true" aria-label={title+' full size gallery'}
-      onTouchStart={event=>{touchStart.current=event.touches[0]?.clientX ?? null}} onTouchEnd={event=>{if(touchStart.current===null || images.length<2)return;const delta=(event.changedTouches[0]?.clientX ?? touchStart.current)-touchStart.current;touchStart.current=null;if(Math.abs(delta)>55){const next=(active+(delta<0?1:-1)+images.length)%images.length;setActive(next);setSelected(next+1)}}} className="fixed inset-0 z-[100] flex flex-col items-center justify-center bg-black/95 p-3 text-white">
-      <div className="absolute left-3 right-3 top-3 z-10 flex items-center justify-between">
+    {mounted && open && images.length>0 && createPortal(<div role="dialog" aria-modal="true" aria-label={title+' full size gallery'}
+      onTouchStart={event=>{touchStart.current=event.touches[0]?.clientX ?? null}} onTouchEnd={event=>{if(touchStart.current===null || images.length<2)return;const delta=(event.changedTouches[0]?.clientX ?? touchStart.current)-touchStart.current;touchStart.current=null;if(Math.abs(delta)>55){const next=(active+(delta<0?1:-1)+images.length)%images.length;setActive(next);setSelected(next+1)}}} className="fixed inset-0 z-[2147483647] flex flex-col items-center justify-center bg-[#050509] px-3 py-4 text-white" style={{ height: "100dvh", width: "100vw", touchAction: "pan-y" }}>
+      <div className="absolute left-3 right-3 top-3 z-10 flex items-center justify-between" style={{ top: "max(12px, env(safe-area-inset-top))" }}>
         <span className="rounded bg-black/70 px-3 py-2 text-sm">{active+1} / {images.length}</span>
         <button ref={closeButton} type="button" onClick={()=>setOpen(false)} aria-label="Close gallery" className="rounded-lg bg-white/20 px-4 py-3 text-lg">✕</button>
       </div>
-      <div className="relative h-[78vh] w-full max-w-6xl">
+      <div className="relative min-h-0 w-full max-w-6xl flex-1">
         <Image src={images[active]} alt={title+' full size image '+(active+1)} fill unoptimized className="object-contain" sizes="100vw"/>
       </div>
-      {images.length>1 && <div className="mt-4 flex w-full max-w-sm justify-between gap-4">
+      {images.length>1 && <div className="mb-2 mt-4 flex w-full max-w-sm shrink-0 justify-between gap-4">
         <button type="button" onClick={()=>{const i=(active-1+images.length)%images.length;setActive(i);setSelected(i+1)}} className="rounded-lg bg-white/20 px-6 py-3">← Previous</button>
         <button type="button" onClick={()=>{const i=(active+1)%images.length;setActive(i);setSelected(i+1)}} className="rounded-lg bg-white/20 px-6 py-3">Next →</button>
       </div>}
-    </div>}
+    </div>, document.body)}
   </div>
 }
