@@ -6,6 +6,7 @@ import GalleryFeedback from '@/components/reviews/GalleryFeedback'
 import VisitorCounters from '@/components/analytics/VisitorCounters'
 import ShareArtwork from '@/components/portfolio/ShareArtwork'
 import CredentialsSection from '@/components/portfolio/CredentialsSection'
+import StudioMotion from '@/components/portfolio/StudioMotion'
 
 export const metadata: Metadata = {
   title: 'RAVZEN — Premium Creative Studio',
@@ -53,7 +54,9 @@ export default async function HomePage() {
     { title: 'Coming to the studio', value: settings.studio_upcoming_features },
   ].map(group => ({ ...group, items: (group.value ?? '').split('\n').map((item: string) => item.trim()).filter(Boolean) })).filter(group => group.items.length)
   return (
-    <main className="studio-home min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
+    <main className="studio-home relative isolate min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
+      <StudioMotion />
+      <div className="studio-aurora" aria-hidden="true" />
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#090910]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-3 px-5 py-4 md:flex-nowrap md:px-10 md:py-5" aria-label="Main navigation">
           <a href="#home" className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap text-base font-black tracking-[.2em]" aria-label="RAVZEN — Home"><Image src="/images/ravzen-header-emblem.svg" alt="" width={26} height={21} className="h-[21px] w-[26px] shrink-0 object-contain" unoptimized /> <span>RAVZEN<span className="text-fuchsia-400">.</span></span></a>
@@ -66,10 +69,10 @@ export default async function HomePage() {
         </nav>
       </header>
 
-      <section id="home" className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 md:px-10 md:pb-36 md:pt-36">
+      <section id="home" data-studio-reveal className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 md:px-10 md:pb-36 md:pt-36">
         <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-fuchsia-700/15 blur-3xl" aria-hidden="true" />
         <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-fuchsia-300">Independent creative studio · Sri Lanka</p>
-        <h1 className="max-w-5xl text-5xl font-black leading-[1.08] tracking-tight md:text-7xl lg:text-8xl">
+        <h1 className="studio-gradient-heading max-w-5xl text-5xl font-black leading-[1.08] tracking-tight md:text-7xl lg:text-8xl">
           {settings.studio_hero_title ?? "Design that makes an impression."}
         </h1>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
@@ -81,7 +84,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      {stats.length > 0 && <section aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 sm:grid-cols-3 md:px-10">
+      {stats.length > 0 && <section data-studio-reveal aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 sm:grid-cols-3 md:px-10">
         {stats.map(stat => <div key={stat.label} className="border-l border-fuchsia-400/50 pl-6">
           <p className="text-4xl font-black text-fuchsia-300 md:text-5xl">{stat.value}</p>
           <p className="mt-3 text-sm text-white/60">{stat.label}</p>
@@ -89,7 +92,7 @@ export default async function HomePage() {
       </section>}
 
       <VisitorCounters />
-      <section aria-label="Overall client rating" className="mx-auto max-w-7xl px-5 pb-12 md:px-10">
+      <section data-studio-reveal aria-label="Overall client rating" className="mx-auto max-w-7xl px-5 pb-12 md:px-10">
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-fuchsia-400/20 bg-white/[.035] px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left">
           <div>
             <p className="text-xs font-bold uppercase tracking-[.25em] text-fuchsia-300">Overall client rating</p>
@@ -104,7 +107,7 @@ export default async function HomePage() {
         </div>
       </section>
 
-      <section id="work" className="mx-auto max-w-7xl px-5 py-24 md:px-10">
+      <section id="work" data-studio-reveal className="mx-auto max-w-7xl px-5 py-24 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Selected work</p>
         <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
           <h2 className="text-4xl font-black md:text-5xl">The portfolio<span className="text-fuchsia-400">.</span></h2>
@@ -115,7 +118,7 @@ export default async function HomePage() {
             {projects.map(project => {
               const images = [...new Set([project.cover_image_url, ...(project.gallery_urls ?? [])].filter((x): x is string => Boolean(x)))]
               return (
-                <article key={project.id} id={`artwork-${project.id}`} className="scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-[#15151e]">
+                <article key={project.id} id={`artwork-${project.id}`} data-studio-reveal className="studio-glow-card scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-[#15151e]">
                   <div className="relative aspect-[4/3] bg-[#242431]">
                     {images[0] && <Image src={images[0]} alt={project.title} fill unoptimized className="object-cover" sizes="(max-width: 768px) 100vw, 33vw" />}
                   </div>
@@ -134,7 +137,7 @@ export default async function HomePage() {
         ) : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
 
-      <section id="services" className="border-y border-white/10 bg-white/[.025]">
+      <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
           {['Brand Identity & Logos', 'Packaging & Product Labels', 'Social & Marketing Design'].map((name, i) => (
             <div key={name} className="border-l border-fuchsia-400/50 pl-5">
@@ -165,7 +168,17 @@ export default async function HomePage() {
         </div>)}
       </section>}
 
-      <footer id="contact" className="border-t border-white/10 bg-[#101018] px-5 py-20 md:px-10">
+      <div className="studio-contact-dock" aria-label="Quick contact">
+        <details className="studio-contact-menu">
+          <summary aria-label="Open quick contact options">Let&apos;s Talk <span aria-hidden="true">✦</span></summary>
+          <div className="studio-contact-options">
+            {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\\D/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>}
+            {(settings.email_primary || SITE_CONFIG.email) && <a href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email ↗</a>}
+            <a href={settings.social_fiverr || 'https://www.fiverr.com/s/611ZzBB'} target="_blank" rel="noopener noreferrer">Fiverr ↗</a>
+          </div>
+        </details>
+      </div>
+      <footer id="contact" data-studio-reveal className="border-t border-white/10 bg-[#101018] px-5 py-20 md:px-10">
         <div className="mx-auto max-w-7xl">
           <p className="text-xs uppercase tracking-[.3em] text-fuchsia-300">Have a project in mind?</p>
           <h2 className="mt-4 text-4xl font-black md:text-6xl">Let&apos;s make it memorable.</h2>
