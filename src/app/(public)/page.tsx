@@ -172,6 +172,7 @@ export default async function HomePage() {
         <details className="studio-contact-menu">
           <summary aria-label="Open quick contact options">Let&apos;s Talk <span aria-hidden="true">✦</span></summary>
           <div className="studio-contact-options">
+            <a href="tel:+94781556575" aria-label="Call RAVZEN at +94 78 155 6575">Call Us ↗</a>
             {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\\D/g, '')}`} target="_blank" rel="noopener noreferrer">WhatsApp ↗</a>}
             {(settings.email_primary || SITE_CONFIG.email) && <a href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email ↗</a>}
             <a href={settings.social_fiverr || 'https://www.fiverr.com/s/611ZzBB'} target="_blank" rel="noopener noreferrer">Fiverr ↗</a>
@@ -183,6 +184,7 @@ export default async function HomePage() {
           <p className="text-xs uppercase tracking-[.3em] text-fuchsia-300">Have a project in mind?</p>
           <h2 className="mt-4 text-4xl font-black md:text-6xl">Let&apos;s make it memorable.</h2>
           <div className="mt-8 flex flex-wrap gap-5 text-sm">
+            <a className="underline underline-offset-4" href="tel:+94781556575">Call Us · +94 78 155 6575 ↗</a>
             {(settings.email_primary || SITE_CONFIG.email) && <a className="underline underline-offset-4" href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email the studio ↗</a>}
             {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a className="underline underline-offset-4" href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\D/g, '')}`}>WhatsApp ↗</a>}
           </div>
