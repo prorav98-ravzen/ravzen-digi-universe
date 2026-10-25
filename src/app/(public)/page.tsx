@@ -52,7 +52,7 @@ export default async function HomePage() {
     <main className="studio-home min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
       <header className="sticky top-0 z-30 border-b border-white/10 bg-[#090910]/90 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-3 px-5 py-4 md:flex-nowrap md:px-10 md:py-5" aria-label="Main navigation">
-          <a href="#home" className="shrink-0 whitespace-nowrap text-base font-black tracking-[.2em]">RAVZEN<span className="text-fuchsia-400">.</span></a>
+          <a href="#home" className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap text-base font-black tracking-[.2em]" aria-label="RAVZEN — Home"><Image src="/images/ravzen-header-emblem.svg" alt="" width={26} height={21} className="h-[21px] w-[26px] shrink-0 object-contain" unoptimized /> <span>RAVZEN<span className="text-fuchsia-400">.</span></span></a>
           <div className="flex w-full flex-wrap items-center justify-center gap-x-5 gap-y-2 border-t border-white/10 pt-3 text-[11px] font-semibold uppercase tracking-wider text-white/65 sm:gap-x-7 md:w-auto md:justify-end md:border-t-0 md:pt-0 md:text-xs">
             <a className="whitespace-nowrap hover:text-white" href="#work">Work</a>
             <a className="whitespace-nowrap hover:text-white" href="#services">Services</a>
