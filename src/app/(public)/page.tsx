@@ -41,12 +41,12 @@ export default async function HomePage() {
     .order('created_at', { ascending: false })
     .limit(18)
   const projectById = new Map(projects.map(project => [project.id, project]))
-  const clientStories: ClientStory[] = (approvedStories ?? [])
+  const clientStories: (ClientStory & {artworkId:string})[] = (approvedStories ?? [])
     .filter(review => typeof review.body === 'string' && review.body.trim().length > 0)
     .map(review => {
       const related = projectById.get(review.artwork_id)
       return {
-        id: review.id, name: review.reviewer_name || 'Client',
+        id: review.id, artworkId: review.artwork_id, name: review.reviewer_name || 'Client',
         quote: review.body, rating: Number(review.rating) || 5,
         verified: review.verified_client === true,
         projectTitle: related?.title ?? null, projectSlug: related?.slug ?? null,
@@ -137,7 +137,7 @@ export default async function HomePage() {
           <h2 className="text-4xl font-black md:text-5xl">The portfolio<span className="text-fuchsia-400">.</span></h2>
           <p className="text-sm text-white/50">{projects.length} published projects</p>
         </div>
-        {projects.length ? <PortfolioExplorer projects={projects} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
+        {projects.length ? <PortfolioExplorer projects={projects} stories={clientStories} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
 
       <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
