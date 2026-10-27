@@ -3,6 +3,7 @@
 import { useState } from 'react'
 import { BookOpen, Download, MessageCircle } from 'lucide-react'
 import { resourceAction, type Resource } from '@/lib/resources/catalog'
+import ShareResource from './ShareResource'
 
 export default function DigitalResources({ items, whatsapp }: { items: Resource[]; whatsapp: string }) {
   const [filter, setFilter] = useState('All')
@@ -18,7 +19,7 @@ export default function DigitalResources({ items, whatsapp }: { items: Resource[
     </div>
     {visible.length ? <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{visible.map(item => {
       const action = resourceAction(item, whatsapp)
-      return <article key={item.id} className="flex min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[.035]">
+      return <article id={`resource-${item.id}`} key={item.id} className="flex min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[.035]">
         <div className="relative flex aspect-[4/3] items-center justify-center overflow-hidden bg-gradient-to-br from-fuchsia-950 via-[#191326] to-indigo-950">
           {item.coverUrl ? <img src={item.coverUrl} alt={item.title} loading="lazy" referrerPolicy="no-referrer" className="h-full w-full object-cover" /> : <BookOpen className="h-16 w-16 text-fuchsia-200/70" aria-hidden="true" />}
           <span className={`absolute left-4 top-4 rounded-full px-3 py-1.5 text-xs font-bold ${item.access === 'free' ? 'bg-emerald-200 text-emerald-950' : 'bg-fuchsia-200 text-fuchsia-950'}`}>{item.access === 'free' ? 'FREE' : 'PAID'}</span>
@@ -33,6 +34,7 @@ export default function DigitalResources({ items, whatsapp }: { items: Resource[
               {item.access === 'free' ? <Download size={18} className="shrink-0" /> : <MessageCircle size={18} className="shrink-0" />}
               {item.access === 'free' ? 'මෙතනින් download කරගන්න' : 'මිලදී ගැනීමට WhatsApp හරහා සම්බන්ධ වෙන්න'}
             </a> : <p className="rounded-xl border border-white/10 p-3 text-center text-sm text-white/50">{item.status === 'coming-soon' ? 'සූදානම් වූ විට මෙහි පළ කරනු ලැබේ.' : 'Contact details will be available soon.'}</p>}
+            <div className="mt-3 flex justify-end"><ShareResource id={item.id} title={item.title} /></div>
             {action && <p className="mt-3 text-xs leading-5 text-white/45">{item.access === 'free' ? 'Download page එක නව tab එකක විවෘත වේ.' : 'Chat එක විවෘත වූ පසු message එක යවන්න. ගෙවීම තහවුරු කිරීමෙන් පසු download link එක ලබාදේ.'}</p>}
           </div>
         </div>
