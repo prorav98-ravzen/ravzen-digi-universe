@@ -35,6 +35,7 @@ type NavItem = {
 }
 
 const NAV: NavItem[] = [
+  { label: 'Digital Resources', href: '/admin/resources', icon: FileText, roles: ['SUPER_ADMIN'] },
   { label: 'Dashboard',      href: '/admin/dashboard',    icon: LayoutDashboard, roles: ['SUPER_ADMIN', 'ADMIN', 'EDITOR'] },
   { label: 'Design',         href: '/admin/design',       icon: FileText,        roles: ['SUPER_ADMIN', 'ADMIN', 'EDITOR'] },
   { label: 'Android Apps',   href: '/admin/android',      icon: Smartphone,      roles: ['SUPER_ADMIN', 'ADMIN', 'EDITOR'] },

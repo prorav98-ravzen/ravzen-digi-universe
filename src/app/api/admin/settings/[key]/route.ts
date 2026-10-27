@@ -15,6 +15,7 @@ export async function PATCH(
   if (user.role !== 'SUPER_ADMIN') return NextResponse.json({ error: 'Only the site owner can change appearance settings' }, { status: 403 })
 
   const { key } = await params
+  if (key === 'digital_resources_catalog') return NextResponse.json({ error: 'Use the Digital Resources manager' }, { status: 400 })
   try {
     const body = await request.json()
     const parsed = SiteSettingsUpdateSchema.safeParse({ ...body, key })
