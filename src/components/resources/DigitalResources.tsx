@@ -29,10 +29,10 @@ export default function DigitalResources({ items, whatsapp }: { items: Resource[
           <h3 className="mt-3 break-words text-xl font-bold">{item.title}</h3>
           <p className="mt-3 whitespace-pre-line break-words text-sm leading-7 text-white/60">{item.description}</p>
           <div className="mt-auto pt-6">
-            <p className="mb-4 text-lg font-bold">{item.status === 'coming-soon' ? 'Coming soon · ළඟදීම' : item.access === 'free' ? 'නොමිලේ / Free' : `LKR ${item.price.toLocaleString('en-LK')}`}</p>
+            <p className="mb-4 text-lg font-bold">{item.status === 'coming-soon' ? 'Coming soon · ළඟදීම' : item.access === 'free' ? 'නොමිලේ / Free' : item.id === '7ef9d9f5-1cc4-4aa5-9d4d-4e7b3b8730c9' ? <><span className="mr-3 text-sm font-normal text-white/45 line-through">LKR 1,499</span><span className="text-emerald-300">LKR 300 · විශේෂ මිල</span></> : `LKR ${item.price.toLocaleString('en-LK')}`}</p>
             {action ? <a href={action} target="_blank" rel="noopener noreferrer" className={`flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white ${item.access === 'free' ? 'bg-white text-black hover:bg-fuchsia-100' : 'bg-emerald-400 text-emerald-950 hover:bg-emerald-300'}`}>
               {item.access === 'free' ? <Download size={18} className="shrink-0" /> : <MessageCircle size={18} className="shrink-0" />}
-              {item.access === 'free' ? 'මෙතනින් download කරගන්න' : 'මිලදී ගැනීමට WhatsApp හරහා සම්බන්ධ වෙන්න'}
+              {item.access === 'free' ? 'මෙතනින් download කරගන්න' : 'Buy Now / දැන්ම මිලදී ගන්න'}
             </a> : <p className="rounded-xl border border-white/10 p-3 text-center text-sm text-white/50">{item.status === 'coming-soon' ? 'සූදානම් වූ විට මෙහි පළ කරනු ලැබේ.' : 'Contact details will be available soon.'}</p>}
             <div className="mt-3 flex justify-end"><ShareResource id={item.id} title={item.title} /></div>
             {action && <p className="mt-3 text-xs leading-5 text-white/45">{item.access === 'free' ? 'Download page එක නව tab එකක විවෘත වේ.' : 'Chat එක විවෘත වූ පසු message එක යවන්න. ගෙවීම තහවුරු කිරීමෙන් පසු download link එක ලබාදේ.'}</p>}
