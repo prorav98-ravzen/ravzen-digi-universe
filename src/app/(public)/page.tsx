@@ -81,7 +81,7 @@ export default async function HomePage() {
     <main className="studio-home relative isolate min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
       <StudioMotion />
       <div className="studio-aurora" aria-hidden="true" />
-      <header className="fixed inset-x-0 top-0 z-[80] border-b border-white/10 bg-[#090910]/95 shadow-lg shadow-black/20 backdrop-blur-xl">
+      <header className="studio-site-header fixed inset-x-0 top-0 z-[80] border-b border-white/10 bg-[#090910]/95 shadow-lg shadow-black/20 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-3 md:flex-nowrap md:px-10 md:py-5" aria-label="Main navigation">
           <a href="#home" className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap text-base font-black tracking-[.2em]" aria-label="RAVZEN — Home"><Image src="/images/ravzen-header-emblem.svg" alt="" width={26} height={21} className="h-[21px] w-[26px] shrink-0 object-contain" unoptimized /> <span>RAVZEN<span className="text-fuchsia-400">.</span></span></a>
           <SwipeSectionNav />
