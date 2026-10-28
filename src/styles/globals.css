@@ -659,7 +659,7 @@ a,
 
 /* RAVZEN Premium Studio: progressive, reduced-motion-safe enhancements */
 .studio-home { overflow: clip; }
-.studio-home > :not(.studio-aurora):not(.studio-contact-dock) { position: relative; }
+.studio-home > :not(.studio-aurora):not(.studio-contact-dock):not(.studio-site-header) { position: relative; }
 .studio-aurora {
   position: absolute; inset: 0 0 auto; height: min(950px, 120vh);
   pointer-events: none; z-index: -1; overflow: hidden;
