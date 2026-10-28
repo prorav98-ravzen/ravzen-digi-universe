@@ -138,32 +138,6 @@ export default async function HomePage() {
         {projects.length ? <PortfolioExplorer projects={projects} stories={clientStories} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
 
-      <section aria-label="Featured RAVZEN Freelancing eBook advertisement" data-studio-reveal className="mx-auto max-w-7xl px-5 pb-16 md:px-10">
-        <a href="#resources" aria-label="Explore the RAVZEN Freelancing eBook in Digital Resources" className="group relative isolate block overflow-hidden rounded-2xl border border-[#d9bc86]/35 bg-[#0b1020] shadow-[0_18px_55px_rgba(0,0,0,.3)] transition duration-300 hover:border-[#e6c991]/70 hover:shadow-[0_20px_70px_rgba(169,126,75,.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e6c991] md:aspect-[5/1]">
-          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_82%_45%,rgba(139,92,246,.23),transparent_48%),linear-gradient(110deg,#0b1020_10%,#18162c_55%,#281a37_100%)]" />
-          <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-24 h-64 w-64 rounded-full border border-[#e6c991]/20 md:h-96 md:w-96" />
-          <div aria-hidden="true" className="pointer-events-none absolute -right-4 -top-16 h-48 w-48 rounded-full border border-[#e6c991]/15 md:h-72 md:w-72" />
-          <div className="relative flex min-h-[210px] items-center justify-between gap-3 px-5 py-6 sm:px-8 md:h-full md:min-h-0 md:px-[5%] md:py-4">
-            <div className="min-w-0 max-w-[76%] md:max-w-[72%]">
-              <p className="mb-3 text-[9px] font-bold uppercase tracking-[.23em] text-[#e6c991] sm:text-[10px] md:mb-[2%]">RAVZEN DIGITAL LEARNING <span className="mx-1 text-white/30">/</span> FEATURED EBOOK</p>
-              <h2 className="text-[clamp(1.25rem,4.4vw,2.9rem)] font-black leading-[1.07] tracking-[-.035em] text-white">Turn your skills into <span className="text-[#e6c991]">opportunity.</span></h2>
-              <p className="mt-2 max-w-xl text-[10px] font-medium leading-relaxed tracking-[.015em] text-[#d3d2de] sm:text-xs md:mt-[2%] md:text-[clamp(.65rem,1.05vw,.95rem)]">Your practical guide to starting a freelance journey and connecting with global clients.</p>
-              <span className="mt-4 inline-flex items-center gap-2 border-b border-[#e6c991] pb-1 text-[10px] font-bold uppercase tracking-[.15em] text-[#f2d6a1] transition group-hover:gap-3 sm:text-xs md:mt-[3%]">Discover the eBook <span aria-hidden="true">↗</span></span>
-            </div>
-            <div aria-hidden="true" className="relative flex w-[23%] max-w-[190px] shrink-0 justify-center md:w-[20%]">
-              <div className="absolute inset-0 rounded-full bg-violet-400/20 blur-2xl" />
-              <div className="relative aspect-[3/4] w-full max-w-[135px] rotate-[8deg] overflow-hidden rounded-r-md rounded-l-sm border border-[#e6c991]/45 bg-gradient-to-br from-[#342c4f] via-[#151a31] to-[#0a1022] p-[9%] shadow-[9px_12px_20px_rgba(0,0,0,.5)] transition-transform duration-300 group-hover:rotate-[4deg]">
-                <div className="absolute inset-y-0 left-[5%] w-[3%] bg-white/10" />
-                <p className="text-[clamp(4px,.6vw,9px)] font-extrabold tracking-[.15em] text-[#e6c991]">RAVZEN</p>
-                <div className="mt-[23%] text-[clamp(9px,1.6vw,22px)] font-black leading-[.96] tracking-tight text-white">FREE<br/><span className="text-[#e6c991]">LANCING</span></div>
-                <div className="mt-[16%] h-px w-[45%] bg-[#e6c991]/65" />
-                <p className="mt-[9%] text-[clamp(4px,.55vw,8px)] font-semibold uppercase tracking-wider text-white/70">THE DIGITAL GUIDE</p>
-              </div>
-            </div>
-          </div>
-        </a>
-      </section>
-
       <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
           {['Brand Identity & Logos', 'Packaging & Product Labels', 'Social & Marketing Design'].map((name, i) => (
