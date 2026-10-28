@@ -14,6 +14,7 @@ const sections = [
 export default function SwipeSectionNav() {
   const [active, setActive] = useState('')
   const refs = useRef<Record<string, HTMLAnchorElement | null>>({})
+  const scroller = useRef<HTMLDivElement | null>(null)
 
   useEffect(() => {
     const update = () => {
@@ -36,12 +37,16 @@ export default function SwipeSectionNav() {
 
   useEffect(() => {
     if (!active) return
-    refs.current[active]?.scrollIntoView({ behavior: 'smooth', block: 'nearest', inline: 'nearest' })
+    const node = refs.current[active]
+    const container = scroller.current
+    if (node && container && container.scrollWidth > container.clientWidth) {
+      container.scrollTo({ left: node.offsetLeft - container.offsetLeft - (container.clientWidth - node.clientWidth) / 2, behavior: 'smooth' })
+    }
   }, [active])
 
   return (
     <div className="min-w-0 w-full border-t border-white/10 md:w-auto md:border-t-0">
-      <div aria-label="Website sections — swipe sideways to explore" className="flex w-full snap-x snap-mandatory items-center gap-2 overflow-x-auto overscroll-x-contain px-1 py-3 text-[11px] font-semibold uppercase tracking-wider [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-1 md:overflow-visible md:py-0 md:text-xs">
+      <div ref={scroller} aria-label="Website sections — swipe sideways to explore" className="flex w-full snap-x snap-mandatory items-center gap-2 overflow-x-auto overscroll-x-contain px-1 py-3 text-[11px] font-semibold uppercase tracking-wider [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-1 md:overflow-visible md:py-0 md:text-xs">
         {sections.map(section => (
           <a key={section.id} ref={node => { refs.current[section.id] = node }} href={`#${section.id}`}
             aria-current={active === section.id ? 'location' : undefined}
