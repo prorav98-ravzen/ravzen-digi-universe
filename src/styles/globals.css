@@ -92,8 +92,8 @@
     background-color: var(--color-void);
     color: var(--color-energy-white);
     font-family: var(--font-inter), system-ui, sans-serif;
-    /* Prevent horizontal scroll from animations */
-    overflow-x: hidden;
+    /* Clip horizontal animation overflow without creating a sticky-breaking scroll container. */
+    overflow-x: clip;
     min-height: 100dvh;
   }
 
@@ -770,4 +770,10 @@ a,
 }
 @media (prefers-reduced-motion:reduce) {
   .studio-glow-card::after { display: none; }
+}
+
+/* Keep anchored studio sections visible beneath the persistent navigation. */
+.studio-home :is(#home, #work, #services, #resources, #credentials, #faq, #contact, #inquiry) { scroll-margin-top: 124px; }
+@media (min-width: 768px) {
+  .studio-home :is(#home, #work, #services, #resources, #credentials, #faq, #contact, #inquiry) { scroll-margin-top: 96px; }
 }
