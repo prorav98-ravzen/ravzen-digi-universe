@@ -138,6 +138,35 @@ export default async function HomePage() {
         {projects.length ? <PortfolioExplorer projects={projects} stories={clientStories} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
 
+      <section aria-label="Featured RAVZEN eBook promotion" data-studio-reveal className="mx-auto max-w-7xl px-5 pb-20 md:px-10">
+        <div className="relative isolate overflow-hidden rounded-[2rem] border border-fuchsia-300/25 bg-[#151024] p-7 shadow-[0_20px_70px_rgba(0,0,0,0.28)] sm:p-10 lg:p-14">
+          <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-24 -z-10 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
+          <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 left-1/3 -z-10 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
+          <div className="grid items-center gap-9 md:grid-cols-[minmax(0,1fr)_minmax(220px,0.65fr)]">
+            <div>
+              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-fuchsia-300/30 bg-fuchsia-300/10 px-4 py-2 text-xs font-bold uppercase tracking-[.18em] text-fuchsia-200"><span aria-hidden="true">✦</span> Featured · RAVZEN Digital Learning</p>
+              <h2 className="max-w-2xl text-3xl font-black leading-tight text-white sm:text-4xl lg:text-5xl">ඔබේ හැකියාවෙන් <span className="text-fuchsia-300">Online ආදායමක්</span> ගොඩනගන්න.</h2>
+              <p className="mt-5 max-w-xl text-base leading-8 text-white/70">Freelancing ආරම්භ කිරීම, international clients හඳුනාගැනීම සහ online වැඩ කිරීම ගැන සිංහලෙන් ඉගෙනගන්න. RAVZEN Freelancing eBook එක සමඟ ඔබේ ඊළඟ පියවර අරඹන්න.</p>
+              <div className="mt-8 flex flex-wrap items-center gap-4">
+                <a href="#resources" className="inline-flex min-h-12 items-center justify-center rounded-full bg-fuchsia-300 px-7 py-3 text-sm font-black text-[#1b1024] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fuchsia-300">Explore the eBook <span className="ml-2" aria-hidden="true">↗</span></a>
+                <span className="text-xs font-medium text-white/50">Sinhala guide · Digital eBook</span>
+              </div>
+            </div>
+            <div aria-hidden="true" className="relative mx-auto flex w-full max-w-[290px] justify-center py-5">
+              <div className="absolute inset-x-8 inset-y-6 rounded-full bg-fuchsia-500/20 blur-3xl" />
+              <div className="relative w-[205px] rotate-[-7deg] rounded-r-xl rounded-l-sm border border-fuchsia-200/35 bg-gradient-to-br from-[#3a2052] via-[#241631] to-[#0e1025] p-6 shadow-[16px_20px_35px_rgba(0,0,0,.5)] sm:w-[235px]">
+                <div className="absolute inset-y-0 left-2 w-[3px] bg-white/15" />
+                <p className="text-[10px] font-bold tracking-[.2em] text-fuchsia-200">RAVZEN · EBOOK</p>
+                <div className="my-10 text-5xl font-black leading-none tracking-tight text-white">FREE<span className="block text-fuchsia-300">LANCING</span></div>
+                <div className="h-px w-16 bg-fuchsia-300/60" />
+                <p className="mt-5 text-sm font-semibold text-white/80">සිංහල ප්‍රායෝගික මාර්ගෝපදේශය</p>
+                <p className="mt-12 text-[10px] tracking-[.18em] text-white/50">LEARN · CREATE · EARN</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
       <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
           {['Brand Identity & Logos', 'Packaging & Product Labels', 'Social & Marketing Design'].map((name, i) => (
