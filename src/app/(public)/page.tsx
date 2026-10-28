@@ -138,33 +138,30 @@ export default async function HomePage() {
         {projects.length ? <PortfolioExplorer projects={projects} stories={clientStories} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
 
-      <section aria-label="Featured RAVZEN eBook promotion" data-studio-reveal className="mx-auto max-w-7xl px-5 pb-20 md:px-10">
-        <div className="relative isolate overflow-hidden rounded-[2rem] border border-fuchsia-300/25 bg-[#151024] p-7 shadow-[0_20px_70px_rgba(0,0,0,0.28)] sm:p-10 lg:p-14">
-          <div aria-hidden="true" className="pointer-events-none absolute -right-20 -top-24 -z-10 h-80 w-80 rounded-full bg-fuchsia-500/20 blur-3xl" />
-          <div aria-hidden="true" className="pointer-events-none absolute -bottom-32 left-1/3 -z-10 h-72 w-72 rounded-full bg-cyan-400/10 blur-3xl" />
-          <div className="grid items-center gap-9 md:grid-cols-[minmax(0,1fr)_minmax(220px,0.65fr)]">
-            <div>
-              <p className="mb-5 inline-flex items-center gap-2 rounded-full border border-fuchsia-300/30 bg-fuchsia-300/10 px-4 py-2 text-xs font-bold uppercase tracking-[.18em] text-fuchsia-200"><span aria-hidden="true">✦</span> Featured · RAVZEN Digital Learning</p>
-              <h2 className="max-w-2xl text-3xl font-black leading-tight text-white sm:text-4xl lg:text-5xl">ඔබේ හැකියාවෙන් <span className="text-fuchsia-300">Online ආදායමක්</span> ගොඩනගන්න.</h2>
-              <p className="mt-5 max-w-xl text-base leading-8 text-white/70">Freelancing ආරම්භ කිරීම, international clients හඳුනාගැනීම සහ online වැඩ කිරීම ගැන සිංහලෙන් ඉගෙනගන්න. RAVZEN Freelancing eBook එක සමඟ ඔබේ ඊළඟ පියවර අරඹන්න.</p>
-              <div className="mt-8 flex flex-wrap items-center gap-4">
-                <a href="#resources" className="inline-flex min-h-12 items-center justify-center rounded-full bg-fuchsia-300 px-7 py-3 text-sm font-black text-[#1b1024] transition hover:bg-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-fuchsia-300">Explore the eBook <span className="ml-2" aria-hidden="true">↗</span></a>
-                <span className="text-xs font-medium text-white/50">Sinhala guide · Digital eBook</span>
-              </div>
+      <section aria-label="Featured RAVZEN Freelancing eBook advertisement" data-studio-reveal className="mx-auto max-w-7xl px-5 pb-16 md:px-10">
+        <a href="#resources" aria-label="Explore the RAVZEN Freelancing eBook in Digital Resources" className="group relative isolate block overflow-hidden rounded-2xl border border-[#d9bc86]/35 bg-[#0b1020] shadow-[0_18px_55px_rgba(0,0,0,.3)] transition duration-300 hover:border-[#e6c991]/70 hover:shadow-[0_20px_70px_rgba(169,126,75,.18)] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#e6c991] md:aspect-[5/1]">
+          <div aria-hidden="true" className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_at_82%_45%,rgba(139,92,246,.23),transparent_48%),linear-gradient(110deg,#0b1020_10%,#18162c_55%,#281a37_100%)]" />
+          <div aria-hidden="true" className="pointer-events-none absolute -right-12 -top-24 h-64 w-64 rounded-full border border-[#e6c991]/20 md:h-96 md:w-96" />
+          <div aria-hidden="true" className="pointer-events-none absolute -right-4 -top-16 h-48 w-48 rounded-full border border-[#e6c991]/15 md:h-72 md:w-72" />
+          <div className="relative flex min-h-[210px] items-center justify-between gap-3 px-5 py-6 sm:px-8 md:h-full md:min-h-0 md:px-[5%] md:py-4">
+            <div className="min-w-0 max-w-[76%] md:max-w-[72%]">
+              <p className="mb-3 text-[9px] font-bold uppercase tracking-[.23em] text-[#e6c991] sm:text-[10px] md:mb-[2%]">RAVZEN DIGITAL LEARNING <span className="mx-1 text-white/30">/</span> FEATURED EBOOK</p>
+              <h2 className="text-[clamp(1.25rem,4.4vw,2.9rem)] font-black leading-[1.07] tracking-[-.035em] text-white">Turn your skills into <span className="text-[#e6c991]">opportunity.</span></h2>
+              <p className="mt-2 max-w-xl text-[10px] font-medium leading-relaxed tracking-[.015em] text-[#d3d2de] sm:text-xs md:mt-[2%] md:text-[clamp(.65rem,1.05vw,.95rem)]">Your practical guide to starting a freelance journey and connecting with global clients.</p>
+              <span className="mt-4 inline-flex items-center gap-2 border-b border-[#e6c991] pb-1 text-[10px] font-bold uppercase tracking-[.15em] text-[#f2d6a1] transition group-hover:gap-3 sm:text-xs md:mt-[3%]">Discover the eBook <span aria-hidden="true">↗</span></span>
             </div>
-            <div aria-hidden="true" className="relative mx-auto flex w-full max-w-[290px] justify-center py-5">
-              <div className="absolute inset-x-8 inset-y-6 rounded-full bg-fuchsia-500/20 blur-3xl" />
-              <div className="relative w-[205px] rotate-[-7deg] rounded-r-xl rounded-l-sm border border-fuchsia-200/35 bg-gradient-to-br from-[#3a2052] via-[#241631] to-[#0e1025] p-6 shadow-[16px_20px_35px_rgba(0,0,0,.5)] sm:w-[235px]">
-                <div className="absolute inset-y-0 left-2 w-[3px] bg-white/15" />
-                <p className="text-[10px] font-bold tracking-[.2em] text-fuchsia-200">RAVZEN · EBOOK</p>
-                <div className="my-10 text-5xl font-black leading-none tracking-tight text-white">FREE<span className="block text-fuchsia-300">LANCING</span></div>
-                <div className="h-px w-16 bg-fuchsia-300/60" />
-                <p className="mt-5 text-sm font-semibold text-white/80">සිංහල ප්‍රායෝගික මාර්ගෝපදේශය</p>
-                <p className="mt-12 text-[10px] tracking-[.18em] text-white/50">LEARN · CREATE · EARN</p>
+            <div aria-hidden="true" className="relative flex w-[23%] max-w-[190px] shrink-0 justify-center md:w-[20%]">
+              <div className="absolute inset-0 rounded-full bg-violet-400/20 blur-2xl" />
+              <div className="relative aspect-[3/4] w-full max-w-[135px] rotate-[8deg] overflow-hidden rounded-r-md rounded-l-sm border border-[#e6c991]/45 bg-gradient-to-br from-[#342c4f] via-[#151a31] to-[#0a1022] p-[9%] shadow-[9px_12px_20px_rgba(0,0,0,.5)] transition-transform duration-300 group-hover:rotate-[4deg]">
+                <div className="absolute inset-y-0 left-[5%] w-[3%] bg-white/10" />
+                <p className="text-[clamp(4px,.6vw,9px)] font-extrabold tracking-[.15em] text-[#e6c991]">RAVZEN</p>
+                <div className="mt-[23%] text-[clamp(9px,1.6vw,22px)] font-black leading-[.96] tracking-tight text-white">FREE<br/><span className="text-[#e6c991]">LANCING</span></div>
+                <div className="mt-[16%] h-px w-[45%] bg-[#e6c991]/65" />
+                <p className="mt-[9%] text-[clamp(4px,.55vw,8px)] font-semibold uppercase tracking-wider text-white/70">THE DIGITAL GUIDE</p>
               </div>
             </div>
           </div>
-        </div>
+        </a>
       </section>
 
       <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
