@@ -177,6 +177,26 @@ export default async function HomePage() {
 
       <DigitalResources items={parseCatalog(settings[RESOURCE_KEY])} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || "94781556575"} />
 
+      <section aria-label="Winco Super City sponsored advertisement" className="mx-auto max-w-7xl px-5 pb-20 md:px-10">
+        <a href="https://www.facebook.com/share/1E4q2qEGG8/" target="_blank" rel="noopener noreferrer sponsored" aria-label="Advertisement: Winco Super City — visit Facebook" className="group relative block overflow-hidden rounded-2xl border border-lime-300/40 bg-white text-black shadow-[0_18px_55px_rgba(0,0,0,.28)] transition hover:border-pink-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-pink-400">
+          <span className="absolute right-3 top-3 z-10 rounded bg-black/85 px-2.5 py-1 text-[11px] font-bold tracking-wider text-white shadow-md sm:right-4 sm:top-4">Ads</span>
+          <div className="relative flex min-h-[180px] flex-col justify-center gap-3 overflow-hidden bg-[linear-gradient(115deg,#e7ffb7_0%,#fff_36%,#ffe1ef_72%,#ffecf4_100%)] px-5 py-7 sm:min-h-[150px] sm:flex-row sm:items-center sm:justify-between sm:gap-6 sm:px-9 lg:aspect-[6/1] lg:min-h-0 lg:py-4">
+            <div className="pointer-events-none absolute -bottom-20 -left-12 h-44 w-44 rounded-full bg-lime-400/50 blur-2xl" aria-hidden="true" />
+            <div className="pointer-events-none absolute -right-16 -top-20 h-52 w-52 rounded-full bg-pink-400/35 blur-2xl" aria-hidden="true" />
+            <div className="relative shrink-0 pr-12 sm:pr-0">
+              <p className="text-[clamp(1.6rem,3.4vw,3.2rem)] font-black leading-none tracking-tight"><span className="text-black">W</span><span className="text-pink-600">in</span><span className="text-black">co</span></p>
+              <p className="mt-1 text-[clamp(.75rem,1.4vw,1.2rem)] font-black uppercase tracking-wider"><span className="text-pink-600">SUPER</span> <span className="text-green-700">CITY</span></p>
+            </div>
+            <div className="relative max-w-2xl text-left sm:text-center">
+              <p className="text-sm font-extrabold leading-relaxed sm:text-[clamp(.7rem,1.2vw,1rem)]">ඔබේ අවශ්‍යතාවන්ට ගැළපෙන උසස්ම තත්ත්වයේ හොඳම භාණ්ඩ විශ්වාසවන්තව, වගකීමක් සහිතව අසමසම මිලකට!</p>
+              <p className="mt-1.5 text-sm font-black text-pink-700 sm:text-[clamp(.8rem,1.55vw,1.25rem)]">විශේෂ වට්ටම් සහ අමතර දීමනා රාශියක්!</p>
+              <p className="mt-1 text-xs font-bold text-green-800 sm:text-sm">Winco Super — ඔබට අවශ්‍ය සියලුම දෑ එකම වහලක් යටින්.</p>
+            </div>
+            <span className="relative w-fit shrink-0 rounded-full bg-pink-600 px-4 py-2 text-xs font-extrabold text-white transition group-hover:bg-pink-700 sm:mr-6">අදම පැමිණෙන්න ↗</span>
+          </div>
+        </a>
+      </section>
+
       <CredentialsSection />
 
 
