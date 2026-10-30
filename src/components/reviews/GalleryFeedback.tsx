@@ -6,7 +6,8 @@ import ArtworkReviews from './ArtworkReviews'
 
 export default function GalleryFeedback({ artworkId, title, images, hideInlineGallery=false, open:controlledOpen, onOpenChange }: { artworkId:string; title:string; images:string[]; hideInlineGallery?:boolean; open?:boolean; onOpenChange?:(open:boolean)=>void }) {
   const [selected,setSelected] = useState(0)
-  const [showReviews,setShowReviews] = useState(false)
+  const [reviewView,setReviewView] = useState<'write'|'read'|null>(null)
+  const showReviews = reviewView !== null
   const [internalOpen,setInternalOpen] = useState(false)
   const open = controlledOpen ?? internalOpen
   const setOpen = onOpenChange ?? setInternalOpen
@@ -58,13 +59,22 @@ export default function GalleryFeedback({ artworkId, title, images, hideInlineGa
         <Image src={url} alt={title+' image '+(index+1)} fill unoptimized loading="lazy" className="object-cover" sizes="96px"/>
       </button>)}
     </div>}
-    <button type="button" aria-expanded={showReviews} onClick={()=>setShowReviews(value=>!value)} className="mt-4 w-full rounded-xl border border-fuchsia-400/25 bg-fuchsia-400/[.07] px-4 py-3 text-left text-sm font-semibold text-fuchsia-100 transition hover:bg-fuchsia-400/[.13] focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">{showReviews ? "Hide reviews and feedback −" : "Read reviews or leave feedback +"}</button>
-    {showReviews && <div className="mt-3 flex flex-wrap gap-2">
-      <button type="button" onClick={()=>setSelected(0)} aria-pressed={selected===0}
-        className={'rounded-full px-3 py-2 text-xs '+(selected===0?'bg-fuchsia-700 text-white':'bg-white/10 text-white/70')}>Whole project reviews</button>
-      {selected>0 && <span className="rounded-full bg-white/10 px-3 py-2 text-xs text-white/70">Reviewing image {selected}</span>}
+    <div className="mt-4 rounded-xl border border-fuchsia-300/25 bg-fuchsia-400/[.06] p-4">
+      <p className="mb-3 text-sm text-white/80">මේ නිර්මාණය ගැන ඔබේ අදහස කියන්න</p>
+      <button type="button" aria-expanded={reviewView==='write'} aria-controls={'reviews-'+artworkId} onClick={()=>{setSelected(0);setReviewView(reviewView==='write'?null:'write')}} className="w-full rounded-xl bg-fuchsia-300 px-4 py-3 text-center text-sm font-bold text-[#190d20] transition hover:bg-fuchsia-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-200">
+        <span className="block">★ ඔබේ අදහස ලියන්න</span><span className="mt-1 block text-xs">{reviewView==='write'?'Close review form −':'Write a review →'}</span>
+      </button>
+      <button type="button" aria-expanded={reviewView==='read'} aria-controls={'reviews-'+artworkId} onClick={()=>{setSelected(0);setReviewView(reviewView==='read'?null:'read')}} className="mt-2 min-h-11 w-full rounded-lg px-2 py-2 text-sm text-fuchsia-200 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-300">අනෙක් අයගේ අදහස් බලන්න · Read reviews</button>
+    </div>
+    {showReviews && <div id={'reviews-'+artworkId}>
+      {images.length>1 && <label className="mt-4 block text-xs text-white/70">අදහස අදාළ වන්නේ · Review for
+        <select value={selected} onChange={event=>setSelected(Number(event.target.value))} className="mt-2 w-full rounded-lg border border-white/20 bg-[#242431] p-3 text-sm text-white">
+          <option value={0}>සම්පූර්ණ නිර්මාණ එකතුව · Whole project</option>
+          {images.map((_,index)=><option key={index} value={index+1}>පින්තූරය · Image {index+1}</option>)}
+        </select>
+      </label>}
+      <ArtworkReviews artworkId={artworkId} imageIndex={selected} view={reviewView!}/>
     </div>}
-    {showReviews && <ArtworkReviews key={artworkId+'-'+selected} artworkId={artworkId} imageIndex={selected}/>}
     {mounted && open && images.length>0 && createPortal(<div ref={dialog} role="dialog" aria-modal="true" aria-label={title+' full size gallery'}
       onTouchStart={event=>{touchStart.current=event.touches[0]?.clientX ?? null}} onTouchEnd={event=>{if(touchStart.current===null || images.length<2)return;const delta=(event.changedTouches[0]?.clientX ?? touchStart.current)-touchStart.current;touchStart.current=null;if(Math.abs(delta)>55){const next=(active+(delta<0?1:-1)+images.length)%images.length;setActive(next);setSelected(next+1)}}} className="fixed inset-0 z-[2147483647] flex flex-col items-center justify-center bg-[#050509] px-3 py-4 text-white" style={{ height: "100dvh", width: "100vw", touchAction: "pan-y" }}>
       <div className="absolute left-3 right-3 top-3 z-10 flex items-center justify-between" style={{ top: "max(12px, env(safe-area-inset-top))" }}>
