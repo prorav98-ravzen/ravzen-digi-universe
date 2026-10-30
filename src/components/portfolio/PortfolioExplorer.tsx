@@ -13,6 +13,7 @@ const readFavorites = ():string[] => {
   try { const data=JSON.parse(localStorage.getItem(STORAGE_KEY)||'[]');return Array.isArray(data)?data.filter((id):id is string=>typeof id==='string').slice(0,100):[] } catch { return [] }
 }
 export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projects:Project[];whatsapp:string;stories?: (ClientStory & {artworkId:string})[]}) {
+  const [galleryId,setGalleryId]=useState<string|null>(null)
   const [search,setSearch]=useState('')
   const [category,setCategory]=useState('All')
   const [favorites,setFavorites]=useState<string[]>([])
@@ -64,7 +65,10 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
         const saved=favorites.includes(project.id)
         return <article key={project.id} id={'artwork-'+project.id} className="studio-glow-card scroll-mt-28 overflow-hidden rounded-2xl border border-white/10 bg-[#15151e]">
           <div className="relative aspect-[4/3] bg-[#242431]">
-            {images[0]&&<Image src={images[0]} alt={project.title} fill unoptimized className="object-cover" sizes="(max-width: 768px) 100vw, 33vw"/>}
+            {images[0]&&<button type="button" onClick={()=>setGalleryId(project.id)} aria-label={'View '+project.title+' gallery, '+images.length+' images'} aria-haspopup="dialog" className="absolute inset-0 block h-full w-full cursor-zoom-in focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-[-4px] focus-visible:outline-fuchsia-400">
+              <Image src={images[0]} alt={project.title} fill unoptimized className="object-cover" sizes="(max-width: 768px) 100vw, 33vw"/>
+              <span className="absolute bottom-3 right-3 rounded-full border border-white/20 bg-black/70 px-3 py-2 text-xs font-medium text-white backdrop-blur-md">View gallery · {images.length} {images.length===1?'image':'images'}</span>
+            </button>}
             <button type="button" onClick={()=>toggle(project.id)} aria-pressed={saved} aria-label={(saved?'Remove ':'Save ')+project.title+(saved?' from':' to')+' favorites'} className={'absolute right-3 top-3 z-10 rounded-full border px-3 py-2 text-lg shadow-lg backdrop-blur-md '+(saved?'border-fuchsia-300 bg-fuchsia-500/90 text-white':'border-white/30 bg-black/70 text-white hover:bg-fuchsia-500/60')}>{saved?'♥':'♡'}</button>
           </div>
           <div className="p-6">
@@ -75,7 +79,7 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
             <Link href={'/projects/'+encodeURIComponent(project.slug)} className="mt-5 inline-flex rounded-full border border-fuchsia-400/35 px-4 py-2 text-xs font-semibold text-fuchsia-200 transition hover:border-fuchsia-300 hover:bg-fuchsia-400/10">View project details ↗</Link>
             <ProjectShowcase title={project.title} slug={project.slug} description={project.short_description} category={project.category?.name??'Creative design'} images={images} stories={stories.filter(story=>story.artworkId===project.id)} />
             <ShareArtwork artworkId={project.id} title={project.title}/>
-            <GalleryFeedback artworkId={project.id} title={project.title} images={images}/>
+            <GalleryFeedback artworkId={project.id} title={project.title} images={images} hideInlineGallery open={galleryId===project.id} onOpenChange={value=>setGalleryId(value?project.id:null)}/>
           </div>
         </article>
       })}
