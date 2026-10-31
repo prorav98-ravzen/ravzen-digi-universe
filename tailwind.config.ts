@@ -7,6 +7,8 @@ import type { Config } from 'tailwindcss'
  * Every token here maps to a CSS variable in globals.css.
  * Components reference tokens by name, never by raw values.
  */
+const studioOrange = { ...colors.orange, 400: '#ff5200', 500: '#e94b00' }
+
 const config: Config = {
   darkMode: ['class'],
   content: [
@@ -18,9 +20,9 @@ const config: Config = {
     extend: {
       // ── Colors ───────────────────────────────────────────────────────────
       colors: {
-        fuchsia: colors.orange,
-        purple: colors.orange,
-        violet: colors.orange,
+        fuchsia: studioOrange,
+        purple: studioOrange,
+        violet: studioOrange,
         // Universe background palette
         universe: {
           void:   '#03040a', // deepest background
