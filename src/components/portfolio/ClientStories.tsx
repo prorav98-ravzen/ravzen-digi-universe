@@ -26,7 +26,7 @@ export default function ClientStories({stories}:{stories:ClientStory[]}) {
       </div>
       <p className="text-xs text-white/50">{stories.length} approved client {stories.length===1?'story':'stories'}</p>
     </div>
-    <div className="relative overflow-hidden rounded-3xl border border-fuchsia-400/25 bg-gradient-to-br from-[#2d1c13] via-[#151420] to-[#101b29] p-6 shadow-[0_15px_70px_rgba(249,115,22,.10)] sm:p-10" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node))setPaused(false)}}>
+    <div className="relative overflow-hidden rounded-3xl border border-fuchsia-400/25 bg-gradient-to-br from-[#2d1c13] via-[#151420] to-[#101b29] p-6 shadow-[0_15px_70px_rgba(255,82,0,.10)] sm:p-10" onMouseEnter={()=>setPaused(true)} onMouseLeave={()=>setPaused(false)} onFocusCapture={()=>setPaused(true)} onBlurCapture={event=>{if(!event.currentTarget.contains(event.relatedTarget as Node))setPaused(false)}}>
       <div className="pointer-events-none absolute -right-20 -top-24 h-72 w-72 rounded-full bg-fuchsia-500/10 blur-3xl" aria-hidden="true"/>
       <div className="relative min-h-56" aria-live="off">
         <div className="flex flex-wrap items-center gap-3">

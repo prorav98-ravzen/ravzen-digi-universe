@@ -21,23 +21,23 @@
     /* Energy spectrum — primary interaction palette */
     --color-energy-white:  #f8faff;
     --color-energy-blue:   #4d7fff;
-    --color-energy-violet: #ea580c;
+    --color-energy-violet: #ff5200;
     --color-energy-cyan:   #00d4ff;
     --color-energy-green:  #00ff87;
     --color-energy-gold:   #ffb800;
-    --color-energy-orange: #ff6b35;
+    --color-energy-orange: #ff5200;
     --color-energy-pink:   #ff4d9d;
-    --color-energy-purple: #f97316;
+    --color-energy-purple: #ff5200;
 
     /* Zone identity gradients (CSS custom properties for gradient stops) */
-    --zone-design-from:   #f97316;
+    --zone-design-from:   #ff5200;
     --zone-design-to:     #ff4d9d;
     --zone-android-from:  #00ff87;
     --zone-android-to:    #00d4ff;
     --zone-software-from: #4d7fff;
-    --zone-software-to:   #ea580c;
+    --zone-software-to:   #ff5200;
     --zone-system-from:   #ffb800;
-    --zone-system-to:     #ff6b35;
+    --zone-system-to:     #ff5200;
 
     /* Glass morphism surfaces */
     --glass-bg:       rgba(255, 255, 255, 0.04);
@@ -195,7 +195,7 @@
     background: linear-gradient(
       135deg,
       rgba(77, 127, 255, 0.1)  0%,
-      rgba(234, 88, 12, 0.1) 100%
+      rgba(255,82,0, 0.1) 100%
     );
     opacity: 0;
     transition: opacity 300ms var(--ease-smooth);
@@ -663,13 +663,13 @@ a,
 .studio-aurora {
   position: absolute; inset: 0 0 auto; height: min(950px, 120vh);
   pointer-events: none; z-index: -1; overflow: hidden;
-  background: radial-gradient(ellipse 48% 38% at 16% 24%, rgba(249,115,22,.14), transparent 78%),
+  background: radial-gradient(ellipse 48% 38% at 16% 24%, rgba(255,82,0,.14), transparent 78%),
               radial-gradient(ellipse 42% 45% at 85% 48%, rgba(34,211,238,.09), transparent 78%);
   animation: studio-aurora-drift 16s ease-in-out infinite alternate;
 }
 @keyframes studio-aurora-drift { from { opacity: .7; transform: translate3d(-1%,0,0); } to { opacity: 1; transform: translate3d(1%,2%,0); } }
 .studio-gradient-heading {
-  background: linear-gradient(105deg, #fff 8%, #fff 36%, #fed7aa 49%, #86e8f4 59%, #fff 75%);
+  background: linear-gradient(105deg, #fff 8%, #fff 36%, #ff5200 49%, #86e8f4 59%, #fff 75%);
   background-size: 210% 100%; background-position: 100% 50%;
   -webkit-background-clip: text; background-clip: text; color: transparent;
   animation: studio-type-shimmer 13s ease-in-out infinite alternate;
@@ -682,7 +682,7 @@ a,
   opacity: 0; transition: opacity .25s ease;
 }
 @media (hover:hover) and (pointer:fine) {
-  .studio-glow-card:hover { border-color: rgba(255,82,0,.42); box-shadow: 0 15px 45px rgba(154,65,14,.12); transform: translateY(-3px); }
+  .studio-glow-card:hover { border-color: rgba(255,82,0,.42); box-shadow: 0 15px 45px rgba(255,82,0,.12); transform: translateY(-3px); }
   .studio-glow-card:hover::before { opacity: 1; }
 }
 .studio-glow-card:focus-within { border-color: rgba(255,82,0,.6); }
@@ -716,7 +716,7 @@ a,
 }
 
 /* Premium reading progress, compositor-only transform */
-.studio-scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 90; pointer-events: none; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg,#fdba74,#ff5200,#22d3ee); box-shadow: 0 0 9px rgba(255,82,0,.5); }
+.studio-scroll-progress { position: fixed; top: 0; left: 0; width: 100%; height: 2px; z-index: 90; pointer-events: none; transform-origin: left; transform: scaleX(0); background: linear-gradient(90deg,#ff5200,#ff5200,#22d3ee); box-shadow: 0 0 9px rgba(255,82,0,.5); }
 
 
 /* Mobile-first polish without extra client-side libraries */
@@ -756,7 +756,7 @@ a,
   .studio-glow-card.studio-glow-active {
     transform: translate3d(var(--magnet-x), calc(-5px + var(--magnet-y)), 0);
     border-color: rgba(255,82,0,.62);
-    box-shadow: 0 20px 55px rgba(154,65,14,.24), 0 0 32px rgba(34,211,238,.10);
+    box-shadow: 0 20px 55px rgba(255,82,0,.24), 0 0 32px rgba(34,211,238,.10);
   }
   .studio-glow-card.studio-glow-active::before {
     opacity: 1;
@@ -765,7 +765,7 @@ a,
   .studio-glow-card.studio-glow-active::after { opacity: 1; }
 }
 @media (hover:none), (pointer:coarse) {
-  .studio-glow-card { border-color: rgba(255,82,0,.22); box-shadow: 0 10px 35px rgba(154,65,14,.10); }
+  .studio-glow-card { border-color: rgba(255,82,0,.22); box-shadow: 0 10px 35px rgba(255,82,0,.10); }
   .studio-glow-card::before { opacity: .48; background: radial-gradient(340px circle at 50% 0%, rgba(255,82,0,.14), transparent 80%); }
 }
 @media (prefers-reduced-motion:reduce) {

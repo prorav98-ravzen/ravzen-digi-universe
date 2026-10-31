@@ -1,4 +1,3 @@
-import colors from 'tailwindcss/colors'
 import type { Config } from 'tailwindcss'
 
 /**
@@ -7,7 +6,12 @@ import type { Config } from 'tailwindcss'
  * Every token here maps to a CSS variable in globals.css.
  * Components reference tokens by name, never by raw values.
  */
-const studioOrange = { ...colors.orange, 400: '#ff5200', 500: '#e94b00' }
+const brandOrange = '#ff5200'
+const studioOrange = {
+  50: brandOrange, 100: brandOrange, 200: brandOrange, 300: brandOrange,
+  400: brandOrange, 500: brandOrange, 600: brandOrange,
+  700: '#b83b00', 800: '#822a00', 900: '#521a00', 950: '#290d00',
+}
 
 const config: Config = {
   darkMode: ['class'],
@@ -20,6 +24,7 @@ const config: Config = {
     extend: {
       // ── Colors ───────────────────────────────────────────────────────────
       colors: {
+        orange: studioOrange,
         fuchsia: studioOrange,
         purple: studioOrange,
         violet: studioOrange,
@@ -34,20 +39,20 @@ const config: Config = {
         energy: {
           white:  '#f8faff',
           blue:   '#4d7fff',
-          violet: '#ea580c',
+          violet: '#ff5200',
           cyan:   '#00d4ff',
           green:  '#00ff87',
           gold:   '#ffb800',
-          orange: '#ff6b35',
+          orange: '#ff5200',
           pink:   '#ff4d9d',
-          purple: '#f97316',
+          purple: '#ff5200',
         },
         // Zone identity colors (future use — defined now so tokens are stable)
         zone: {
-          design:   { from: '#f97316', to: '#ff4d9d' },
+          design:   { from: '#ff5200', to: '#ff4d9d' },
           android:  { from: '#00ff87', to: '#00d4ff' },
-          software: { from: '#4d7fff', to: '#ea580c' },
-          system:   { from: '#ffb800', to: '#ff6b35' },
+          software: { from: '#4d7fff', to: '#ff5200' },
+          system:   { from: '#ffb800', to: '#ff5200' },
         },
         // Glass morphism surface colors
         glass: {
@@ -103,7 +108,7 @@ const config: Config = {
       // ── Glow box shadows ──────────────────────────────────────────────────
       boxShadow: {
         'glow-blue':   '0 0 20px rgba(77,127,255,0.4),  0 0 60px rgba(77,127,255,0.1)',
-        'glow-violet': '0 0 20px rgba(234,88,12,0.4),  0 0 60px rgba(234,88,12,0.1)',
+        'glow-violet': '0 0 20px rgba(255,82,0,0.4),  0 0 60px rgba(255,82,0,0.1)',
         'glow-cyan':   '0 0 20px rgba(0,212,255,0.4),   0 0 60px rgba(0,212,255,0.1)',
         'glow-green':  '0 0 20px rgba(0,255,135,0.4),   0 0 60px rgba(0,255,135,0.1)',
         'glow-gold':   '0 0 20px rgba(255,184,0,0.4),   0 0 60px rgba(255,184,0,0.1)',
@@ -116,12 +121,12 @@ const config: Config = {
       // ── Gradient backgrounds ──────────────────────────────────────────────
       backgroundImage: {
         'universe-void':    'radial-gradient(ellipse at center, #060918 0%, #03040a 100%)',
-        'nebula-purple':    'radial-gradient(ellipse 60% 40% at 20% 50%, rgba(234,88,12,0.07) 0%, transparent 70%)',
+        'nebula-purple':    'radial-gradient(ellipse 60% 40% at 20% 50%, rgba(255,82,0,0.07) 0%, transparent 70%)',
         'nebula-cyan':      'radial-gradient(ellipse 50% 60% at 80% 30%, rgba(0,212,255,0.05) 0%, transparent 70%)',
-        'gradient-design':  'linear-gradient(135deg, #f97316 0%, #ff4d9d 100%)',
+        'gradient-design':  'linear-gradient(135deg, #ff5200 0%, #ff4d9d 100%)',
         'gradient-android': 'linear-gradient(135deg, #00ff87 0%, #00d4ff 100%)',
-        'gradient-software':'linear-gradient(135deg, #4d7fff 0%, #ea580c 100%)',
-        'gradient-system':  'linear-gradient(135deg, #ffb800 0%, #ff6b35 100%)',
+        'gradient-software':'linear-gradient(135deg, #4d7fff 0%, #ff5200 100%)',
+        'gradient-system':  'linear-gradient(135deg, #ffb800 0%, #ff5200 100%)',
         'grid-fine': [
           'linear-gradient(rgba(77,127,255,0.04) 1px, transparent 1px)',
           'linear-gradient(90deg, rgba(77,127,255,0.04) 1px, transparent 1px)',
