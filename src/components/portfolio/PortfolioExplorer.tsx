@@ -18,7 +18,7 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
   const [category,setCategory]=useState('All')
   const [favorites,setFavorites]=useState<string[]>([])
   const [onlySaved,setOnlySaved]=useState(false)
-  const [sort,setSort]=useState('featured')
+  const [sort,setSort]=useState('newest')
   useEffect(()=>{setFavorites(readFavorites())},[])
   const categories=useMemo(()=>['All',...Array.from(new Set(projects.map(p=>p.category?.name||'Creative design'))).sort()], [projects])
   const visible=useMemo(()=>{
@@ -46,7 +46,7 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
           <select value={category} onChange={e=>setCategory(e.target.value)} className="w-full rounded-xl border border-white/20 bg-[#11111b] px-4 py-3 text-sm text-white focus:border-fuchsia-400 md:min-w-40">{categories.map(c=><option key={c} value={c}>{c}</option>)}</select>
         </label>
         <label className="block"><span className="mb-2 block text-xs font-semibold text-white/65">Sort by</span>
-          <select value={sort} onChange={e=>setSort(e.target.value)} className="w-full rounded-xl border border-white/20 bg-[#11111b] px-4 py-3 text-sm text-white focus:border-fuchsia-400"><option value="featured">Featured order</option><option value="title">Name A–Z</option><option value="price">Lowest listed price</option></select>
+          <select value={sort} onChange={e=>setSort(e.target.value)} className="w-full rounded-xl border border-white/20 bg-[#11111b] px-4 py-3 text-sm text-white focus:border-fuchsia-400"><option value="newest">Newest first</option><option value="title">Name A–Z</option><option value="price">Lowest listed price</option></select>
         </label>
       </div>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
