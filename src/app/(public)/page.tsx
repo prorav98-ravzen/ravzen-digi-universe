@@ -60,7 +60,7 @@ export default async function HomePage() {
   const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', [RESOURCE_KEY,'studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary','social_instagram','social_facebook','studio_completed_projects','studio_experience_years','studio_client_count','studio_upcoming_projects','studio_upcoming_features', ...[1, 2, 3].flatMap(i => [`studio_review_${i}_name`, `studio_review_${i}_quote`, `studio_review_${i}_rating`])])
   const settings = Object.fromEntries((settingRows ?? []).map(row => [row.key, row.value]))
   const hex = (value: string | undefined, fallback: string) => value && /^#[0-9a-fA-F]{6}$/.test(value) ? value : fallback
-  const accent = hex(settings.studio_accent_color, '#e879f9')
+  const accent = hex(settings.studio_accent_color, '#fb923c')
   const background = hex(settings.studio_background_color, '#090910')
   const fontScale = Math.max(80, Math.min(125, Number(settings.studio_font_scale) || 100))
   const stats = [

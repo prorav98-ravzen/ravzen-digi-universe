@@ -68,7 +68,7 @@ export default function ArtworkReviews({ artworkId, imageIndex = 0, view = 'writ
       </label>
       <p id={formId+'-length'} className="text-xs text-white/65">අවම අකුරු 10ක් · At least 10 characters ({body.trim().length}/2000)</p>
       <label className="flex items-start gap-3 text-xs leading-5 text-white/75"><input type="checkbox" checked={consent} onChange={e=>setConsent(e.target.checked)} required className="mt-1 h-5 w-5 shrink-0 accent-fuchsia-400"/><span>අනුමත කිරීමෙන් පසු මගේ නම, ඇගයීම සහ අදහස පළ කිරීමට එකඟයි.<br/>I agree to publish my name, rating and review after approval.</span></label>
-      <button type="submit" disabled={busy} className="min-h-12 w-full rounded-xl bg-fuchsia-300 px-4 py-3 font-bold text-[#190d20] hover:bg-fuchsia-200 disabled:opacity-60">{busy?'යවමින්… / Sending…':'අදහස යවන්න · Send review →'}</button>
+      <button type="submit" disabled={busy} className="min-h-12 w-full rounded-xl bg-fuchsia-300 px-4 py-3 font-bold text-[#20150d] hover:bg-fuchsia-200 disabled:opacity-60">{busy?'යවමින්… / Sending…':'අදහස යවන්න · Send review →'}</button>
       {message && <p role="status" className="rounded-lg border border-fuchsia-300/30 bg-fuchsia-400/10 p-3 leading-6 text-fuchsia-100">{message}</p>}
       <p className="text-xs leading-5 text-white/60">ඔබේ අදහස අනුමත කළ පසු පෙන්වනු ඇත. / Reviews appear after approval.</p>
     </form>

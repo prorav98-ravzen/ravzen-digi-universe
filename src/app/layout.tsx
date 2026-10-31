@@ -151,7 +151,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             var x=e.clientX,y=e.clientY;
             var ripple=document.createElement('span');
             ripple.setAttribute('aria-hidden','true');
-            ripple.style.cssText='position:fixed;left:'+x+'px;top:'+y+'px;width:12px;height:12px;border:1.5px solid rgba(232,121,249,.6);border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:.8;';
+            ripple.style.cssText='position:fixed;left:'+x+'px;top:'+y+'px;width:12px;height:12px;border:1.5px solid rgba(251,146,60,.6);border-radius:50%;background:radial-gradient(circle,rgba(34,211,238,.12),transparent 70%);pointer-events:none;z-index:2147483646;transform:translate(-50%,-50%) scale(.2);opacity:.8;';
             document.body.appendChild(ripple);
             var animation=ripple.animate([{transform:'translate(-50%,-50%) scale(.2)',opacity:.8},{transform:'translate(-50%,-50%) scale(18)',opacity:0}],{duration:650,easing:'cubic-bezier(.15,.65,.2,1)'});
             animation.onfinish=function(){ripple.remove()};

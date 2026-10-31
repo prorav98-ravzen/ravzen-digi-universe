@@ -61,7 +61,7 @@ export default function GalleryFeedback({ artworkId, title, images, hideInlineGa
     </div>}
     <div className="mt-4 rounded-xl border border-fuchsia-300/25 bg-fuchsia-400/[.06] p-4">
       <p className="mb-3 text-sm text-white/80">මේ නිර්මාණය ගැන ඔබේ අදහස කියන්න</p>
-      <button type="button" aria-expanded={reviewView==='write'} aria-controls={'reviews-'+artworkId} onClick={()=>{setSelected(0);setReviewView(reviewView==='write'?null:'write')}} className="w-full rounded-xl bg-fuchsia-300 px-4 py-3 text-center text-sm font-bold text-[#190d20] transition hover:bg-fuchsia-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-200">
+      <button type="button" aria-expanded={reviewView==='write'} aria-controls={'reviews-'+artworkId} onClick={()=>{setSelected(0);setReviewView(reviewView==='write'?null:'write')}} className="w-full rounded-xl bg-fuchsia-300 px-4 py-3 text-center text-sm font-bold text-[#20150d] transition hover:bg-fuchsia-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-fuchsia-200">
         <span className="block">★ ඔබේ අදහස ලියන්න</span><span className="mt-1 block text-xs">{reviewView==='write'?'Close review form −':'Write a review →'}</span>
       </button>
       <button type="button" aria-expanded={reviewView==='read'} aria-controls={'reviews-'+artworkId} onClick={()=>{setSelected(0);setReviewView(reviewView==='read'?null:'read')}} className="mt-2 min-h-11 w-full rounded-lg px-2 py-2 text-sm text-fuchsia-200 underline underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-300">අනෙක් අයගේ අදහස් බලන්න · Read reviews</button>

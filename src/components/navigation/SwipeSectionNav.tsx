@@ -51,7 +51,7 @@ export default function SwipeSectionNav() {
           <a key={section.id} ref={node => { refs.current[section.id] = node }} href={`#${section.id}`}
             aria-current={active === section.id ? 'location' : undefined}
             onClick={() => setActive(section.id)}
-            className={`shrink-0 snap-center whitespace-nowrap rounded-full px-4 py-2.5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-300 md:px-3 ${active === section.id ? 'bg-fuchsia-300 text-[#130c1a]' : 'text-white/65 hover:bg-white/10 hover:text-white'}`}>
+            className={`shrink-0 snap-center whitespace-nowrap rounded-full px-4 py-2.5 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-300 md:px-3 ${active === section.id ? 'bg-fuchsia-300 text-[#1a110c]' : 'text-white/65 hover:bg-white/10 hover:text-white'}`}>
             {section.label}
           </a>
         ))}

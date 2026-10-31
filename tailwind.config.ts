@@ -1,3 +1,4 @@
+import colors from 'tailwindcss/colors'
 import type { Config } from 'tailwindcss'
 
 /**
@@ -17,6 +18,9 @@ const config: Config = {
     extend: {
       // ── Colors ───────────────────────────────────────────────────────────
       colors: {
+        fuchsia: colors.orange,
+        purple: colors.orange,
+        violet: colors.orange,
         // Universe background palette
         universe: {
           void:   '#03040a', // deepest background
@@ -28,19 +32,19 @@ const config: Config = {
         energy: {
           white:  '#f8faff',
           blue:   '#4d7fff',
-          violet: '#7c5cfc',
+          violet: '#ea580c',
           cyan:   '#00d4ff',
           green:  '#00ff87',
           gold:   '#ffb800',
           orange: '#ff6b35',
           pink:   '#ff4d9d',
-          purple: '#b44dff',
+          purple: '#f97316',
         },
         // Zone identity colors (future use — defined now so tokens are stable)
         zone: {
-          design:   { from: '#b44dff', to: '#ff4d9d' },
+          design:   { from: '#f97316', to: '#ff4d9d' },
           android:  { from: '#00ff87', to: '#00d4ff' },
-          software: { from: '#4d7fff', to: '#7c5cfc' },
+          software: { from: '#4d7fff', to: '#ea580c' },
           system:   { from: '#ffb800', to: '#ff6b35' },
         },
         // Glass morphism surface colors
@@ -97,7 +101,7 @@ const config: Config = {
       // ── Glow box shadows ──────────────────────────────────────────────────
       boxShadow: {
         'glow-blue':   '0 0 20px rgba(77,127,255,0.4),  0 0 60px rgba(77,127,255,0.1)',
-        'glow-violet': '0 0 20px rgba(124,92,252,0.4),  0 0 60px rgba(124,92,252,0.1)',
+        'glow-violet': '0 0 20px rgba(234,88,12,0.4),  0 0 60px rgba(234,88,12,0.1)',
         'glow-cyan':   '0 0 20px rgba(0,212,255,0.4),   0 0 60px rgba(0,212,255,0.1)',
         'glow-green':  '0 0 20px rgba(0,255,135,0.4),   0 0 60px rgba(0,255,135,0.1)',
         'glow-gold':   '0 0 20px rgba(255,184,0,0.4),   0 0 60px rgba(255,184,0,0.1)',
@@ -110,11 +114,11 @@ const config: Config = {
       // ── Gradient backgrounds ──────────────────────────────────────────────
       backgroundImage: {
         'universe-void':    'radial-gradient(ellipse at center, #060918 0%, #03040a 100%)',
-        'nebula-purple':    'radial-gradient(ellipse 60% 40% at 20% 50%, rgba(124,92,252,0.07) 0%, transparent 70%)',
+        'nebula-purple':    'radial-gradient(ellipse 60% 40% at 20% 50%, rgba(234,88,12,0.07) 0%, transparent 70%)',
         'nebula-cyan':      'radial-gradient(ellipse 50% 60% at 80% 30%, rgba(0,212,255,0.05) 0%, transparent 70%)',
-        'gradient-design':  'linear-gradient(135deg, #b44dff 0%, #ff4d9d 100%)',
+        'gradient-design':  'linear-gradient(135deg, #f97316 0%, #ff4d9d 100%)',
         'gradient-android': 'linear-gradient(135deg, #00ff87 0%, #00d4ff 100%)',
-        'gradient-software':'linear-gradient(135deg, #4d7fff 0%, #7c5cfc 100%)',
+        'gradient-software':'linear-gradient(135deg, #4d7fff 0%, #ea580c 100%)',
         'gradient-system':  'linear-gradient(135deg, #ffb800 0%, #ff6b35 100%)',
         'grid-fine': [
           'linear-gradient(rgba(77,127,255,0.04) 1px, transparent 1px)',
