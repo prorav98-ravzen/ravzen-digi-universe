@@ -31,8 +31,8 @@ export default async function HomePage() {
     .from('design_projects')
     .select('id,title,slug,short_description,cover_image_url,gallery_urls,price,currency,category:categories(name)')
     .eq('status', 'published')
-    .order('sort_order', { ascending: true })
     .order('created_at', { ascending: false })
+    .order('id', { ascending: true })
   const projects = error ? [] : (data ?? []) as unknown as Project[]
   const { data: approvedRatings } = await supabase.from('artwork_reviews').select('rating').eq('status', 'approved')
   const ratings = (approvedRatings ?? []).map(row => Number(row.rating)).filter(rating => Number.isFinite(rating) && rating >= 1 && rating <= 5)
