@@ -160,6 +160,16 @@ export default async function HomePage() {
 
       <CredentialsSection />
 
+      <aside id="ravzen-services-ad" aria-label="RAVZEN Graphic advertisement" className="mx-auto max-w-3xl scroll-mt-32 px-5 pb-24 md:px-10">
+        <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
+          <span className="rounded-full border border-orange-400/40 bg-orange-400/10 px-4 py-2 text-xs font-bold text-orange-300">Advertisement / දැන්වීම</span>
+          <span className="text-xs font-semibold tracking-wide text-white/60">RAVZEN Graphic</span>
+        </div>
+        <a href={settings.social_facebook || 'https://www.facebook.com/share/1DmiMk4N5Q/'} target="_blank" rel="noopener noreferrer" aria-label="RAVZEN Graphic advertisement — visit our Facebook page (opens in a new tab)" className="group block overflow-hidden rounded-2xl border border-white/15 bg-white/[.04] shadow-xl transition hover:border-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400">
+          <img src="https://vcgmxsbckiodxzxpmiay.supabase.co/storage/v1/object/public/media/portfolio/bb6e5c82-a8bc-4b49-a06f-377644bfc185/1ee37580-ebbe-4a1f-b467-1849c3172024.webp" alt="RAVZEN Graphic — packaging, label, editorial, social media, advertising and brand identity design services" width={1536} height={1536} loading="lazy" decoding="async" className="block h-auto w-full" />
+          <span className="flex items-center justify-between gap-3 px-5 py-4 text-sm font-semibold text-white"><span>Visit our Facebook page</span><span aria-hidden="true" className="text-orange-300">↗</span></span>
+        </a>
+      </aside>
 
       {upcoming.length > 0 && <section aria-label="What's next" className="mx-auto grid max-w-7xl gap-7 px-5 pb-24 md:grid-cols-2 md:px-10">
         {upcoming.map(group => <div key={group.title} className="rounded-2xl border border-white/10 p-8">
