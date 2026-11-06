@@ -24,8 +24,8 @@ export default function DigitalResources({ items, whatsapp }: { items: Resource[
       const expanded = expandedIds.includes(item.id)
       const hasMore = item.description.length > 170
       return <article id={`resource-${item.id}`} key={item.id} className="flex min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[.035]">
-        <div className={`relative flex ${item.id === '7ef9d9f5-1cc4-4aa5-9d4d-4e7b3b8730c9' ? 'aspect-[3/2]' : 'aspect-[4/3]'} items-center justify-center overflow-hidden bg-gradient-to-br from-fuchsia-950 via-[#261b13] to-indigo-950`}>
-          {item.coverUrl ? <img src={item.coverUrl} alt={item.title} loading="lazy" referrerPolicy="no-referrer" className="h-full w-full object-cover" /> : <BookOpen className="h-16 w-16 text-fuchsia-200/70" aria-hidden="true" />}
+        <div className={`relative flex ${['7ef9d9f5-1cc4-4aa5-9d4d-4e7b3b8730c9', '769fbb66-b427-4a41-864d-bb4228f83903'].includes(item.id) ? 'aspect-[3/2]' : 'aspect-[4/3]'} items-center justify-center overflow-hidden bg-gradient-to-br from-fuchsia-950 via-[#261b13] to-indigo-950`}>
+          {item.coverUrl ? <img src={item.coverUrl} alt={item.title} loading="lazy" referrerPolicy="no-referrer" className={`h-full w-full ${item.id === '769fbb66-b427-4a41-864d-bb4228f83903' ? 'object-contain' : 'object-cover'}`} /> : <BookOpen className="h-16 w-16 text-fuchsia-200/70" aria-hidden="true" />}
           <span className={`absolute right-4 top-4 rounded-full px-3 py-1.5 text-xs font-bold ${item.access === 'free' ? 'bg-emerald-200 text-emerald-950' : 'bg-fuchsia-200 text-fuchsia-950'}`}>{item.access === 'free' ? 'FREE' : 'PAID'}</span>
         </div>
         <div className="flex flex-1 flex-col p-6">
