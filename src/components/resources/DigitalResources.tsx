@@ -20,12 +20,14 @@ export default function DigitalResources({ items, whatsapp }: { items: Resource[
       <label className="w-full sm:w-72"><span className="sr-only">Search digital resources</span><input type="search" value={query} onChange={e => setQuery(e.target.value)} placeholder="Search courses & products…" className="w-full rounded-full border border-white/20 bg-white/5 px-5 py-3 text-sm text-white focus:border-fuchsia-300" /></label>
     </div>
     {visible.length ? <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">{visible.map(item => {
+      const isAtsBuilder = item.id === 'c90ccf2d-ec34-45b7-8da7-12496ad9b926'
+      const atsOffer = isAtsBuilder && item.access === 'paid' && item.status === 'available' && item.price > 0 && item.price < 5000
       const action = resourceAction(item, whatsapp)
       const expanded = expandedIds.includes(item.id)
       const hasMore = item.description.length > 170
       return <article id={`resource-${item.id}`} key={item.id} className="flex min-w-0 flex-col overflow-hidden rounded-3xl border border-white/10 bg-white/[.035]">
-        <div className={`relative flex ${['7ef9d9f5-1cc4-4aa5-9d4d-4e7b3b8730c9', '769fbb66-b427-4a41-864d-bb4228f83903'].includes(item.id) ? 'aspect-[3/2]' : 'aspect-[4/3]'} items-center justify-center overflow-hidden bg-gradient-to-br from-fuchsia-950 via-[#261b13] to-indigo-950`}>
-          {item.coverUrl ? <img src={item.coverUrl} alt={item.title} loading="lazy" referrerPolicy="no-referrer" className={`h-full w-full ${item.id === '769fbb66-b427-4a41-864d-bb4228f83903' ? 'object-contain' : 'object-cover'}`} /> : <BookOpen className="h-16 w-16 text-fuchsia-200/70" aria-hidden="true" />}
+        <div className={`relative flex ${['7ef9d9f5-1cc4-4aa5-9d4d-4e7b3b8730c9', '769fbb66-b427-4a41-864d-bb4228f83903', 'c90ccf2d-ec34-45b7-8da7-12496ad9b926'].includes(item.id) ? 'aspect-[3/2]' : 'aspect-[4/3]'} items-center justify-center overflow-hidden bg-gradient-to-br from-fuchsia-950 via-[#261b13] to-indigo-950`}>
+          {item.coverUrl ? <img src={item.coverUrl} alt={item.title} loading="lazy" referrerPolicy="no-referrer" className={`h-full w-full ${isAtsBuilder || item.id === '769fbb66-b427-4a41-864d-bb4228f83903' ? 'object-contain' : 'object-cover'}`} /> : <BookOpen className="h-16 w-16 text-fuchsia-200/70" aria-hidden="true" />}
           <span className={`absolute right-4 top-4 rounded-full px-3 py-1.5 text-xs font-bold ${item.access === 'free' ? 'bg-emerald-200 text-emerald-950' : 'bg-fuchsia-200 text-fuchsia-950'}`}>{item.access === 'free' ? 'FREE' : 'PAID'}</span>
         </div>
         <div className="flex flex-1 flex-col p-6">
@@ -36,10 +38,10 @@ export default function DigitalResources({ items, whatsapp }: { items: Resource[
           </div>
           {hasMore && <button type="button" aria-expanded={expanded} aria-controls={`resource-details-${item.id}`} onClick={() => toggleDetails(item.id)} className="mt-3 inline-flex w-full items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/[.04] px-4 py-2.5 text-sm font-semibold text-fuchsia-200 transition-colors hover:border-fuchsia-300/60 hover:bg-white/[.08] focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-300">{expanded ? <>Show Less / අඩුවෙන් පෙන්වන්න <ChevronUp size={16} /></> : <>Read More / වැඩි විස්තර <ChevronDown size={16} /></>}</button>}
           <div className="mt-auto pt-6">
-            <p className="mb-4 text-lg font-bold">{item.status === 'coming-soon' ? 'Coming soon · ළඟදීම' : item.access === 'free' ? 'නොමිලේ / Free' : item.id === '7ef9d9f5-1cc4-4aa5-9d4d-4e7b3b8730c9' ? <><span className="mr-3 text-sm font-normal text-white/45 line-through">LKR 1,499</span><span className="text-emerald-300">LKR 300 · විශේෂ මිල</span></> : `LKR ${item.price.toLocaleString('en-LK')}`}</p>
+            <p className="mb-4 text-lg font-bold">{item.status === 'coming-soon' ? 'Coming soon · ළඟදීම' : item.access === 'free' ? 'නොමිලේ / Free' : atsOffer ? <><span className="block text-sm font-normal text-white/45">සාමාන්‍ය මිල <s>LKR 5,000</s></span><span className="text-emerald-300">LKR {item.price.toLocaleString('en-LK')} · විශේෂ මිල</span><span className="mt-2 block text-sm text-emerald-200">{Math.round((1 - item.price / 5000) * 100)}% OFF · ඔබට ඉතිරි වන මුදල රු.{(5000 - item.price).toLocaleString('en-LK')}</span></> : item.id === '7ef9d9f5-1cc4-4aa5-9d4d-4e7b3b8730c9' ? <><span className="mr-3 text-sm font-normal text-white/45 line-through">LKR 1,499</span><span className="text-emerald-300">LKR 300 · විශේෂ මිල</span></> : `LKR ${item.price.toLocaleString('en-LK')}`}</p>
             {action ? <a href={action} target="_blank" rel="noopener noreferrer" className={`flex items-center justify-center gap-2 rounded-xl px-4 py-3 text-center text-sm font-semibold leading-6 focus-visible:outline focus-visible:outline-2 focus-visible:outline-white ${item.access === 'free' ? 'bg-white text-black hover:bg-fuchsia-100' : 'bg-emerald-400 text-emerald-950 hover:bg-emerald-300'}`}>
               {item.access === 'free' ? <Download size={18} className="shrink-0" /> : <MessageCircle size={18} className="shrink-0" />}
-              {item.access === 'free' ? 'මෙතනින් download කරගන්න' : 'Buy Now / දැන්ම මිලදී ගන්න'}
+              {item.access === 'free' ? 'මෙතනින් download කරගන්න' : isAtsBuilder ? 'WhatsApp හරහා මිලදී ගන්න' : 'Buy Now / දැන්ම මිලදී ගන්න'}
             </a> : <p className="rounded-xl border border-white/10 p-3 text-center text-sm text-white/50">{item.status === 'coming-soon' ? 'සූදානම් වූ විට මෙහි පළ කරනු ලැබේ.' : 'Contact details will be available soon.'}</p>}
             <div className="mt-3 flex justify-end"><ShareResource id={item.id} title={item.title} /></div>
             {action && <p className="mt-3 text-xs leading-5 text-white/45">{item.access === 'free' ? 'Download page එක නව tab එකක විවෘත වේ.' : 'Chat එක විවෘත වූ පසු message එක යවන්න. ගෙවීම තහවුරු කිරීමෙන් පසු download link එක ලබාදේ.'}</p>}
