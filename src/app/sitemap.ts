@@ -10,5 +10,6 @@ export default function sitemap(): MetadataRoute.Sitemap {
       changeFrequency: 'monthly' as const,
       priority: 0.8,
     })),
+    { url: new URL('/resources/free-sinhala-fonts', SITE_CONFIG.url).toString(), changeFrequency: 'monthly', priority: 0.8 },
   ]
 }
