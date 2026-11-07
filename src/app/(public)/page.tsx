@@ -149,6 +149,12 @@ export default async function HomePage() {
         </div>
       </section>
 
+      <nav aria-label="Explore design services and resources" className="mx-auto max-w-7xl px-5 pb-12 md:px-10">
+        <a href="/explore" className="inline-flex items-center gap-2 rounded-full border border-orange-400/50 bg-orange-400/10 px-6 py-3 text-sm font-semibold text-orange-200 transition hover:border-orange-300 hover:bg-orange-400/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-400">
+          Explore all design services &amp; free resources <span aria-hidden="true">↗</span>
+        </a>
+      </nav>
+
       <DigitalResources items={parseCatalog(settings[RESOURCE_KEY])} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || "94781556575"} />
 
       <section aria-label="Winco Super City sponsored advertisement" className="mx-auto max-w-7xl px-5 pb-20 md:px-10">
