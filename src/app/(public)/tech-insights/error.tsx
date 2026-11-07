@@ -1,0 +1,2 @@
+'use client'
+export default function InsightsError({ reset }: { reset: () => void }) { return <div lang="si" className="rounded-2xl border border-white/15 p-8"><h1 className="text-2xl font-bold">ලිපි ලබාගැනීමට බාධාවක් තිබෙනවා</h1><p className="mt-4 leading-8 text-white/65">කරුණාකර මොහොතකින් නැවත උත්සාහ කරන්න.</p><button onClick={reset} className="mt-6 rounded-full border border-white/30 px-6 py-3">නැවත උත්සාහ කරන්න</button></div> }

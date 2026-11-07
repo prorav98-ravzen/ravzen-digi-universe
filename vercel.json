@@ -1,29 +1,31 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-
   "framework": "nextjs",
-
   "buildCommand": "next build",
   "outputDirectory": ".next",
   "installCommand": "npm ci",
-
-  "regions": ["iad1"],
-
+  "regions": [
+    "iad1"
+  ],
   "functions": {
     "src/app/api/**": {
       "maxDuration": 30
+    },
+    "src/app/api/cron/tech-insights/route.ts": {
+      "maxDuration": 300
     }
   },
-
   "headers": [
     {
       "source": "/api/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "no-store, no-cache, must-revalidate, proxy-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "no-store, no-cache, must-revalidate, proxy-revalidate"
+        }
       ]
     }
   ],
-
   "cleanUrls": true,
   "trailingSlash": false
 }

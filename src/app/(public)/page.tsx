@@ -1,3 +1,5 @@
+import { Suspense } from 'react'
+import InsightsSection from '@/components/insights/InsightsSection'
 import DigitalResources from '@/components/resources/DigitalResources'
 import { parseCatalog, RESOURCE_KEY } from '@/lib/resources/catalog'
 import type { Metadata } from 'next'
@@ -184,6 +186,8 @@ export default async function HomePage() {
           <ul className="mt-6 space-y-4 text-white/65">{group.items.map((item: string, index: number) => <li key={index} className="border-t border-white/10 pt-4">{item}</li>)}</ul>
         </div>)}
       </section>}
+
+      <Suspense fallback={null}><InsightsSection /></Suspense>
 
       <StudioFAQ />
       <ProjectInquiry whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ""} email={settings.email_primary || SITE_CONFIG.email || ""} />
