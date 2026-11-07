@@ -94,8 +94,10 @@ export default async function HomePage() {
       <section id="home" data-studio-reveal className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 md:px-10 md:pb-36 md:pt-36">
         <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-fuchsia-700/15 blur-3xl" aria-hidden="true" />
         <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-fuchsia-300">Independent creative studio · Sri Lanka</p>
-        <h1 className="studio-gradient-heading max-w-5xl text-5xl font-black leading-[1.08] tracking-tight md:text-7xl lg:text-8xl">
-          {settings.studio_hero_title ?? "Design that makes an impression."}
+        <h1 className="max-w-5xl text-5xl font-black leading-[1.08] tracking-tight text-white md:text-7xl lg:text-8xl">
+          <span>Imagine.</span>{' '}
+          <span className="text-orange-400">Create.</span>{' '}
+          <span>Evolve.</span>
         </h1>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Distinctive identities, premium packaging and striking visuals for brands ready to stand apart."}
