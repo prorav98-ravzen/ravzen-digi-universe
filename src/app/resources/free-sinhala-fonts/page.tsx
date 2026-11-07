@@ -19,7 +19,7 @@ export default function FreeSinhalaFontsPage() {
   return (
     <main className="min-h-screen bg-[#03040a] px-5 py-16 text-white sm:px-8">
       <div className="mx-auto max-w-4xl">
-        <Link href="/" className="text-sm text-orange-400 hover:underline">← RAVZEN Creative Studio</Link>
+        <Link href="/" className="text-sm text-orange-400 hover:underline">← RAVZEN Creative Studio</Link>\n        <Link href="/explore" className="ml-5 text-sm text-orange-400 hover:underline">Explore all services & resources</Link>
         <p className="mt-14 text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">Free Design Resources</p>
         <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">Free Sinhala Fonts Collection</h1>
         <p className="mt-6 max-w-2xl text-lg leading-relaxed text-gray-300">Discover font resources for Sinhala typography and creative design, alongside English and Tamil collections available through RAVZEN.</p>
