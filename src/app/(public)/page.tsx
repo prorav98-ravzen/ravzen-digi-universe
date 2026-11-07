@@ -1,4 +1,5 @@
 import { Suspense } from 'react'
+import { Cormorant_Garamond } from 'next/font/google'
 import InsightsSection from '@/components/insights/InsightsSection'
 import DigitalResources from '@/components/resources/DigitalResources'
 import { parseCatalog, RESOURCE_KEY } from '@/lib/resources/catalog'
@@ -14,6 +15,13 @@ import ClientStories, { type ClientStory } from '@/components/portfolio/ClientSt
 import CredentialsSection from '@/components/portfolio/CredentialsSection'
 import StudioMotion from '@/components/portfolio/StudioMotion'
 import SwipeSectionNav from '@/components/navigation/SwipeSectionNav'
+
+const heroFont = Cormorant_Garamond({
+  subsets: ['latin'],
+  weight: '400',
+  style: ['normal', 'italic'],
+  display: 'swap',
+})
 
 export const metadata: Metadata = {
   title: 'RAVZEN — Premium Creative Studio',
@@ -94,10 +102,10 @@ export default async function HomePage() {
       <section id="home" data-studio-reveal className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 md:px-10 md:pb-36 md:pt-36">
         <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-[#B76E3B]/10 blur-3xl" aria-hidden="true" />
         <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-[#E9A46B]">Independent creative studio · Sri Lanka</p>
-        <h1 className="max-w-5xl text-5xl font-black leading-[1.08] tracking-tight text-white md:text-7xl lg:text-8xl">
-          <span>Imagine.</span>{' '}
-          <span className="text-[#E9A46B]">Create.</span>{' '}
-          <span>Evolve.</span>
+        <h1 className={`${heroFont.className} max-w-5xl text-5xl font-normal leading-[1.12] tracking-[-.025em] text-white md:text-7xl lg:text-8xl`}>
+          <span className="inline-block">Imagine.</span>{' '}
+          <span className="inline-block font-normal italic text-[#E9A46B]">Create.</span>{' '}
+          <span className="inline-block">Evolve.</span>
         </h1>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Distinctive identities, premium packaging and striking visuals for brands ready to stand apart."}
