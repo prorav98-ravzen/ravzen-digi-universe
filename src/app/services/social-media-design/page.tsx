@@ -11,18 +11,21 @@ export const metadata: Metadata = {
 }
 
 export default function ServicePage() {
-  return <main className="min-h-screen bg-[#03040a] px-5 py-16 text-white sm:px-8"><div className="mx-auto max-w-4xl">
-    <Link href="/" className="text-sm text-orange-400 hover:underline">← RAVZEN Creative Studio</Link>
-        <Link href="/explore" className="ml-5 text-sm text-orange-400 hover:underline">Explore all services & resources</Link>
-    <p className="mt-14 text-sm font-semibold uppercase tracking-[0.25em] text-orange-400">Creative Services · Sri Lanka</p>
-    <h1 className="mt-4 text-4xl font-bold tracking-tight sm:text-6xl">Social Media Post Design in Sri Lanka</h1>
-    <p className="mt-6 max-w-2xl text-lg leading-relaxed text-gray-300">Make your brand stand out with purposeful social media graphics for campaigns, products and promotions.</p>
-    <Link href="/#contact" className="mt-8 inline-block rounded-lg bg-orange-500 px-6 py-3 font-semibold text-black hover:bg-orange-400">Request a design quote</Link>
-    <section className="mt-20" aria-labelledby="offerings"><h2 id="offerings" className="text-2xl font-semibold">What we offer</h2>
-    <ul className="mt-5 grid gap-4 sm:grid-cols-2"><li className="rounded-xl border border-white/15 bg-white/5 p-5"><h3 className="text-lg font-semibold">Facebook posts</h3><p className="mt-2 text-sm leading-relaxed text-gray-300">Clear promotional designs for your Facebook audience.</p></li>
-<li className="rounded-xl border border-white/15 bg-white/5 p-5"><h3 className="text-lg font-semibold">Instagram graphics</h3><p className="mt-2 text-sm leading-relaxed text-gray-300">Feed and story artwork tailored to your message.</p></li>
-<li className="rounded-xl border border-white/15 bg-white/5 p-5"><h3 className="text-lg font-semibold">Advertising creatives</h3><p className="mt-2 text-sm leading-relaxed text-gray-300">Campaign visuals built around your offer and brand.</p></li>
-<li className="rounded-xl border border-white/15 bg-white/5 p-5"><h3 className="text-lg font-semibold">Promotional artwork</h3><p className="mt-2 text-sm leading-relaxed text-gray-300">Graphics for launches, events and seasonal promotions.</p></li></ul></section>
-    <section className="mt-16 max-w-2xl"><h2 className="text-2xl font-semibold">Start your project</h2><p className="mt-4 leading-relaxed text-gray-300">Tell us about your business, goals, preferred style and required formats. We can discuss the scope and provide a quote based on your needs.</p><Link href="/#contact" className="mt-6 inline-block font-semibold text-orange-400 hover:underline">Contact RAVZEN →</Link></section>
-  </div></main>
+  return (
+    <main className="min-h-screen bg-[#03040a] px-5 py-16 text-white sm:px-8">
+      <div className="mx-auto max-w-3xl">
+        <Link href="/" className="text-sm text-orange-400 hover:underline">← RAVZEN Creative Studio</Link>
+        <p className="mt-20 text-xs font-semibold uppercase tracking-[0.2em] text-orange-400">Creative Services</p>
+        <h1 className="mt-4 text-4xl font-semibold tracking-tight sm:text-5xl">Social Media Design</h1>
+        <p className="mt-5 max-w-xl text-base leading-7 text-white/65">Creative social posts and promotional graphics that make an impression.</p>
+        <div className="mt-9 flex flex-wrap gap-3">
+          <Link href="/#contact" className="rounded-full bg-orange-400 px-6 py-3 text-sm font-semibold text-black transition-colors hover:bg-orange-300">Get a Quote</Link>
+          <Link href="/#work" className="rounded-full border border-white/20 px-6 py-3 text-sm font-medium text-white/85 transition-colors hover:border-white/50">View Our Work</Link>
+        </div>
+        <div className="mt-24 border-t border-white/10 pt-6">
+          <Link href="/explore" className="text-sm text-white/60 transition-colors hover:text-orange-400">← Explore more services</Link>
+        </div>
+      </div>
+    </main>
+  )
 }
