@@ -37,6 +37,9 @@ export const metadata: Metadata = {
   },
   description: SITE_CONFIG.description,
   metadataBase: new URL(SITE_CONFIG.url),
+  verification: {
+    google: 'VO23LmvT5amaby8GHNPkaoN15YEZC8qphmNFEn3GSg0',
+  },
   keywords: [
     'RAVZEN', 'creative studio', 'graphic design', 'logo design',
     'brand identity', 'packaging design', 'UI/UX design', 'branding',
