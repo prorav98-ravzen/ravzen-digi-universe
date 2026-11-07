@@ -27,11 +27,11 @@ export default function ShareArtwork({ artworkId, title }: { artworkId: string; 
       }
     }
   }
-  return <div className="mt-4">
+  return <div className="min-w-0">
     <button type="button" onClick={() => void share()} aria-label={'Share ' + title}
-      className="inline-flex items-center gap-2 rounded-full border border-fuchsia-400/40 bg-fuchsia-500/15 px-4 py-2 text-sm font-semibold text-fuchsia-100 transition hover:bg-fuchsia-500/25">
-      <span aria-hidden="true">↗</span> Share this artwork pack
+      className="inline-flex min-h-11 w-full items-center justify-center gap-1 rounded-lg px-1 text-xs font-semibold text-fuchsia-200 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">
+      <span aria-hidden="true">↗</span> Share
     </button>
-    {message && <p role="status" className="mt-2 text-xs text-emerald-300">{message}</p>}
+    {message && <p role="status" className="mt-1 break-words text-center text-xs text-emerald-300">{message}</p>}
   </div>
 }

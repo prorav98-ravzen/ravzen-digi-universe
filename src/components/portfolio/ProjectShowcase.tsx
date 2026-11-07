@@ -1,16 +1,23 @@
 'use client'
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import Link from 'next/link'
+import ShareArtwork from './ShareArtwork'
 import type { ClientStory } from './ClientStories'
 
-export default function ProjectShowcase({title,slug,description,category,images,stories}:{title:string;slug:string;description:string|null;category:string;images:string[];stories:ClientStory[]}) {
+export default function ProjectShowcase({artworkId,title,slug,description,category,images,stories}:{artworkId:string;title:string;slug:string;description:string|null;category:string;images:string[];stories:ClientStory[]}) {
+  const panelId=useId()
   const [open,setOpen]=useState(false)
   const [tab,setTab]=useState<'overview'|'feedback'|'process'>('overview')
-  return <div className="mt-4 rounded-xl border border-fuchsia-400/20 bg-gradient-to-br from-fuchsia-500/[.07] to-cyan-400/[.035]">
-    <button type="button" aria-expanded={open} onClick={()=>setOpen(v=>!v)} className="flex w-full items-center justify-between gap-3 px-4 py-3 text-left text-sm font-bold text-fuchsia-200 hover:text-white">
-      <span>✦ Explore this project</span><span aria-hidden="true">{open?'−':'+'}</span>
-    </button>
-    {open&&<div className="border-t border-white/10 px-4 pb-5 pt-4">
+  return <div className="mt-4 border-t border-white/10 pt-2">
+    <div className="grid grid-cols-3 items-start gap-1">
+      <Link href={'/projects/'+encodeURIComponent(slug)} aria-label={'View details for '+title} className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg px-1 text-xs font-semibold text-fuchsia-200 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">Details <span aria-hidden="true">↗</span></Link>
+      <button type="button" aria-label={'Explore '+title} aria-expanded={open} aria-controls={panelId} onClick={()=>setOpen(v=>!v)} className="inline-flex min-h-11 items-center justify-center gap-1 rounded-lg px-1 text-xs font-semibold text-fuchsia-200 transition hover:bg-white/5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">
+        <span>Explore</span><span aria-hidden="true">{open?'−':'+'}</span>
+      </button>
+      <ShareArtwork artworkId={artworkId} title={title}/>
+    </div>
+    <div id={panelId} hidden={!open}>
+    {open&&<div className="mt-2 rounded-xl border border-white/10 bg-white/[.025] px-4 pb-5 pt-4">
       <div className="flex flex-wrap gap-2" role="tablist" aria-label={title+' showcase'}>
         {(['overview','feedback','process'] as const).map(value=><button key={value} role="tab" type="button" aria-selected={tab===value} onClick={()=>setTab(value)} className={'rounded-full px-3 py-2 text-xs font-semibold capitalize '+(tab===value?'bg-fuchsia-400 text-black':'border border-white/15 text-white/70 hover:border-fuchsia-400')}>{value==='feedback'?('Feedback'+(stories.length?' ('+stories.length+')':'')):value==='process'?'Working together':value}</button>)}
       </div>
@@ -36,5 +43,6 @@ export default function ProjectShowcase({title,slug,description,category,images,
         <a href="#inquiry" className="inline-block text-fuchsia-200 underline underline-offset-4">Discuss a similar project ↗</a>
       </div>}
     </div>}
+    </div>
   </div>
 }
