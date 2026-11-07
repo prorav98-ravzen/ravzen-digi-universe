@@ -62,7 +62,7 @@ export default async function HomePage() {
   const { data: settingRows } = await supabase.from('site_settings').select('key,value').in('key', [RESOURCE_KEY,'studio_hero_title','studio_hero_description','studio_accent_color','studio_background_color','studio_font_scale','email_primary','whatsapp_primary','social_instagram','social_facebook','studio_completed_projects','studio_experience_years','studio_client_count','studio_upcoming_projects','studio_upcoming_features', ...[1, 2, 3].flatMap(i => [`studio_review_${i}_name`, `studio_review_${i}_quote`, `studio_review_${i}_rating`])])
   const settings = Object.fromEntries((settingRows ?? []).map(row => [row.key, row.value]))
   const hex = (value: string | undefined, fallback: string) => value && /^#[0-9a-fA-F]{6}$/.test(value) ? value : fallback
-  const accent = hex(settings.studio_accent_color, '#ff5200')
+  const accent = hex(settings.studio_accent_color, '#D88A4E')
   const background = hex(settings.studio_background_color, '#090910')
   const fontScale = Math.max(80, Math.min(125, Number(settings.studio_font_scale) || 100))
   const stats = [
@@ -80,46 +80,46 @@ export default async function HomePage() {
     { title: 'Coming to the studio', value: settings.studio_upcoming_features },
   ].map(group => ({ ...group, items: (group.value ?? '').split('\n').map((item: string) => item.trim()).filter(Boolean) })).filter(group => group.items.length)
   return (
-    <main className="studio-home relative isolate min-h-screen text-white selection:bg-fuchsia-500/40" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
+    <main className="studio-home relative isolate min-h-screen text-white selection:bg-[#D88A4E]/35" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
       <StudioMotion />
       <div className="studio-aurora" aria-hidden="true" />
       <header className="studio-site-header fixed inset-x-0 top-0 z-[80] border-b border-white/10 bg-[#090910]/95 shadow-lg shadow-black/20 backdrop-blur-xl">
         <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-3 md:flex-nowrap md:px-10 md:py-5" aria-label="Main navigation">
-          <a href="#home" className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap text-base font-black tracking-[.2em]" aria-label="RAVZEN — Home"><Image src="/images/ravzen-header-emblem.svg" alt="" width={26} height={21} className="h-[21px] w-[26px] shrink-0 object-contain" unoptimized /> <span>RAVZEN<span className="text-fuchsia-400">.</span></span></a>
+          <a href="#home" className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap text-base font-black tracking-[.2em]" aria-label="RAVZEN — Home"><Image src="/images/ravzen-header-emblem.svg" alt="" width={26} height={21} className="h-[21px] w-[26px] shrink-0 object-contain" unoptimized /> <span>RAVZEN<span className="text-[#E9A46B]">.</span></span></a>
           <SwipeSectionNav />
         </nav>
       </header>
       <div aria-hidden="true" className="h-[113px] md:h-[82px]" />
 
       <section id="home" data-studio-reveal className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 md:px-10 md:pb-36 md:pt-36">
-        <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-fuchsia-700/15 blur-3xl" aria-hidden="true" />
-        <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-fuchsia-300">Independent creative studio · Sri Lanka</p>
+        <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-[#B76E3B]/10 blur-3xl" aria-hidden="true" />
+        <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-[#E9A46B]">Independent creative studio · Sri Lanka</p>
         <h1 className="max-w-5xl text-5xl font-black leading-[1.08] tracking-tight text-white md:text-7xl lg:text-8xl">
           <span>Imagine.</span>{' '}
-          <span className="text-orange-400">Create.</span>{' '}
+          <span className="text-[#E9A46B]">Create.</span>{' '}
           <span>Evolve.</span>
         </h1>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Distinctive identities, premium packaging and striking visuals for brands ready to stand apart."}
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
-          <a href="#work" className="rounded-full bg-white px-7 py-3 text-sm font-bold text-black hover:bg-fuchsia-100">Explore the work ↗</a>
-          <a href="#inquiry" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-fuchsia-400">Start a project</a>
+          <a href="#work" className="rounded-full bg-white px-7 py-3 text-sm font-bold text-black hover:bg-[#F6E9DC]">Explore the work ↗</a>
+          <a href="#inquiry" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-[#D88A4E]">Start a project</a>
         </div>
       </section>
 
       {stats.length > 0 && <section data-studio-reveal aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 sm:grid-cols-3 md:px-10">
-        {stats.map(stat => <div key={stat.label} className="border-l border-fuchsia-400/50 pl-6">
-          <p className="text-4xl font-black text-fuchsia-300 md:text-5xl">{stat.value}</p>
+        {stats.map(stat => <div key={stat.label} className="border-l border-[#D88A4E]/40 pl-6">
+          <p className="text-4xl font-black text-[#E9A46B] md:text-5xl">{stat.value}</p>
           <p className="mt-3 text-sm text-white/60">{stat.label}</p>
         </div>)}
       </section>}
 
       <VisitorCounters />
       <section data-studio-reveal aria-label="Overall client rating" className="mx-auto max-w-7xl px-5 pb-12 md:px-10">
-        <div className="flex flex-col items-center gap-3 rounded-2xl border border-fuchsia-400/20 bg-white/[.035] px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left">
+        <div className="flex flex-col items-center gap-3 rounded-2xl border border-[#D88A4E]/20 bg-white/[.035] px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left">
           <div>
-            <p className="text-xs font-bold uppercase tracking-[.25em] text-fuchsia-300">Overall client rating</p>
+            <p className="text-xs font-bold uppercase tracking-[.25em] text-[#E9A46B]">Overall client rating</p>
             <p className="mt-2 text-sm text-white/55">{ratings.length ? `Based on ${ratings.length} approved ${ratings.length === 1 ? 'review' : 'reviews'}` : 'No approved ratings yet'}</p>
           </div>
           {averageRating !== null ? <div className="flex flex-col items-center gap-1 sm:items-end">
@@ -134,9 +134,9 @@ export default async function HomePage() {
       <ClientStories stories={clientStories} />
 
       <section id="work" data-studio-reveal className="mx-auto max-w-7xl px-5 py-24 md:px-10">
-        <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Selected work</p>
+        <p className="text-xs font-bold uppercase tracking-[.3em] text-[#E9A46B]">Selected work</p>
         <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
-          <h2 className="text-4xl font-black md:text-5xl">The portfolio<span className="text-fuchsia-400">.</span></h2>
+          <h2 className="text-4xl font-black md:text-5xl">The portfolio<span className="text-[#E9A46B]">.</span></h2>
           <p className="text-sm text-white/50">{projects.length} published projects</p>
         </div>
         {projects.length ? <PortfolioExplorer projects={projects} stories={clientStories} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
@@ -145,8 +145,8 @@ export default async function HomePage() {
       <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
           {['Brand Identity & Logos', 'Packaging & Product Labels', 'Social & Marketing Design'].map((name, i) => (
-            <div key={name} className="border-l border-fuchsia-400/50 pl-5">
-              <span className="text-xs text-fuchsia-300">0{i + 1}</span>
+            <div key={name} className="border-l border-[#D88A4E]/40 pl-5">
+              <span className="text-xs text-[#E9A46B]">0{i + 1}</span>
               <h2 className="mt-2 text-lg font-semibold">{name}</h2>
             </div>
           ))}
@@ -154,7 +154,7 @@ export default async function HomePage() {
       </section>
 
       <nav aria-label="Explore design services and resources" className="mx-auto max-w-7xl px-5 pb-12 md:px-10">
-        <a href="/explore" className="inline-flex items-center gap-2 rounded-full border border-orange-400/50 bg-orange-400/10 px-6 py-3 text-sm font-semibold text-orange-200 transition hover:border-orange-300 hover:bg-orange-400/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-400">
+        <a href="/explore" className="inline-flex items-center gap-2 rounded-full border border-[#D88A4E]/40 bg-[#D88A4E]/10 px-6 py-3 text-sm font-semibold text-[#F3C6A0] transition hover:border-[#E9A46B] hover:bg-[#D88A4E]/15 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#E9A46B]">
           Explore all design services &amp; free resources <span aria-hidden="true">↗</span>
         </a>
       </nav>
@@ -172,18 +172,18 @@ export default async function HomePage() {
 
       <aside id="ravzen-services-ad" aria-label="RAVZEN Graphic advertisement" className="mx-auto max-w-3xl scroll-mt-32 px-5 pb-24 md:px-10">
         <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-          <span className="rounded-full border border-orange-400/40 bg-orange-400/10 px-4 py-2 text-xs font-bold text-orange-300">Advertisement / දැන්වීම</span>
+          <span className="rounded-full border border-[#D88A4E]/35 bg-[#D88A4E]/10 px-4 py-2 text-xs font-bold text-[#E9A46B]">Advertisement / දැන්වීම</span>
           <span className="text-xs font-semibold tracking-wide text-white/60">RAVZEN Graphic</span>
         </div>
-        <a href={settings.social_facebook || 'https://www.facebook.com/share/1DmiMk4N5Q/'} target="_blank" rel="noopener noreferrer" aria-label="RAVZEN Graphic advertisement — visit our Facebook page (opens in a new tab)" className="group block overflow-hidden rounded-2xl border border-white/15 bg-white/[.04] shadow-xl transition hover:border-orange-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-orange-400">
+        <a href={settings.social_facebook || 'https://www.facebook.com/share/1DmiMk4N5Q/'} target="_blank" rel="noopener noreferrer" aria-label="RAVZEN Graphic advertisement — visit our Facebook page (opens in a new tab)" className="group block overflow-hidden rounded-2xl border border-white/15 bg-white/[.04] shadow-xl transition hover:border-[#D88A4E] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E9A46B]">
           <img src="https://vcgmxsbckiodxzxpmiay.supabase.co/storage/v1/object/public/media/portfolio/bb6e5c82-a8bc-4b49-a06f-377644bfc185/1ee37580-ebbe-4a1f-b467-1849c3172024.webp" alt="RAVZEN Graphic — packaging, label, editorial, social media, advertising and brand identity design services" width={1536} height={1536} loading="lazy" decoding="async" className="block h-auto w-full" />
-          <span className="flex items-center justify-between gap-3 px-5 py-4 text-sm font-semibold text-white"><span>Visit our Facebook page</span><span aria-hidden="true" className="text-orange-300">↗</span></span>
+          <span className="flex items-center justify-between gap-3 px-5 py-4 text-sm font-semibold text-white"><span>Visit our Facebook page</span><span aria-hidden="true" className="text-[#E9A46B]">↗</span></span>
         </a>
       </aside>
 
       {upcoming.length > 0 && <section aria-label="What's next" className="mx-auto grid max-w-7xl gap-7 px-5 pb-24 md:grid-cols-2 md:px-10">
         {upcoming.map(group => <div key={group.title} className="rounded-2xl border border-white/10 p-8">
-          <p className="text-xs uppercase tracking-[.3em] text-fuchsia-300">On the horizon</p>
+          <p className="text-xs uppercase tracking-[.3em] text-[#E9A46B]">On the horizon</p>
           <h2 className="mt-4 text-2xl font-bold">{group.title}</h2>
           <ul className="mt-6 space-y-4 text-white/65">{group.items.map((item: string, index: number) => <li key={index} className="border-t border-white/10 pt-4">{item}</li>)}</ul>
         </div>)}
@@ -206,7 +206,7 @@ export default async function HomePage() {
       </div>
       <footer id="contact" data-studio-reveal className="border-t border-white/10 bg-[#101018] px-5 py-20 md:px-10">
         <div className="mx-auto max-w-7xl">
-          <p className="text-xs uppercase tracking-[.3em] text-fuchsia-300">Have a project in mind?</p>
+          <p className="text-xs uppercase tracking-[.3em] text-[#E9A46B]">Have a project in mind?</p>
           <h2 className="mt-4 text-4xl font-black md:text-6xl">Let&apos;s make it memorable.</h2>
           <div className="mt-8 flex flex-wrap gap-5 text-sm">
             <a className="underline underline-offset-4" href="tel:+94781556575">Call Us · +94 78 155 6575 ↗</a>
@@ -214,13 +214,13 @@ export default async function HomePage() {
             {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a className="underline underline-offset-4" href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\D/g, '')}`}>WhatsApp ↗</a>}
           </div>
           <div className="mt-12">
-            <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Social &amp; Professional Profiles</p>
+            <p className="text-xs font-bold uppercase tracking-[.3em] text-[#E9A46B]">Social &amp; Professional Profiles</p>
             <div className="mt-5 flex flex-wrap gap-3">
               {[
                 { label: 'Instagram', url: settings.social_instagram || 'https://www.instagram.com/ravzen_graphic/' },
                 { label: 'Facebook', url: settings.social_facebook || 'https://www.facebook.com/share/1DmiMk4N5Q/' },
-              ].filter(link => /^https:\/\//i.test(link.url)).map(link => <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[.045] px-5 py-3 text-sm font-semibold text-white/85 transition hover:border-fuchsia-400 hover:bg-fuchsia-400/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-fuchsia-400">
-                <span aria-hidden="true" className="text-fuchsia-300">↗</span>{link.label}
+              ].filter(link => /^https:\/\//i.test(link.url)).map(link => <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[.045] px-5 py-3 text-sm font-semibold text-white/85 transition hover:border-[#D88A4E] hover:bg-[#D88A4E]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#E9A46B]">
+                <span aria-hidden="true" className="text-[#E9A46B]">↗</span>{link.label}
               </a>)}
             </div>
           </div>
@@ -228,7 +228,7 @@ export default async function HomePage() {
             <Image src="/images/ravzen-logo.png" alt="RAVZEN studio logo" width={46} height={46} className="h-12 w-12 object-contain" />
             <p className="text-sm font-bold tracking-[.16em] text-white/90">RAVZEN CREATIVE STUDIO</p>
             <p className="text-xs text-white/55">Crafted with passion. Powered by creativity.</p>
-            <p className="text-xs text-white/55">Designed, Developed &amp; Deployed by <span className="font-semibold text-fuchsia-300">Ravindu Zekara</span></p>
+            <p className="text-xs text-white/55">Designed, Developed &amp; Deployed by <span className="font-semibold text-[#E9A46B]">Ravindu Zekara</span></p>
             <p className="text-[11px] text-white/35">A RAVZEN Professional Creation · © {new Date().getFullYear()} · All rights reserved.</p>
           </div>
         </div>
