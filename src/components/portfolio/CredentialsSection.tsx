@@ -32,6 +32,26 @@ export default function CredentialsSection() {
           <h3 className="mt-4 text-lg font-bold">{item.title}</h3><p className="mt-3 text-sm leading-7 text-white/60">{item.description}</p>
         </article>)}
       </div>
+      <div className="mt-16" aria-labelledby="experience-heading">
+        <p className="text-xs font-bold uppercase tracking-[.3em] text-orange-300">Professional background</p>
+        <h3 id="experience-heading" className="mt-3 text-3xl font-bold md:text-4xl">Professional <span className="text-orange-300">Work Experience.</span></h3>
+        <p className="mt-3 text-sm leading-7 text-white/60">Digital Marketing &amp; Product Designer</p>
+        <div className="mt-8 grid gap-4 md:grid-cols-2">
+          <article className="rounded-2xl border border-white/10 bg-[#15151e] p-6 md:p-8">
+            <p className="text-xs font-bold uppercase tracking-widest text-orange-300">2024 – Present</p>
+            <h4 className="mt-4 text-xl font-bold">Senior Digital &amp; Visual Graphic Designer</h4>
+            <p className="mt-2 font-medium text-white/80">Leaves Stationery Company</p>
+            <p className="mt-1 text-xs text-white/50">A business division of Galgedara Marketing (Pvt) Ltd</p>
+            <p className="mt-5 text-sm leading-7 text-white/60">Specializing in digital and visual graphic design, product branding, packaging design, advertising, and creative marketing solutions. Focused on developing high-quality visual content, enhancing product presentation, and maintaining consistent brand identities across digital and print media.</p>
+          </article>
+          <article className="rounded-2xl border border-white/10 bg-[#15151e] p-6 md:p-8">
+            <p className="text-xs font-bold uppercase tracking-widest text-orange-300">2018 – 2021</p>
+            <h4 className="mt-4 text-xl font-bold">Graphic Designer &amp; Machine Operator</h4>
+            <p className="mt-2 font-medium text-white/80">Galgedara Marketing (Pvt) Ltd</p>
+            <p className="mt-5 text-sm leading-7 text-white/60">Gained hands-on experience in commercial graphic design, printing technology, and machine operations. Responsible for preparing print-ready artwork, operating production equipment, maintaining print quality, and supporting efficient production workflows.</p>
+          </article>
+        </div>
+      </div>
       <div className="mt-12 rounded-2xl border border-white/10 bg-[#15151e] p-7 md:p-9">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Academic foundation</p>
         <h3 className="mt-3 text-2xl font-bold">General Education Qualifications</h3>
