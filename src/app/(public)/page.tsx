@@ -14,6 +14,7 @@ import StudioFAQ from '@/components/portfolio/StudioFAQ'
 import ClientStories, { type ClientStory } from '@/components/portfolio/ClientStories'
 import CredentialsSection from '@/components/portfolio/CredentialsSection'
 import StudioMotion from '@/components/portfolio/StudioMotion'
+import StudioFooter from '@/components/portfolio/StudioFooter'
 import SwipeSectionNav from '@/components/navigation/SwipeSectionNav'
 
 const heroFont = Cormorant_Garamond({
@@ -212,35 +213,13 @@ export default async function HomePage() {
           </div>
         </details>
       </div>
-      <footer id="contact" data-studio-reveal className="border-t border-white/10 bg-[#101018] px-5 py-20 md:px-10">
-        <div className="mx-auto max-w-7xl">
-          <p className="text-xs uppercase tracking-[.3em] text-[#E9A46B]">Have a project in mind?</p>
-          <h2 className="mt-4 text-4xl font-black md:text-6xl">Let&apos;s make it memorable.</h2>
-          <div className="mt-8 flex flex-wrap gap-5 text-sm">
-            <a className="underline underline-offset-4" href="tel:+94781556575">Call Us · +94 78 155 6575 ↗</a>
-            {(settings.email_primary || SITE_CONFIG.email) && <a className="underline underline-offset-4" href={`mailto:${settings.email_primary || SITE_CONFIG.email}`}>Email the studio ↗</a>}
-            {(settings.whatsapp_primary || SITE_CONFIG.whatsapp) && <a className="underline underline-offset-4" href={`https://wa.me/${(settings.whatsapp_primary || SITE_CONFIG.whatsapp).replace(/\D/g, '')}`}>WhatsApp ↗</a>}
-          </div>
-          <div className="mt-12">
-            <p className="text-xs font-bold uppercase tracking-[.3em] text-[#E9A46B]">Social &amp; Professional Profiles</p>
-            <div className="mt-5 flex flex-wrap gap-3">
-              {[
-                { label: 'Instagram', url: settings.social_instagram || 'https://www.instagram.com/ravzen_graphic/' },
-                { label: 'Facebook', url: settings.social_facebook || 'https://www.facebook.com/share/1DmiMk4N5Q/' },
-              ].filter(link => /^https:\/\//i.test(link.url)).map(link => <a key={link.label} href={link.url} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/[.045] px-5 py-3 text-sm font-semibold text-white/85 transition hover:border-[#D88A4E] hover:bg-[#D88A4E]/10 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#E9A46B]">
-                <span aria-hidden="true" className="text-[#E9A46B]">↗</span>{link.label}
-              </a>)}
-            </div>
-          </div>
-          <div className="mt-16 flex flex-col items-center gap-3 border-t border-white/10 pt-9 text-center">
-            <Image src="/images/ravzen-logo.png" alt="RAVZEN studio logo" width={46} height={46} className="h-12 w-12 object-contain" />
-            <p className="text-sm font-bold tracking-[.16em] text-white/90">RAVZEN CREATIVE STUDIO</p>
-            <p className="text-xs text-white/55">Crafted with passion. Powered by creativity.</p>
-            <p className="text-xs text-white/55">Designed, Developed &amp; Deployed by <span className="font-semibold text-[#E9A46B]">Ravindu Zekara</span></p>
-            <p className="text-[11px] text-white/35">A RAVZEN Professional Creation · © {new Date().getFullYear()} · All rights reserved.</p>
-          </div>
-        </div>
-      </footer>
+      <StudioFooter
+        fontClassName={heroFont.className}
+        whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || '94781556575'}
+        email={settings.email_primary || SITE_CONFIG.email || ''}
+        facebook={settings.social_facebook || 'https://www.facebook.com/share/1DmiMk4N5Q/'}
+        instagram={settings.social_instagram || 'https://www.instagram.com/ravzen_graphic/'}
+      />
     </main>
   )
 }
