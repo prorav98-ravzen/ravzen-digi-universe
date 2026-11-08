@@ -1,6 +1,6 @@
 import Image from 'next/image'
 import { Poppins } from 'next/font/google'
-import { Phone, Mail, Instagram } from 'lucide-react'
+import { Phone, Mail, Instagram, Heart } from 'lucide-react'
 
 const badgeFont = Poppins({ subsets: ['latin'], weight: '400', display: 'swap' })
 
@@ -48,9 +48,9 @@ export default function StudioFooter({ fontClassName, whatsapp, email, facebook,
           <span className={`${badgeFont.className} flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/20 text-xl font-normal leading-none text-white`}>3+</span>
         </div>
       </div>
-      <div className="mt-7 flex flex-col gap-3 border-t border-white/[.06] pt-5 text-[11px] leading-5 text-white/45 md:flex-row md:items-center md:justify-between">
+      <div className="mt-7 flex flex-col gap-3 border-t border-white/[.06] pt-5 text-[11px] leading-5 text-white/45">
         <p>© 2016–2026 RAVZEN. All rights reserved.</p>
-        <p>Designed &amp; developed by <span className="text-white/70">Ravindu Zekara</span></p>
+        <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-white/70"><span>RAVZEN</span><Heart className="h-3.5 w-3.5 shrink-0 fill-white text-white" strokeWidth={0} aria-hidden="true" /><span>Powered by Ravindu Zekara Hemantha</span></p>
       </div>
     </div>
   </footer>
