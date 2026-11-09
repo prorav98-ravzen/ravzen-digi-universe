@@ -31,7 +31,16 @@ export async function POST(request: Request) {
         return NextResponse.json({ status: 'validated_not_published', title: article.title, source: source.url })
       }
       return NextResponse.json({ error: 'no_fresh_source' }, { status: 503 })
-    } catch { return NextResponse.json({ error: 'validation_failed' }, { status: 503 }) }
+    } catch (error) {
+      // Expose only predefined codes to the authenticated operator, never provider bodies or keys.
+      const message = error instanceof Error ? error.message : ''
+      const code = /^(configuration_[a-z_]+|quality_[a-z_]+|gemini_(http_\d+|incomplete|unavailable)|source_[a-z_]+)$/.test(message)
+        ? message
+        : error instanceof Error && error.name === 'ZodError' ? 'quality_schema'
+        : error instanceof Error && error.name === 'TimeoutError' ? 'generation_timeout' : 'validation_failed'
+      console.error('tech_insights_dry_run_failed', { code })
+      return NextResponse.json({ error: code }, { status: 503 })
+    }
   }
   const slot = publicationSlot()
   if (!slot) return NextResponse.json({ status: 'outside_publication_window' })
