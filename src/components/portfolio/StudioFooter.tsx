@@ -28,7 +28,7 @@ export default function StudioFooter({ fontClassName, whatsapp, email, facebook,
         <div>
           <p className="text-[10px] font-medium uppercase tracking-[.25em] text-[#E9A46B]">Your next idea starts here</p>
           <h2 className={`${fontClassName} mt-4 max-w-xl text-4xl font-normal leading-[1.12] tracking-tight md:text-6xl`}>Let&apos;s create something <span className="italic text-[#E9A46B]">memorable.</span></h2>
-          <p className="mt-4 max-w-md text-sm leading-6 text-white/55">Thoughtful design. Personal collaboration.<br />A creative partner for your next chapter.</p>
+          <p className="mt-4 max-w-md text-sm leading-6 text-white/75">Thoughtful design. Personal collaboration.<br />A creative partner for your next chapter.</p>
         </div>
         <div>
           <nav aria-label="Contact RAVZEN" className="grid w-full max-w-sm grid-cols-5 gap-2 sm:gap-3 lg:ml-auto">
@@ -42,13 +42,13 @@ export default function StudioFooter({ fontClassName, whatsapp, email, facebook,
       <div className="mt-10 grid items-center gap-7 border-t border-white/10 pt-8 md:mt-14 md:grid-cols-[1fr_auto]">
         <div className="flex items-center gap-4">
           <Image src="/images/ravzen-header-emblem.svg" alt="" width={40} height={34} className="h-auto w-10 shrink-0" />
-          <div><p className="text-sm font-semibold tracking-[.18em] text-white">RAVZEN<span className="text-[#E9A46B]">.</span></p><p className="mt-1 text-[11px] tracking-wide text-white/50">Independent creative studio · Since 2016</p></div>
+          <div><p className="text-sm font-semibold tracking-[.18em] text-white">RAVZEN<span className="text-[#E9A46B]">.</span></p><p className="mt-1 text-[11px] tracking-wide text-white/70">Independent creative studio · Since 2016</p></div>
         </div>
         <div className="flex items-center gap-3" aria-label="Website age recommendation: ages 3 and up">
           <span className={`${badgeFont.className} flex h-12 w-12 shrink-0 items-center justify-center rounded-xl border border-white/20 text-xl font-normal leading-none text-white`}>3+</span>
         </div>
       </div>
-      <div className="mt-7 flex flex-col gap-3 border-t border-white/[.06] pt-5 text-[11px] leading-5 text-white/45">
+      <div className="mt-7 flex flex-col gap-3 border-t border-white/[.06] pt-5 text-[11px] leading-5 text-white/70">
         <p>© 2016–2026 RAVZEN. All rights reserved.</p>
         <p className="flex flex-wrap items-center gap-x-1.5 gap-y-1 text-white/70"><span>RAVZEN</span><Heart className="h-3.5 w-3.5 shrink-0 fill-white text-white" strokeWidth={0} aria-hidden="true" /><span>Powered by Ravindu Zekara Hemantha</span></p>
       </div>
