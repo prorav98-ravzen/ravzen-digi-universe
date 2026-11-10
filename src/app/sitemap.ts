@@ -1,4 +1,4 @@
-import { listArticles } from '@/lib/insights/data'
+import { listSitemapArticles } from '@/lib/insights/data'
 import type { MetadataRoute } from 'next'
 import { SITE_CONFIG } from '@/config/site'
 
@@ -6,8 +6,8 @@ import { SITE_CONFIG } from '@/config/site'
 export const dynamic = 'force-dynamic'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
-  let articles: Awaited<ReturnType<typeof listArticles>> = []
-  try { articles = await listArticles(1000) } catch { /* Existing routes stay available during database outages. */ }
+  let articles: Awaited<ReturnType<typeof listSitemapArticles>> = []
+  try { articles = await listSitemapArticles() } catch { /* Existing routes stay available during database outages. */ }
   return [
     { url: new URL('/tech-insights', SITE_CONFIG.url).toString(), changeFrequency: 'weekly', priority: 0.8 },
     ...articles.map(article => ({ url: new URL(`/tech-insights/${article.slug}`, SITE_CONFIG.url).toString(), lastModified: article.published_at, changeFrequency: 'monthly' as const, priority: 0.7 })),
