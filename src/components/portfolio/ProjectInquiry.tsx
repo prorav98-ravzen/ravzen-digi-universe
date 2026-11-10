@@ -20,7 +20,7 @@ export default function ProjectInquiry({whatsapp,email}:{whatsapp:string;email:s
       <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">Start your next project</p>
       <h2 id="inquiry-title" className="mt-3 text-3xl font-black md:text-4xl">Tell us what you imagine.</h2>
       <p className="mt-3 max-w-2xl text-sm leading-7 text-white/60">A simple private project brief. Nothing is submitted or stored on our website; you choose when to send it via WhatsApp or email.</p>
-      <div className="mt-6 flex gap-2" aria-label={'Step '+step+' of 2'}>{[1,2].map(i=><span key={i} className={'h-1.5 flex-1 rounded-full '+(i<=step?'bg-fuchsia-400':'bg-white/15')}/>)}</div>
+      <div className="mt-6 flex gap-2" role="group" aria-label={'Step '+step+' of 2'}>{[1,2].map(i=><span key={i} className={'h-1.5 flex-1 rounded-full '+(i<=step?'bg-fuchsia-400':'bg-white/15')}/>)}</div>
       {step===1?<div className="mt-7 grid gap-5 sm:grid-cols-2">
         <label className="block text-sm font-semibold">Design service<select value={service} onChange={e=>setService(e.target.value)} className={'mt-2 '+field}>{services.map(s=><option key={s}>{s}</option>)}</select></label>
         <label className="block text-sm font-semibold">Estimated budget<select value={budget} onChange={e=>setBudget(e.target.value)} className={'mt-2 '+field}>{budgets.map(b=><option key={b}>{b}</option>)}</select></label>
