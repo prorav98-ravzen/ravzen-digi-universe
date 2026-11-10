@@ -125,8 +125,8 @@ export const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
       <Comp
         ref={ref}
         className={cn(buttonVariants({ variant, size }), className)}
-        disabled={disabled ?? loading}
-        aria-disabled={disabled ?? loading}
+        {...(!asChild ? { disabled: Boolean(disabled || loading) } : {})}
+        aria-disabled={disabled || loading ? true : undefined}
         {...props}
       >
         {loading ? (
