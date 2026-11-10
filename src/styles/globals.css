@@ -802,3 +802,11 @@ a,
   outline: 2px solid #F3C6A0;
   outline-offset: 4px;
 }
+
+/* Keep the mobile first paint stable: decorative infinite animations can delay
+   Lighthouse visual completeness without improving content readability. */
+@media (max-width: 767px) {
+  .studio-aurora { animation: none; }
+  .studio-gradient-heading { animation: none; background-position: 100% 50%; }
+  .studio-home [data-studio-reveal] { transition-duration: .2s; }
+}
