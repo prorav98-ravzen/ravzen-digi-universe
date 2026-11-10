@@ -47,7 +47,7 @@ export default function SwipeSectionNav() {
 
   return (
     <div className="min-w-0 w-full border-t border-white/10 md:w-auto md:border-t-0">
-      <div ref={scroller} aria-label="Website sections — swipe sideways to explore" className="flex w-full snap-x snap-mandatory items-center gap-2 overflow-x-auto overscroll-x-contain px-1 py-3 text-[11px] font-semibold uppercase tracking-wider [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-1 md:overflow-x-auto md:py-0 md:text-xs">
+      <nav ref={scroller} aria-label="Website sections — swipe sideways to explore" className="flex w-full snap-x snap-mandatory items-center gap-2 overflow-x-auto overscroll-x-contain px-1 py-3 text-[11px] font-semibold uppercase tracking-wider [scrollbar-width:none] [&::-webkit-scrollbar]:hidden md:gap-1 md:overflow-x-auto md:py-0 md:text-xs">
         {sections.map(section => (
           <a key={section.id} ref={node => { refs.current[section.id] = node }} href={`#${section.id}`}
             aria-current={active === section.id ? 'location' : undefined}
@@ -56,7 +56,7 @@ export default function SwipeSectionNav() {
             {section.label}
           </a>
         ))}
-      </div>
+      </nav>
     </div>
   )
 }
