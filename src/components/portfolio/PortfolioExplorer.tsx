@@ -48,7 +48,7 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
         </label>
       </div>
       <div className="mt-4 flex flex-wrap items-center justify-between gap-3">
-        <p aria-live="polite" className="text-sm text-white/55">{visible.length} of {projects.length} projects</p>
+        <p aria-live="polite" className="text-sm text-white/80">{visible.length} of {projects.length} projects</p>
         <button type="button" onClick={()=>setOnlySaved(v=>!v)} aria-pressed={onlySaved} className={'rounded-full border px-4 py-2 text-sm font-semibold '+(onlySaved?'border-fuchsia-300 bg-fuchsia-500/20 text-white':'border-white/20 text-white/75 hover:border-fuchsia-300')}>♡ Saved moodboard ({selected.length})</button>
       </div>
       {selected.length>0 && <div className="mt-4 flex flex-wrap items-center gap-3 rounded-xl border border-fuchsia-400/20 bg-fuchsia-400/[.06] p-3">
@@ -72,7 +72,7 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
           <div className="p-6">
             <p className="text-xs uppercase tracking-widest text-fuchsia-300">{project.category?.name??'Creative design'}</p>
             <h3 className="mt-2 text-xl font-bold">{project.title}</h3>
-            {project.short_description&&<p className="mt-3 text-sm leading-6 text-white/55">{project.short_description}</p>}
+            {project.short_description&&<p className="mt-3 text-sm leading-6 text-white/80">{project.short_description}</p>}
             {project.price!==null&&<p className="mt-4 text-sm font-semibold text-white/80">{project.currency??'LKR'} {Number(project.price).toLocaleString('en-LK')}</p>}
             <ProjectShowcase artworkId={project.id} title={project.title} slug={project.slug} description={project.short_description} category={project.category?.name??'Creative design'} images={images} stories={stories.filter(story=>story.artworkId===project.id)} />
             <GalleryFeedback artworkId={project.id} title={project.title} images={images} hideInlineGallery open={galleryId===project.id} onOpenChange={value=>setGalleryId(value?project.id:null)}/>
