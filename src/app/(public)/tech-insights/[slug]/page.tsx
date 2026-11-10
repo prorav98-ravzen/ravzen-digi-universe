@@ -1,7 +1,7 @@
 import type { Metadata } from 'next'
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
-import { getArticle } from '@/lib/insights/data'
+import { getArticle, listArticles } from '@/lib/insights/data'
 import { SITE_CONFIG } from '@/config/site'
 import ArticleShare from '@/components/insights/ArticleShare'
 import ArticleExperience from '@/components/insights/ArticleExperience'
@@ -17,6 +17,7 @@ export default async function ArticlePage({ params }: Props) {
   const article = await getArticle((await params).slug)
   if (!article) notFound()
   const url = new URL(`/tech-insights/${article.slug}`, SITE_CONFIG.url).toString()
+  const relatedArticles = (await listArticles(12)).filter(item => item.slug !== article.slug).slice(0, 3)
   const schema = { '@context': 'https://schema.org', '@type': 'BlogPosting', headline: article.title, description: article.excerpt, inLanguage: 'si-LK', datePublished: article.published_at, dateModified: article.published_at, mainEntityOfPage: url, url, image: new URL(SITE_CONFIG.ogImage, SITE_CONFIG.url).toString(), author: { '@type': 'Organization', name: 'RAVZEN Tech Insights', url: SITE_CONFIG.url }, publisher: { '@type': 'Organization', name: 'RAVZEN', url: SITE_CONFIG.url }, citation: article.source_url }
   return <article className="mx-auto max-w-3xl [overflow-wrap:anywhere]">
     <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(schema).replace(/</g, '\\u003c') }} />
@@ -28,6 +29,7 @@ export default async function ArticlePage({ params }: Props) {
     {article.sections.map((section, i) => <section key={i} id={`section-${i}`} className="mt-10 scroll-mt-8"><h2 className="mb-5 text-2xl font-bold leading-relaxed">{section.heading}</h2>{section.paragraphs.map((paragraph, j) => <p key={j} className="mb-5 text-base leading-[2.15] text-white/80 sm:text-lg">{paragraph}</p>)}</section>)}
     <section className="my-12 rounded-2xl border border-white/15 p-6 sm:p-8"><h2 className="text-xl font-bold text-fuchsia-300">මතක තබාගත යුතු දේ</h2><ul className="mt-5 list-disc space-y-4 pl-5 leading-8 text-white/80">{article.takeaways.map((item, i) => <li key={i}>{item}</li>)}</ul></section>
     <aside className="border-t border-white/10 pt-8"><h2 className="text-lg font-bold">මුල් මූලාශ්‍රය</h2><a href={article.source_url} target="_blank" rel="noopener noreferrer" className="mt-4 inline-block leading-8 text-fuchsia-300 underline">{article.source_title} ↗</a><p className="mt-3 text-sm text-white/55">{article.source_name} · {new Date(article.source_published_at).toLocaleDateString('en-GB', { timeZone: 'Asia/Colombo' })}</p><p className="mt-5 text-sm leading-7 text-white/50">මූලාශ්‍රයේ තොරතුරු ඇසුරින් RAVZEN සඳහා ස්වාධීනව සකස් කළ AI සහාය ලැබූ සිංහල විග්‍රහයකි. ස්වයංක්‍රීය කරුණු පරීක්ෂාවක් භාවිත කර ඇත; මානව සංස්කාරක පරීක්ෂාවක් සිදු කළ බව මෙයින් අදහස් නොවේ.</p></aside>
+    {relatedArticles.length > 0 && <nav aria-label="තවත් කියවීමට ලිපි" className="my-12 border-t border-white/15 pt-8"><h2 className="mb-5 text-xl font-bold">තවත් කියවන්න</h2><ul className="space-y-4">{relatedArticles.map(item => <li key={item.slug}><Link href={`/tech-insights/${item.slug}`} className="block rounded-xl border border-white/15 p-4 text-white/90 transition-colors hover:border-orange-400/60 hover:text-white">{item.title}</Link></li>)}</ul></nav>}
     <ArticleExperience slug={article.slug} category={article.category} title={article.title} />
     <ArticleShare title={article.title} url={url} />
   </article>
