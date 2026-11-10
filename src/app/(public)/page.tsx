@@ -129,14 +129,14 @@ export default async function HomePage() {
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-[#D88A4E]/20 bg-white/[.035] px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left">
           <div>
             <p className="text-xs font-bold uppercase tracking-[.25em] text-[#E9A46B]">Overall client rating</p>
-            <p className="mt-2 text-sm text-white/55">{ratings.length ? `Based on ${ratings.length} approved ${ratings.length === 1 ? 'review' : 'reviews'}` : 'No approved ratings yet'}</p>
+            <p className="mt-2 text-sm text-white/80">{ratings.length ? `Based on ${ratings.length} approved ${ratings.length === 1 ? 'review' : 'reviews'}` : 'No approved ratings yet'}</p>
           </div>
           {averageRating !== null ? <div className="flex flex-col items-center gap-1 sm:items-end">
-            <p className="text-3xl font-black tabular-nums text-white">{averageRating.toFixed(1)} <span className="text-lg font-semibold text-white/50">/ 5.0</span></p>
+            <p className="text-3xl font-black tabular-nums text-white">{averageRating.toFixed(1)} <span className="text-lg font-semibold text-white/75">/ 5.0</span></p>
             <div className="flex gap-1" role="img" aria-label={`${averageRating.toFixed(1)} out of 5 stars`}>
               {[1, 2, 3, 4, 5].map(star => <span key={star} className="relative inline-block text-2xl leading-none text-white/20" aria-hidden="true">★<span className="absolute inset-0 overflow-hidden text-amber-400" style={{ width: `${Math.max(0, Math.min(1, averageRating - star + 1)) * 100}%` }}>★</span></span>)}
             </div>
-          </div> : <p className="text-sm text-white/50">Ratings will appear after reviews are approved.</p>}
+          </div> : <p className="text-sm text-white/75">Ratings will appear after reviews are approved.</p>}
         </div>
       </section>
 
@@ -146,7 +146,7 @@ export default async function HomePage() {
         <p className="text-xs font-bold uppercase tracking-[.3em] text-[#E9A46B]">Selected work</p>
         <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
           <h2 className="text-4xl font-black md:text-5xl">The portfolio<span className="text-[#E9A46B]">.</span></h2>
-          <p className="text-sm text-white/50">{projects.length} published projects</p>
+          <p className="text-sm text-white/75">{projects.length} published projects</p>
         </div>
         {projects.length ? <PortfolioExplorer projects={projects} stories={clientStories} whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ''} /> : <p className="rounded-2xl border border-white/10 p-10 text-white/60">Portfolio projects will appear here once published.</p>}
       </section>
