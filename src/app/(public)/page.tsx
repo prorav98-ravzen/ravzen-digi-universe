@@ -93,10 +93,10 @@ export default async function HomePage() {
       <StudioMotion />
       <div className="studio-aurora" aria-hidden="true" />
       <header className="studio-site-header fixed inset-x-0 top-0 z-[80] border-b border-white/10 bg-[#090910]/95 shadow-lg shadow-black/20 backdrop-blur-xl">
-        <nav className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-3 md:flex-nowrap md:px-10 md:py-5" aria-label="Main navigation">
+        <div className="mx-auto flex max-w-7xl flex-wrap items-center justify-between gap-x-5 gap-y-2 px-5 py-3 md:flex-nowrap md:px-10 md:py-5">
           <a href="#home" className="inline-flex shrink-0 items-center gap-2.5 whitespace-nowrap text-base font-black tracking-[.2em]" aria-label="RAVZEN — Home"><Image src="/images/ravzen-header-emblem.svg" alt="" width={26} height={21} className="h-[21px] w-[26px] shrink-0 object-contain" unoptimized /> <span>RAVZEN<span className="text-[#E9A46B]">.</span></span></a>
           <SwipeSectionNav />
-        </nav>
+        </div>
       </header>
       <div aria-hidden="true" className="h-[113px] md:h-[82px]" />
 
