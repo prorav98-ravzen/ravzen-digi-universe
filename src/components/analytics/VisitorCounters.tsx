@@ -37,6 +37,6 @@ export default function VisitorCounters({ numberFontClassName = '' }: { numberFo
         </div>
       )}
     </div>
-    <p className="mt-3 text-xs text-white/40">Approximate unique browsers · Refreshes are not counted again on the same day.</p>
+    <p className="mt-3 text-xs text-white/75">Approximate unique browsers · Refreshes are not counted again on the same day.</p>
   </section>
 }
