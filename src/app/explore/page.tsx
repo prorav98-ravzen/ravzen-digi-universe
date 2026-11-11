@@ -2,7 +2,7 @@ import type { Metadata } from 'next'
 import Link from 'next/link'
 
 export const metadata: Metadata = {
-  title: 'Explore Design Services & Free Resources',
+  title: { absolute: 'Design Services & Resources | RAVZEN' },
   description: 'Explore RAVZEN Creative Studio packaging design, logo design, social media graphics and free Sinhala font resources in Sri Lanka.',
   alternates: { canonical: '/explore' },
 }
