@@ -3,7 +3,7 @@ import Link from 'next/link'
 import { listArticles } from '@/lib/insights/data'
 import { SITE_CONFIG } from '@/config/site'
 export const dynamic = 'force-dynamic'
-export const metadata: Metadata = { title: 'RAVZEN Tech Insights — සිංහල තාක්ෂණික ලිපි', description: 'AI, software සහ නිර්මාණශීලීත්වය ගැන විශ්වාසදායක මූලාශ්‍ර ඇසුරින් සකස් කරන ස්වාධීන සිංහල තාක්ෂණික ලිපි.', alternates: { canonical: '/tech-insights' }, openGraph: { title: 'RAVZEN Tech Insights', description: 'තාක්ෂණය ගැන අලුතින් සිතන්න.', url: '/tech-insights', locale: 'si_LK', type: 'website', images: [SITE_CONFIG.ogImage] } }
+export const metadata: Metadata = { title: { absolute: 'සිංහල තාක්ෂණික ලිපි | RAVZEN Tech Insights' }, description: 'AI, software සහ නිර්මාණශීලීත්වය ගැන විශ්වාසදායක මූලාශ්‍ර ඇසුරින් සකස් කරන ස්වාධීන සිංහල තාක්ෂණික ලිපි.', alternates: { canonical: '/tech-insights' }, openGraph: { title: 'RAVZEN Tech Insights', description: 'තාක්ෂණය ගැන අලුතින් සිතන්න.', url: '/tech-insights', locale: 'si_LK', type: 'website', images: [SITE_CONFIG.ogImage] } }
 export default async function InsightsPage() {
   const articles = await listArticles(100)
   return <><p className="text-xs font-bold uppercase tracking-[.3em] text-[#FF9A62]">Technology · Creativity · Possibility</p><h1 className="mt-5 text-4xl font-black leading-tight sm:text-6xl">RAVZEN Tech Insights<span className="text-[#FF9A62]">.</span></h1><p className="mt-6 max-w-2xl text-lg leading-9 text-white/80">තාක්ෂණයේ අලුත් දේ, අපේ වැඩට වැදගත් වෙන විදිහ. විශ්වාසදායක මුල් මූලාශ්‍ර සමඟ ස්වාධීන සිංහල විග්‍රහයන්.</p>
