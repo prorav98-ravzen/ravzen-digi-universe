@@ -32,7 +32,7 @@ const jetbrainsMono = JetBrains_Mono({
 
 export const metadata: Metadata = {
   title: {
-    default:  `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
+    default:  'RAVZEN | Graphic Design & Branding Sri Lanka',
     template: '%s | RAVZEN',
   },
   description: SITE_CONFIG.description,
