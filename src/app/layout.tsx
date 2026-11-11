@@ -85,9 +85,8 @@ export const metadata: Metadata = {
       'max-video-preview':  -1,
     },
   },
-  alternates: {
-    canonical: SITE_CONFIG.url,
-  },
+  // Canonical URLs belong to individual routes; a root canonical incorrectly
+  // tells search engines that every service and article is the homepage.
   icons: {
     icon: '/images/ravzen-logo.png',
     shortcut: '/images/ravzen-logo.png',
