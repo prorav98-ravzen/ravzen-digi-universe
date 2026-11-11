@@ -4,7 +4,7 @@ import { SITE_CONFIG } from '@/config/site'
 
 const route = '/resources/free-sinhala-fonts'
 export const metadata: Metadata = {
-  title: 'Free Sinhala Fonts Collection | RAVZEN',
+  title: { absolute: 'Free Sinhala Fonts Collection | RAVZEN' },
   description: 'Explore RAVZEN’s free font resources for creative projects, including Sinhala, English and Tamil font collections. Check font licenses before commercial use.',
   alternates: { canonical: route },
   openGraph: {
