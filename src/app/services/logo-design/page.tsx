@@ -5,7 +5,7 @@ import { SITE_CONFIG } from '@/config/site'
 const route = '/services/logo-design'
 export const metadata: Metadata = {
   title: { absolute: 'Logo Design Sri Lanka | RAVZEN' },
-  description: 'Custom logo design, brand identity concepts and professional branding artwork for Sri Lankan businesses. Explore RAVZEN's portfolio and request a quote.',
+  description: 'Custom logo design, brand identity concepts and professional branding artwork for Sri Lankan businesses. Explore the RAVZEN portfolio and request a quote.',
   alternates: { canonical: route },
   openGraph: { title: 'Logo Design in Sri Lanka | RAVZEN', description: 'Professional logo design and brand identity artwork for Sri Lankan businesses. Explore RAVZEN Creative Studio and request a custom logo quote.', url: new URL(route, SITE_CONFIG.url).toString(), type: 'website' },
 }
