@@ -33,7 +33,7 @@ const jetbrainsMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: {
     default:  `${SITE_CONFIG.name} — ${SITE_CONFIG.tagline}`,
-    template: `%s | ${SITE_CONFIG.name}`,
+    template: '%s | RAVZEN',
   },
   description: SITE_CONFIG.description,
   metadataBase: new URL(SITE_CONFIG.url),
