@@ -23,7 +23,20 @@ async function getProject(slug: string) {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const project = await getProject(slug)
-  return { title: project ? `${project.title} | RAVZEN Creative Studio` : 'Project | RAVZEN', description: project?.short_description || 'Explore RAVZEN premium creative work.' }
+  if (!project) return { title: 'Project not found | RAVZEN', robots: { index: false, follow: false } }
+  const description = (project.short_description?.trim() || `Explore ${project.title}, a creative design project by RAVZEN in Sri Lanka.`).slice(0, 155)
+  return {
+    title: { absolute: `${project.title.slice(0, 48)} | RAVZEN` },
+    description,
+    alternates: { canonical: `/projects/${encodeURIComponent(project.slug)}` },
+    openGraph: {
+      title: `${project.title} | RAVZEN`,
+      description,
+      url: `/projects/${encodeURIComponent(project.slug)}`,
+      type: 'article',
+      ...(project.cover_image_url ? { images: [{ url: project.cover_image_url, alt: project.title }] } : {}),
+    },
+  }
 }
 
 export default async function ProjectCaseStudy({ params }: Props) {
