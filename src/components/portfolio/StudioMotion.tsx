@@ -7,21 +7,7 @@ export default function StudioMotion() {
   useEffect(() => {
     const root = document.querySelector<HTMLElement>('.studio-home')
     if (!root) return
-    const progress = document.createElement('div')
-    progress.className = 'studio-scroll-progress'
-    progress.setAttribute('aria-hidden', 'true')
-    document.body.appendChild(progress)
-    let raf = 0
-    const updateProgress = () => {
-      raf = 0
-      const max = document.documentElement.scrollHeight - window.innerHeight
-      progress.style.transform = `scaleX(${max > 0 ? Math.min(1, Math.max(0, window.scrollY / max)) : 0})`
-    }
-    const onScroll = () => { if (!raf) raf = window.requestAnimationFrame(updateProgress) }
-    window.addEventListener('scroll', onScroll, { passive: true })
-    window.addEventListener('resize', onScroll, { passive: true })
-    updateProgress()
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return () => { window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); window.cancelAnimationFrame(raf); progress.remove() }
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
 
     const items = Array.from(root.querySelectorAll<HTMLElement>('[data-studio-reveal]'))
     const observer = 'IntersectionObserver' in window
@@ -76,7 +62,65 @@ export default function StudioMotion() {
       }
     })
 
-    return () => { observer?.disconnect(); cleanups.forEach(cleanup => cleanup()); window.removeEventListener('scroll', onScroll); window.removeEventListener('resize', onScroll); window.cancelAnimationFrame(raf); progress.remove() }
+
+    // Premium interactions, desktop pointer only; no motion on reduced-motion devices.
+    const buttons = finePointer ? Array.from(root.querySelectorAll<HTMLElement>('a[href="#work"], a[href="#inquiry"], .studio-contact-options a')) : []
+    const buttonCleanup = buttons.map(button => {
+      button.classList.add('ravzen-magnetic')
+      const move = (event: PointerEvent) => {
+        const rect = button.getBoundingClientRect()
+        const dx = (event.clientX - rect.left - rect.width / 2) * .10
+        const dy = (event.clientY - rect.top - rect.height / 2) * .13
+        button.style.setProperty('--button-x', dx.toFixed(1) + 'px')
+        button.style.setProperty('--button-y', dy.toFixed(1) + 'px')
+      }
+      const leave = () => {button.style.removeProperty('--button-x');button.style.removeProperty('--button-y')}
+      button.addEventListener('pointermove', move, {passive:true})
+      button.addEventListener('pointerleave', leave)
+      return () => {button.removeEventListener('pointermove',move);button.removeEventListener('pointerleave',leave);leave()}
+    })
+    const headings = Array.from(root.querySelectorAll<HTMLElement>('#work h2, #services h2, #inquiry h2'))
+    headings.forEach(h => h.classList.add('ravzen-kinetic-heading'))
+    const artworkCards = Array.from(root.querySelectorAll<HTMLElement>('#work article.studio-glow-card'))
+    artworkCards.forEach(card => card.classList.add('ravzen-artwork-reveal'))
+    const viewed = new Set<HTMLElement>()
+    const artworkObserver = new IntersectionObserver(entries => entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('ravzen-artwork-visible')
+        artworkObserver.unobserve(entry.target)
+      }
+    }), {threshold:.12})
+    artworkCards.forEach(card => artworkObserver.observe(card))
+
+    // Reveal contact option only after meaningful artwork exploration.
+    let seen = 0
+    const contact = root.querySelector<HTMLElement>('.studio-contact-float')
+    const onArtworkClick = (event: Event) => {
+      const target = event.target as Element
+      const card = target.closest('#work article.studio-glow-card') as HTMLElement | null
+      if (!card || viewed.has(card)) return
+      viewed.add(card)
+      seen++
+      if (seen >= 3 && contact) contact.classList.add('ravzen-contact-attention')
+    }
+    root.addEventListener('click', onArtworkClick)
+    const spotlight = document.createElement('div')
+    spotlight.className = 'ravzen-ambient-spotlight'
+    spotlight.setAttribute('aria-hidden','true')
+    if (finePointer) root.appendChild(spotlight)
+    let spotFrame = 0
+    const onPointer = (event: PointerEvent) => {
+      if (spotFrame) return
+      spotFrame = requestAnimationFrame(() => {
+        spotFrame = 0
+        const rect = root.getBoundingClientRect()
+        spotlight.style.left = event.clientX - rect.left + 'px'
+        spotlight.style.top = event.clientY - rect.top + 'px'
+      })
+    }
+    if (finePointer) root.addEventListener('pointermove',onPointer,{passive:true})
+
+    return () => { artworkObserver.disconnect(); buttonCleanup.forEach(fn=>fn()); root.removeEventListener('click',onArtworkClick); root.removeEventListener('pointermove',onPointer); cancelAnimationFrame(spotFrame); spotlight.remove(); observer?.disconnect(); cleanups.forEach(cleanup => cleanup());  }
   }, [])
   return null
 }
