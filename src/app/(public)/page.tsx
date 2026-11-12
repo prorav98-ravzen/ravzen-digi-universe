@@ -119,12 +119,12 @@ export default async function HomePage() {
 
       {stats.length > 0 && <section data-studio-reveal aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 sm:grid-cols-3 md:px-10">
         {stats.map(stat => <div key={stat.label} className="border-l border-[#D88A4E]/40 pl-6">
-          <p className={`${heroFont.className} text-4xl font-normal leading-none tracking-[-.025em] text-[#E9A46B] md:text-5xl`}>{stat.value}</p>
+          <p className={"font-semibold leading-none tracking-[-.035em] tabular-nums text-[#E9A46B] text-4xl md:text-5xl"}>{stat.value}</p>
           <p className="mt-3 text-sm text-white/60">{stat.label}</p>
         </div>)}
       </section>}
 
-      <VisitorCounters numberFontClassName={heroFont.className} />
+      <VisitorCounters numberFontClassName="ravzen-stat-number" />
       <section data-studio-reveal aria-label="Overall client rating" className="mx-auto max-w-7xl px-5 pb-12 md:px-10">
         <div className="flex flex-col items-center gap-3 rounded-2xl border border-[#D88A4E]/20 bg-white/[.035] px-6 py-7 text-center sm:flex-row sm:justify-between sm:text-left">
           <div>
