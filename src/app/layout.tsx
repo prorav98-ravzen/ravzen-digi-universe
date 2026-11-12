@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from 'next'
-import { Inter, Orbitron, JetBrains_Mono } from 'next/font/google'
+import { Inter, Orbitron, JetBrains_Mono, Plus_Jakarta_Sans } from 'next/font/google'
 import '@/styles/globals.css'
 import { SITE_CONFIG } from '@/config/site'
 
@@ -26,6 +26,13 @@ const jetbrainsMono = JetBrains_Mono({
   display:  'swap',
   weight:   ['400', '500'],
   preload:  false, // Not above the fold — defer
+})
+
+const jakarta = Plus_Jakarta_Sans({
+  subsets: ['latin'],
+  variable: '--font-jakarta',
+  display: 'swap',
+  weight: ['600'],
 })
 
 // ── SEO metadata ──────────────────────────────────────────────────────────────
@@ -130,7 +137,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     <html
       lang="en"
       dir="ltr"
-      className={`${inter.variable} ${orbitron.variable} ${jetbrainsMono.variable}`}
+      className={`${inter.variable} ${orbitron.variable} ${jetbrainsMono.variable} ${jakarta.variable}`}
       suppressHydrationWarning
     >
       <head>
