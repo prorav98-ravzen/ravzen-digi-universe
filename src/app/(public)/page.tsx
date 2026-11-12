@@ -103,11 +103,14 @@ export default async function HomePage() {
       <section id="home" data-studio-reveal className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 md:px-10 md:pb-36 md:pt-36">
         <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-[#B76E3B]/10 blur-3xl" aria-hidden="true" />
         <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-[#E9A46B]">Independent creative studio · Sri Lanka</p>
-        <h1 className={`${heroFont.className} max-w-5xl text-5xl font-normal leading-[1.12] tracking-[-.025em] text-white md:text-7xl lg:text-8xl`}>
+        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8">
+          <Image src="/images/ravzen-header-emblem.svg" alt="RAVZEN logo" width={140} height={115} className="h-auto w-20 shrink-0 object-contain sm:w-28 lg:w-36" unoptimized priority />
+          <h1 className={`${heroFont.className} max-w-5xl text-5xl font-normal leading-[1.12] tracking-[-.025em] text-white md:text-7xl lg:text-8xl`}>
           <span className="inline-block">Imagine.</span>{' '}
           <span className="inline-block font-normal italic text-[#E9A46B]">Create.</span>{' '}
           <span className="inline-block">Evolve.</span>
         </h1>
+        </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Distinctive identities, premium packaging and striking visuals for brands ready to stand apart."}
         </p>
