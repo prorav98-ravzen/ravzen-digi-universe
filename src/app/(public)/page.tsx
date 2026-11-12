@@ -9,6 +9,7 @@ import { SITE_CONFIG } from '@/config/site'
 import Image from 'next/image'
 import PortfolioExplorer from '@/components/portfolio/PortfolioExplorer'
 import VisitorCounters from '@/components/analytics/VisitorCounters'
+import AnimatedStudioStat from '@/components/analytics/AnimatedStudioStat'
 import ProjectInquiry from '@/components/portfolio/ProjectInquiry'
 import StudioFAQ from '@/components/portfolio/StudioFAQ'
 import ClientStories, { type ClientStory } from '@/components/portfolio/ClientStories'
@@ -75,9 +76,9 @@ export default async function HomePage() {
   const background = hex(settings.studio_background_color, '#090910')
   const fontScale = Math.max(80, Math.min(125, Number(settings.studio_font_scale) || 100))
   const stats = [
-    { label: 'Projects completed', value: settings.studio_completed_projects ?? '600+' },
+    { label: 'Projects completed', value: settings.studio_completed_projects ?? '800+' },
     { label: 'Years of experience', value: settings.studio_experience_years ?? '9+' },
-    { label: 'Satisfied clients', value: settings.studio_client_count ?? '75+' },
+    { label: 'Satisfied clients', value: settings.studio_client_count ?? '100+' },
   ].filter(stat => stat.value.trim())
   const reviews = [1, 2, 3].map(i => ({
     name: settings[`studio_review_${i}_name`]?.trim(),
@@ -122,7 +123,7 @@ export default async function HomePage() {
 
       {stats.length > 0 && <section data-studio-reveal aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 sm:grid-cols-3 md:px-10">
         {stats.map(stat => <div key={stat.label} className="border-l border-[#D88A4E]/40 pl-6">
-          <p className={"font-semibold leading-none tracking-[-.035em] tabular-nums text-[#E9A46B] text-4xl md:text-5xl"}>{stat.value}</p>
+          <p className={"font-semibold leading-none tracking-[-.035em] tabular-nums text-[#E9A46B] text-4xl md:text-5xl"}><AnimatedStudioStat value={stat.value} /></p>
           <p className="mt-3 text-sm text-white/60">{stat.label}</p>
         </div>)}
       </section>}
