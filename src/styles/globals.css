@@ -859,3 +859,43 @@ a,
 @media (prefers-reduced-motion: reduce) {
   .ravzen-morph-letter { animation: none; }
 }
+
+
+/* RAVZEN premium micro-interactions — no reading progress indicator. */
+@media (hover:hover) and (pointer:fine) {
+  .studio-home .ravzen-magnetic {
+    transform: translate3d(var(--button-x,0px),var(--button-y,0px),0);
+    transition: transform 220ms cubic-bezier(.2,.8,.2,1), box-shadow 220ms ease;
+  }
+  .studio-home .ravzen-magnetic:hover { box-shadow: 0 8px 26px rgba(224,124,61,.18); }
+  .studio-home .studio-glow-card { transition: transform 300ms ease, border-color 300ms ease, box-shadow 300ms ease; }
+  .studio-home .studio-glow-card:hover { transform: perspective(1000px) rotateX(1deg) rotateY(-1deg) translateY(-3px); border-color:rgba(233,164,107,.5); box-shadow:0 20px 45px rgba(0,0,0,.24); }
+  .studio-home .studio-glow-card:hover img { transform: scale(1.035); }
+  .studio-home .ravzen-kinetic-heading:hover { letter-spacing:.025em; }
+}
+.studio-home .studio-glow-card img { transition: transform 500ms cubic-bezier(.2,.8,.2,1), filter 600ms ease; }
+.studio-home .ravzen-kinetic-heading { transition:letter-spacing 450ms cubic-bezier(.2,.8,.2,1); }
+.studio-home .ravzen-artwork-reveal img { filter:blur(3px); }
+.studio-home .ravzen-artwork-visible img { filter:blur(0); }
+.studio-home .ravzen-ambient-spotlight {
+  position:absolute; z-index:0; pointer-events:none; width:300px; height:300px;
+  transform:translate(-50%,-50%); border-radius:50%;
+  background:radial-gradient(circle,rgba(232,130,58,.075),transparent 70%);
+  filter:blur(12px);
+}
+.studio-home .ravzen-contact-attention { animation:ravzen-contact-pulse 2.4s ease-in-out 2; }
+@keyframes ravzen-contact-pulse { 50% { filter:drop-shadow(0 0 13px rgba(239,145,69,.65)); } }
+.studio-home .ravzen-stat-number { animation:ravzen-stat-shine 1.5s ease-out 1; }
+@keyframes ravzen-stat-shine { 0% {text-shadow:0 0 0 transparent;} 55% {text-shadow:0 0 16px rgba(239,145,69,.28);} 100% {text-shadow:none;} }
+@supports (view-transition-name:root) {
+  @media (prefers-reduced-motion:no-preference) {
+    ::view-transition-old(root) { animation-duration:180ms; }
+    ::view-transition-new(root) { animation-duration:240ms; }
+  }
+}
+@media (prefers-reduced-motion:reduce) {
+  .studio-home .ravzen-magnetic, .studio-home .studio-glow-card, .studio-home .studio-glow-card img,
+  .studio-home .ravzen-kinetic-heading, .studio-home .ravzen-stat-number,
+  .studio-home .ravzen-contact-attention { animation:none!important; transition:none!important; transform:none!important; filter:none!important; }
+  .studio-home .ravzen-ambient-spotlight { display:none; }
+}
