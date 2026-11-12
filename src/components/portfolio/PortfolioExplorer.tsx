@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
 import GalleryFeedback from '@/components/reviews/GalleryFeedback'
 import ProjectShowcase from '@/components/portfolio/ProjectShowcase'
@@ -17,6 +17,10 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
   const [favorites,setFavorites]=useState<string[]>([])
   const [onlySaved,setOnlySaved]=useState(false)
   const [sort,setSort]=useState('newest')
+  const [notice,setNotice]=useState('')
+  const noticeTimer=useRef<ReturnType<typeof setTimeout>|null>(null)
+  useEffect(()=>()=>{if(noticeTimer.current)clearTimeout(noticeTimer.current)},[])
+  const notify=(message:string)=>{setNotice(message);if(noticeTimer.current)clearTimeout(noticeTimer.current);noticeTimer.current=setTimeout(()=>setNotice(''),2400)}
   useEffect(()=>{setFavorites(readFavorites())},[])
   const categories=useMemo(()=>['All',...Array.from(new Set(projects.map(p=>p.category?.name||'Creative design'))).sort()], [projects])
   const visible=useMemo(()=>{
@@ -29,12 +33,14 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
   const toggle=(id:string)=>{
     const next=favorites.includes(id)?favorites.filter(v=>v!==id):[...favorites,id]
     setFavorites(next)
+    notify(favorites.includes(id)?'Removed from your moodboard':'Saved to your moodboard')
     try{localStorage.setItem(STORAGE_KEY,JSON.stringify(next))}catch{}
   }
   const selected=projects.filter(p=>favorites.includes(p.id))
   const phone=whatsapp.replace(/\D/g,'')
   const moodboardText='Hello RAVZEN! I like these portfolio projects and would like to discuss a design:\n'+selected.map((p,i)=>(i+1)+'. '+p.title+' — '+'https://ravzen-digi-universe.vercel.app/projects/'+encodeURIComponent(p.slug)).join('\n')
   return <div>
+    <div role="status" aria-live="polite" className={'pointer-events-none fixed bottom-24 left-1/2 z-[90] -translate-x-1/2 rounded-full border border-[#E9A46B]/40 bg-[#17141A]/95 px-5 py-3 text-sm text-[#F5D2B1] shadow-xl backdrop-blur-lg transition-opacity duration-300 '+(notice?'opacity-100':'opacity-0')}>{notice}</div>
     <div className="mb-8 rounded-2xl border border-fuchsia-400/20 bg-white/[.035] p-4 sm:p-6">
       <div className="grid gap-3 md:grid-cols-[1fr_auto_auto]">
         <label className="block"><span className="mb-2 block text-xs font-semibold text-white/65">Find your inspiration</span>
