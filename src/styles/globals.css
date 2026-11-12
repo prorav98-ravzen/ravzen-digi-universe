@@ -826,3 +826,21 @@ a,
   font-variant-numeric: tabular-nums;
   letter-spacing: -0.015em;
 }
+
+/* Hero emblem: gentle 3D rotation, isolated from the navigation brand. */
+@keyframes ravzen-hero-emblem-turn {
+  from { transform: perspective(500px) rotateY(0deg); }
+  to { transform: perspective(500px) rotateY(360deg); }
+}
+.studio-home .studio-hero-rotating-logo {
+  animation: ravzen-hero-emblem-turn 8s linear infinite;
+  transform-origin: center center;
+  backface-visibility: visible;
+  will-change: transform;
+}
+@media (hover: hover) and (pointer: fine) {
+  .studio-home .studio-hero-rotating-logo:hover { animation-duration: 4s; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-home .studio-hero-rotating-logo { animation: none; will-change: auto; }
+}
