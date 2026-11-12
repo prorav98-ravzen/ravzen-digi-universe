@@ -899,3 +899,33 @@ a,
   .studio-home .ravzen-contact-attention { animation:none!important; transition:none!important; transform:none!important; filter:none!important; }
   .studio-home .ravzen-ambient-spotlight { display:none; }
 }
+
+
+/* Premium RAVZEN aurora: behind content, minimal GPU load. */
+.studio-home::before {
+  content:''; position:absolute; inset:0 0 auto; height:min(850px,110vh);
+  pointer-events:none; z-index:-1; opacity:.58;
+  background:radial-gradient(ellipse 45% 55% at 20% 28%,rgba(255,94,19,.16),transparent 75%),
+             radial-gradient(ellipse 40% 50% at 80% 24%,rgba(236,169,93,.11),transparent 75%);
+  background-size:120% 110%;
+  animation:ravzen-aurora-drift 19s ease-in-out infinite alternate;
+}
+@keyframes ravzen-aurora-drift {
+  from {background-position:0% 0%; opacity:.42}
+  to {background-position:100% 25%; opacity:.65}
+}
+.ravzen-cursor-label {
+  position:fixed; left:0; top:0; z-index:100; pointer-events:none;
+  transform:translate(18px,18px) scale(.9); opacity:0;
+  padding:7px 12px; border:1px solid rgba(233,164,107,.45); border-radius:100px;
+  background:rgba(16,15,20,.93); color:#f5d2b1; font-size:11px;
+  letter-spacing:.02em; white-space:nowrap;
+  transition:opacity .15s ease,transform .15s ease;
+  box-shadow:0 8px 25px rgba(0,0,0,.25);
+}
+.ravzen-cursor-label.is-visible {opacity:1; transform:translate(18px,18px) scale(1)}
+@media (hover:none), (pointer:coarse) {.ravzen-cursor-label{display:none}}
+@media (prefers-reduced-motion:reduce) {
+  .studio-home::before {animation:none!important}
+  .ravzen-cursor-label {display:none!important}
+}
