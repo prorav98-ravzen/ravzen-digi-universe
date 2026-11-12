@@ -810,3 +810,12 @@ a,
   .studio-gradient-heading { animation: none; background-position: 100% 50%; }
   .studio-home [data-studio-reveal] { transition-duration: .2s; }
 }
+
+/* RAVZEN studio counters: modern premium numerals only. */
+.studio-home .ravzen-stat-number,
+.studio-home [aria-label="Studio experience"] .tabular-nums {
+  font-family: var(--font-jakarta), var(--font-inter), system-ui, sans-serif;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  letter-spacing: -0.035em;
+}
