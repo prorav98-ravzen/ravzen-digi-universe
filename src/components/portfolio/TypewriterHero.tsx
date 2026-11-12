@@ -1,69 +1,92 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 
 const original = 'Imagine. Create. Evolve.'
-// Every phrase uses only letters available in the original tagline.
 const phrases = [original, 'Imagine Art.', 'Create. Live.', 'Evolve Art.'] as const
-const sourceLetters = original.toLowerCase().replace(/[^a-z]/g, '')
 
-function usesOriginalLetters(value: string) {
-  const available = [...sourceLetters]
-  for (const letter of value.toLowerCase().replace(/[^a-z]/g, '')) {
-    const position = available.indexOf(letter)
-    if (position === -1) return false
-    available.splice(position, 1)
-  }
-  return true
+// Assign each character to a stable character from the original tagline.
+// The same letter physically travels to its new position between phrases.
+function assignLetters(phrase: string) {
+  const available = [...original].map((letter, id) => ({ letter, id }))
+  return [...phrase].map(letter => {
+    const index = available.findIndex(item => item.letter.toLowerCase() === letter.toLowerCase())
+    if (index === -1) return { letter, id: -1 }
+    const [match] = available.splice(index, 1)
+    return { letter, id: match.id }
+  })
 }
 
 export default function TypewriterHero() {
   const [typed, setTyped] = useState(0)
   const [phase, setPhase] = useState(0)
-  const [motion, setMotion] = useState(false)
+  const root = useRef<HTMLSpanElement>(null)
+  const previous = useRef<Map<number, DOMRect>>(new Map())
+  const initial = useRef(true)
+  const reduced = useRef(false)
 
   useEffect(() => {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
-      setTyped(original.length)
-      return
-    }
+    reduced.current = window.matchMedia('(prefers-reduced-motion: reduce)').matches
+    if (reduced.current) { setTyped(original.length); return }
     let index = 0
-    let timeout: ReturnType<typeof setTimeout>
-    const next = () => {
-      index += 1
+    let timer: ReturnType<typeof setTimeout>
+    const tick = () => {
+      index++
       setTyped(index)
-      if (index < original.length) {
-        timeout = setTimeout(next, original[index - 1] === '.' ? 310 : 75)
-      }
+      if (index < original.length) timer = setTimeout(tick, original[index - 1] === '.' ? 300 : 75)
     }
-    timeout = setTimeout(next, 280)
-    return () => clearTimeout(timeout)
+    timer = setTimeout(tick, 250)
+    return () => clearTimeout(timer)
   }, [])
 
   useEffect(() => {
-    if (typed < original.length || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return
-    const interval = setInterval(() => {
-      setMotion(true)
-      setPhase(previous => (previous + 1) % phrases.length)
-    }, 4300)
+    if (typed < original.length || reduced.current) return
+    const interval = setInterval(() => setPhase(value => (value + 1) % phrases.length), 4700)
     return () => clearInterval(interval)
   }, [typed])
 
-  const phrase = phrases[phase]
-  if (!usesOriginalLetters(phrase)) return <span>{original}</span>
+  useLayoutEffect(() => {
+    const parent = root.current
+    if (!parent) return
+    const spans = Array.from(parent.querySelectorAll<HTMLElement>('[data-letter-id]'))
+    const current = new Map<number, DOMRect>()
+    spans.forEach(el => current.set(Number(el.dataset.letterId), el.getBoundingClientRect()))
+    if (!initial.current && !reduced.current) {
+      spans.forEach(el => {
+        const before = previous.current.get(Number(el.dataset.letterId))
+        const after = current.get(Number(el.dataset.letterId))
+        if (!after) return
+        if (before) {
+          const dx = before.left - after.left
+          const dy = before.top - after.top
+          el.animate([
+            { transform: `translate(${dx}px, ${dy}px)`, opacity: 1 },
+            { transform: 'translate(0, 0)', opacity: 1 }
+          ], { duration: 1050, easing: 'cubic-bezier(.22,1,.36,1)', fill: 'both' })
+        } else {
+          el.animate([{ opacity: 0, transform: 'scale(.7)' }, { opacity: 1, transform: 'scale(1)' }],
+            { duration: 650, easing: 'ease-out', fill: 'both' })
+        }
+      })
+    }
+    previous.current = current
+    initial.current = false
+  }, [phase])
 
-  return <span aria-label={phrase} className="relative inline-block min-h-[1.15em] align-top">
+  const letters = assignLetters(phrases[phase])
+  return <span ref={root} aria-label={phrases[phase]} className="relative inline-block align-top">
     <span className="invisible" aria-hidden="true">{original}</span>
-    <span className="absolute inset-0 flex flex-wrap items-center justify-center gap-x-[.22em] gap-y-0" aria-hidden="true">
-      {phrase.split(' ').map((word, wordIndex) => (
-        <span key={`${phase}-${wordIndex}`} className={`inline-block whitespace-nowrap ${wordIndex === 1 ? 'italic text-[#E9A46B]' : ''}`}>
-          {[...word].map((letter, letterIndex) => {
-            const letterPosition = phrase.split(' ').slice(0, wordIndex).join(' ').length + (wordIndex ? 1 : 0) + letterIndex
-            const visible = phase !== 0 || letterPosition < typed
-            return <span key={`${phase}-${wordIndex}-${letterIndex}`} className={motion ? 'ravzen-morph-letter' : ''} style={motion ? { animationDelay: `${letterIndex * 36 + wordIndex * 140}ms` } : undefined}>{visible ? letter : '\u00a0'}</span>
+    <span className="absolute inset-0 flex flex-wrap items-center justify-center gap-x-[.22em]" aria-hidden="true">
+      {phrases[phase].split(' ').map((word, wordIndex) => {
+        const start = phrases[phase].split(' ').slice(0, wordIndex).reduce((sum, part) => sum + part.length + 1, 0)
+        return <span key={wordIndex} className={`inline-block whitespace-nowrap ${wordIndex === 1 ? 'italic text-[#E9A46B]' : ''}`}>
+          {[...word].map((character, letterIndex) => {
+            const index = start + letterIndex
+            const item = letters[index]
+            return <span key={item.id >= 0 ? item.id : `extra-${index}`} data-letter-id={item.id >= 0 ? item.id : undefined} className="inline-block" style={{ opacity: phase === 0 && index >= typed ? 0 : 1 }}>{character}</span>
           })}
         </span>
-      ))}
+      })}
     </span>
   </span>
 }
