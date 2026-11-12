@@ -102,26 +102,26 @@ export default async function HomePage() {
       </header>
       <div aria-hidden="true" className="h-[113px] md:h-[82px]" />
 
-      <section id="home" data-studio-reveal className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 md:px-10 md:pb-36 md:pt-36">
+      <section id="home" data-studio-reveal className="relative mx-auto max-w-7xl overflow-hidden px-5 pb-24 pt-24 text-center md:px-10 md:pb-36 md:pt-36">
         <div className="pointer-events-none absolute right-[-10%] top-10 h-80 w-80 rounded-full bg-[#B76E3B]/10 blur-3xl" aria-hidden="true" />
         <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-[#E9A46B]">Independent creative studio · Sri Lanka</p>
-        <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8">
+        <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:items-center sm:gap-8">
           <Image src="/images/ravzen-header-emblem.svg" alt="RAVZEN logo" width={140} height={115} className="studio-hero-rotating-logo h-auto w-20 shrink-0 object-contain sm:w-28 lg:w-36" unoptimized priority />
           <h1 className={`${heroFont.className} max-w-5xl text-5xl font-normal leading-[1.12] tracking-[-.025em] text-white md:text-7xl lg:text-8xl`}>
           <TypewriterHero />
         </h1>
         </div>
-        <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
+        <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Trusted, premium graphic design services with unique creative concepts in Sri Lanka. Proudly based in Bibile, Sri Lanka."}
         </p>
-        <div className="mt-10 flex flex-wrap gap-4">
+        <div className="mt-10 flex flex-wrap justify-center gap-4">
           <a href="#work" className="rounded-full bg-white px-7 py-3 text-sm font-bold text-black hover:bg-[#F6E9DC]">Explore the work ↗</a>
           <a href="#inquiry" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-[#D88A4E]">Start a project</a>
         </div>
       </section>
 
-      {stats.length > 0 && <section data-studio-reveal aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 sm:grid-cols-3 md:px-10">
-        {stats.map(stat => <div key={stat.label} className="border-l border-[#D88A4E]/40 pl-6">
+      {stats.length > 0 && <section data-studio-reveal aria-label="Studio experience" className="mx-auto grid max-w-7xl gap-8 px-5 pb-20 text-center sm:grid-cols-3 md:px-10">
+        {stats.map(stat => <div key={stat.label} className="border-b border-[#D88A4E]/40 px-4 pb-5 sm:border-b-0 sm:border-l-0 sm:pb-0">
           <p className={"font-semibold leading-none tracking-[-.035em] tabular-nums text-[#E9A46B] text-4xl md:text-5xl"}><AnimatedStudioStat value={stat.value} /></p>
           <p className="mt-3 text-sm text-white/60">{stat.label}</p>
         </div>)}
