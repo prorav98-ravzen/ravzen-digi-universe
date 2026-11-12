@@ -112,7 +112,7 @@ export default async function HomePage() {
         </h1>
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
-          {settings.studio_hero_description ?? "Distinctive identities, premium packaging and striking visuals for brands ready to stand apart."}
+          {settings.studio_hero_description ?? "Trusted, premium graphic design services with unique creative concepts in Sri Lanka. Proudly based in Bibile, Sri Lanka."}
         </p>
         <div className="mt-10 flex flex-wrap gap-4">
           <a href="#work" className="rounded-full bg-white px-7 py-3 text-sm font-bold text-black hover:bg-[#F6E9DC]">Explore the work ↗</a>
