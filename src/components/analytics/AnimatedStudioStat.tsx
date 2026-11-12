@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from 'react'
 
 export default function AnimatedStudioStat({ value }: { value: string }) {
-  const match = value.trim().match(/^([\\d,]+)(.*)$/)
+  const match = value.trim().match(/^([0-9,]+)(.*)$/)
   const target = match ? Number(match[1].replace(/,/g, '')) : NaN
   const suffix = match ? match[2] : ''
   const valid = Number.isFinite(target) && target >= 0
