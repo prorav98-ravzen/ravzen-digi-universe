@@ -15,6 +15,7 @@ import StudioFAQ from '@/components/portfolio/StudioFAQ'
 import ClientStories, { type ClientStory } from '@/components/portfolio/ClientStories'
 import CredentialsSection from '@/components/portfolio/CredentialsSection'
 import StudioMotion from '@/components/portfolio/StudioMotion'
+import TypewriterHero from '@/components/portfolio/TypewriterHero'
 import StudioFooter from '@/components/portfolio/StudioFooter'
 import SwipeSectionNav from '@/components/navigation/SwipeSectionNav'
 
@@ -107,9 +108,7 @@ export default async function HomePage() {
         <div className="flex flex-col items-start gap-6 sm:flex-row sm:items-center sm:gap-8">
           <Image src="/images/ravzen-header-emblem.svg" alt="RAVZEN logo" width={140} height={115} className="studio-hero-rotating-logo h-auto w-20 shrink-0 object-contain sm:w-28 lg:w-36" unoptimized priority />
           <h1 className={`${heroFont.className} max-w-5xl text-5xl font-normal leading-[1.12] tracking-[-.025em] text-white md:text-7xl lg:text-8xl`}>
-          <span className="inline-block">Imagine.</span>{' '}
-          <span className="inline-block font-normal italic text-[#E9A46B]">Create.</span>{' '}
-          <span className="inline-block">Evolve.</span>
+          <TypewriterHero />
         </h1>
         </div>
         <p className="mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
