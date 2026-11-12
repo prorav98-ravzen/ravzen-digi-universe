@@ -120,7 +120,24 @@ export default function StudioMotion() {
     }
     if (finePointer) root.addEventListener('pointermove',onPointer,{passive:true})
 
-    return () => { artworkObserver.disconnect(); buttonCleanup.forEach(fn=>fn()); root.removeEventListener('click',onArtworkClick); root.removeEventListener('pointermove',onPointer); cancelAnimationFrame(spotFrame); spotlight.remove(); observer?.disconnect(); cleanups.forEach(cleanup => cleanup());  }
+    const cursorLabel = document.createElement('div')
+    cursorLabel.className = 'ravzen-cursor-label'
+    cursorLabel.textContent = 'View project'
+    cursorLabel.setAttribute('aria-hidden','true')
+    if (finePointer) document.body.appendChild(cursorLabel)
+    const onCursorMove = (event: PointerEvent) => {
+      const target = event.target as Element
+      const artwork = target.closest('#work article.studio-glow-card')
+      const interactive = target.closest('button, a')
+      cursorLabel.classList.toggle('is-visible',Boolean(artwork && interactive))
+      if (artwork && interactive) {
+        cursorLabel.textContent = target.closest('a') ? 'Explore project' : 'View artwork'
+        cursorLabel.style.left = event.clientX + 'px'
+        cursorLabel.style.top = event.clientY + 'px'
+      }
+    }
+    if (finePointer) root.addEventListener('pointermove',onCursorMove,{passive:true})
+    return () => { root.removeEventListener('pointermove',onCursorMove); cursorLabel.remove(); artworkObserver.disconnect(); buttonCleanup.forEach(fn=>fn()); root.removeEventListener('click',onArtworkClick); root.removeEventListener('pointermove',onPointer); cancelAnimationFrame(spotFrame); spotlight.remove(); observer?.disconnect(); cleanups.forEach(cleanup => cleanup());  }
   }, [])
   return null
 }
