@@ -94,7 +94,7 @@ export default function StudioMotion() {
 
     // Reveal contact option only after meaningful artwork exploration.
     let seen = 0
-    const contact = root.querySelector<HTMLElement>('.studio-contact-float')
+    const contact = root.querySelector<HTMLElement>('.studio-contact-dock')
     const onArtworkClick = (event: Event) => {
       const target = event.target as Element
       const card = target.closest('#work article.studio-glow-card') as HTMLElement | null
