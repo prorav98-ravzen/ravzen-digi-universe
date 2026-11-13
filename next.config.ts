@@ -108,6 +108,12 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: '/:path*',
+        has: [{ type: 'host', value: 'ravzen-digi-universe.vercel.app' }],
+        destination: 'https://ravzen.vercel.app/:path*',
+        permanent: true,
+      },
+      {
         source:      '/zones/:zone',
         destination: '/',
         permanent:   false,
