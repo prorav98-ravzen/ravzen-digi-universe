@@ -5,7 +5,7 @@ import { getArticle, listArticles } from '@/lib/insights/data'
 import { SITE_CONFIG } from '@/config/site'
 import ArticleShare from '@/components/insights/ArticleShare'
 import ArticleExperience from '@/components/insights/ArticleExperience'
-export const dynamic = 'force-dynamic'
+export const revalidate = 300
 type Props = { params: Promise<{ slug: string }> }
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const article = await getArticle((await params).slug)
