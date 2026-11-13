@@ -27,8 +27,14 @@ const heroFont = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: 'RAVZEN — Premium Creative Studio',
-  description: 'Premium logo design, branding, packaging and visual design by RAVZEN Creative Studio.',
+  title: 'RAVZEN Graphic — Graphic Design Studio in Sri Lanka',
+  description: 'RAVZEN Graphic (RAVZEN DiGi Universe) is a professional graphic design studio in Bibile, Sri Lanka. Explore logo design, branding, packaging, labels, social media posts and print design.',
+  alternates: { canonical: '/' },
+  openGraph: {
+    title: 'RAVZEN Graphic — Graphic Design Studio in Sri Lanka',
+    description: 'RAVZEN Graphic, also known as RAVZEN DiGi Universe, offers professional logo design, branding, packaging, labels and social media graphics in Sri Lanka.',
+    url: SITE_CONFIG.url,
+  },
 }
 
 type Project = {
