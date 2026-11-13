@@ -9,7 +9,7 @@ export const SITE_CONFIG = {
   name:        'RAVZEN DIGI UNIVERSE',
   tagline:     'Premium Creative Studio',
   description:
-    "RAVZEN Creative Studio creates distinctive logos, branding, premium packaging and visual design for ambitious brands.",
+    "RAVZEN Graphic is a Sri Lankan graphic design studio based in Bibile, offering professional logo design, brand identity, packaging and label design, social media graphics, posters and print-ready artwork.",
   url:          process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ravzen.vercel.app',
   locale:       'en',
   themeColor:   '#03040a',
