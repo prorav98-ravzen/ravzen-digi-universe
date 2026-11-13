@@ -55,7 +55,7 @@ export const metadata: Metadata = {
   authors: [{ name: 'RAVZEN', url: SITE_CONFIG.url }],
   creator: 'RAVZEN',
   publisher: 'RAVZEN',
-  category: 'technology',
+  category: 'design',
   openGraph: {
     type:        'website',
     locale:      'en_US',
@@ -128,7 +128,7 @@ const structuredData = {
   alternateName: ['RAVZEN', 'RAVZEN DiGi Universe', 'RAVZEN Graphic Design'],
   url:         SITE_CONFIG.url,
   description: SITE_CONFIG.description,
-  sameAs:     [],
+  sameAs:     ['https://www.instagram.com/ravzen_graphic/'],
 }
 
 // ── Root layout ───────────────────────────────────────────────────────────────
