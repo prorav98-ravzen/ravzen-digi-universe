@@ -59,6 +59,14 @@ export default async function ProjectCaseStudy({ params }: Props) {
       {images[0] && <div className="relative mt-12 aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
         <Image src={images[0]} alt={project.title} fill unoptimized className="object-contain" sizes="(max-width: 768px) 100vw, 1100px" priority />
       </div>}
+      <section aria-labelledby="project-overview" className="mt-12 max-w-4xl space-y-5 text-white/75">
+        <h2 id="project-overview" className="text-2xl font-bold text-white">About this design project</h2>
+        <p className="leading-8">This {project.category?.name?.toLowerCase() ?? 'creative design'} project, <strong className="font-semibold text-white">{project.title}</strong>, is featured in the RAVZEN Graphic portfolio. RAVZEN is a graphic design studio based in Bibile, Sri Lanka, showcasing branding, packaging, promotional artwork and visual design.</p>
+        {project.short_description ? <p className="leading-8">{project.short_description}</p> : <p className="leading-8">Explore the available artwork below to see the visual direction and presentation of this project. For details about design requirements, formats or a similar commission, contact the studio directly.</p>}
+        <h3 className="text-lg font-semibold text-white">Explore the artwork and discuss your project</h3>
+        <p className="leading-8">The gallery presents the images available for this project. If you are planning related design work, you can review the portfolio, share your brief and discuss the intended use, preferred style and production requirements with RAVZEN Graphic.</p>
+        <p className="text-sm leading-7">Project category: {project.category?.name ?? 'Creative design'} · Studio: RAVZEN Graphic · Location: Bibile, Sri Lanka</p>
+      </section>
       <section aria-label="Project artwork gallery" className="mx-auto mt-12 max-w-4xl rounded-2xl border border-white/10 bg-white/[.025] p-4 sm:p-8">
         <h2 className="text-2xl font-bold">Explore the project</h2>
         <p className="mt-2 text-sm text-white/55">Browse the creative work and leave your feedback.</p>
