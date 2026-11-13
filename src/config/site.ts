@@ -10,7 +10,7 @@ export const SITE_CONFIG = {
   tagline:     'Premium Creative Studio',
   description:
     "RAVZEN Creative Studio creates distinctive logos, branding, premium packaging and visual design for ambitious brands.",
-  url:          process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ravzen-digi-universe.vercel.app',
+  url:          process.env.NEXT_PUBLIC_SITE_URL ?? 'https://ravzen.vercel.app',
   locale:       'en',
   themeColor:   '#03040a',
   ogImage:      '/images/ravzen-logo.png',
