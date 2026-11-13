@@ -41,6 +41,10 @@ export default function ServicePage() {
           </div>
           <p className="leading-8">Whether you are launching a new venture or refreshing an existing identity, share your business name, industry and preferred style to discuss a suitable design direction.</p>
         </section>
+        <section className="mt-12 space-y-4 text-white/75" aria-label="Design planning guidance">
+          <h2 className="text-xl font-semibold text-white">Planning your design brief</h2>
+          <p className="leading-8">Logo design decisions start with understanding where a mark will appear: a small social profile image, a printed label, a storefront sign or a business card. Readability at different sizes, balanced lettering and recognisable shapes are practical considerations when reviewing concepts. Before requesting a design, prepare your preferred business name, audience, competitors, reference styles and any existing brand colours. A clear brief makes it easier to discuss a direction that fits both digital and print use.</p>
+        </section>
         <div className="mt-24 border-t border-white/10 pt-6">
           <Link href="/explore" className="text-sm text-white/60 transition-colors hover:text-orange-400">← Explore more services</Link>
         </div>
