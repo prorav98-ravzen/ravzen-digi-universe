@@ -41,6 +41,10 @@ export default function ServicePage() {
           </div>
           <p className="leading-8">Tell us the platform, campaign objective, required text, product images and preferred dimensions so the design can be planned around your message.</p>
         </section>
+        <section className="mt-12 space-y-4 text-white/75" aria-label="Design planning guidance">
+          <h2 className="text-xl font-semibold text-white">Planning your design brief</h2>
+          <p className="leading-8">A useful social media brief identifies the platform, audience, message and desired action. A product launch post may prioritise a clear product image and release details, while a promotion needs readable pricing and dates. Consistent typography, spacing and colours help a series of posts feel connected to the same brand. Provide the exact wording, images, logo and publishing dimensions so each design can be prepared for its intended placement.</p>
+        </section>
         <div className="mt-24 border-t border-white/10 pt-6">
           <Link href="/explore" className="text-sm text-white/60 transition-colors hover:text-orange-400">← Explore more services</Link>
         </div>
