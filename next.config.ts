@@ -113,6 +113,13 @@ const nextConfig: NextConfig = {
         destination: 'https://ravzen.vercel.app/:path*',
         permanent: true,
       },
+      // Consolidate alternate production domains under one canonical host.
+      ...['ravzen-studio.vercel.app', 'ravzen-digi-universe-ravzen.vercel.app'].map(host => ({
+        source: '/:path*',
+        has: [{ type: 'host' as const, value: host }],
+        destination: 'https://ravzen.vercel.app/:path*',
+        permanent: true,
+      })),
       {
         source:      '/zones/:zone',
         destination: '/',
