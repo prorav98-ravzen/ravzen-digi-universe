@@ -117,6 +117,7 @@ export default async function HomePage() {
           <TypewriterHero />
         </h1>
         </div>
+        <p className="mx-auto mt-6 max-w-3xl text-sm font-semibold tracking-wide text-white/80 md:text-base">RAVZEN Graphic · RAVZEN DiGi Universe · Graphic Design Studio in Bibile, Sri Lanka</p>
         <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Trusted, premium graphic design services with unique creative concepts in Sri Lanka. Proudly based in Bibile, Sri Lanka."}
         </p>
