@@ -24,7 +24,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { slug } = await params
   const project = await getProject(slug)
   if (!project) return { title: 'Project not found | RAVZEN', robots: { index: false, follow: false } }
-  const description = (project.short_description?.trim() || `Explore ${project.title}, a creative design project by RAVZEN in Sri Lanka.`).slice(0, 155)
+  const summary = project.short_description?.trim() || `Explore ${project.title}, a creative design project by RAVZEN in Sri Lanka.`
+  const description = (summary.length < 70 ? `${summary} View the artwork and learn about RAVZEN Graphic design services in Sri Lanka.` : summary).slice(0, 155)
   return {
     title: { absolute: `${project.title.slice(0, 48)} | RAVZEN` },
     description,
