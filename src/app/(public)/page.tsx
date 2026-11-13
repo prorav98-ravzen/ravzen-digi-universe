@@ -134,6 +134,7 @@ export default async function HomePage() {
         </p>
         <div className="mt-10 flex flex-wrap justify-center gap-4">
           <a href="#work" className="rounded-full bg-white px-7 py-3 text-sm font-bold text-black hover:bg-[#F6E9DC]">Explore the work ↗</a>
+          <a href="/about-ravzen" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-[#D88A4E]">About RAVZEN Graphic ↗</a>
           <a href="#inquiry" className="rounded-full border border-white/25 px-7 py-3 text-sm font-bold hover:border-[#D88A4E]">Start a project</a>
         </div>
       </section>
