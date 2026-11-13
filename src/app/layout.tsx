@@ -39,7 +39,7 @@ const jakarta = Plus_Jakarta_Sans({
 
 export const metadata: Metadata = {
   title: {
-    default:  'RAVZEN | Graphic Design & Branding Sri Lanka',
+    default:  'RAVZEN Graphic | Graphic Design & Branding Sri Lanka',
     template: '%s | RAVZEN',
   },
   description: SITE_CONFIG.description,
@@ -48,7 +48,7 @@ export const metadata: Metadata = {
     google: 'VO23LmvT5amaby8GHNPkaoN15YEZC8qphmNFEn3GSg0',
   },
   keywords: [
-    'RAVZEN', 'creative studio', 'graphic design', 'logo design',
+    'RAVZEN Graphic', 'RAVZEN Graphics', 'RAVZEN', 'RAVZEN DiGi Universe', 'creative studio', 'graphic design', 'logo design',
     'brand identity', 'packaging design', 'UI/UX design', 'branding',
     'Sri Lanka', 'product advertising', 'social media design',
   ],
@@ -124,7 +124,8 @@ export const viewport: Viewport = {
 const structuredData = {
   '@context': 'https://schema.org',
   '@type':    'Organization',
-  name:        SITE_CONFIG.name,
+  name:        'RAVZEN Graphic',
+  alternateName: ['RAVZEN', 'RAVZEN DiGi Universe', 'RAVZEN Graphic Design'],
   url:         SITE_CONFIG.url,
   description: SITE_CONFIG.description,
   sameAs:     [],
