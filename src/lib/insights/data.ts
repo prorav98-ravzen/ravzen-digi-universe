@@ -3,7 +3,7 @@ import { cache } from 'react'
 import { createClient } from '@supabase/supabase-js'
 import type { Article } from './schema'
 export function insightsClient() {
-  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: (input, init) => fetch(input, { ...init, cache: 'no-store', signal: AbortSignal.timeout(12_000) }) } })
+  return createClient(process.env.NEXT_PUBLIC_SUPABASE_URL!, process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!, { auth: { persistSession: false, autoRefreshToken: false }, global: { fetch: (input, init) => fetch(input, { ...init, next: { revalidate: 300 }, signal: AbortSignal.timeout(12_000) }) } })
 }
 export const listArticles = cache(async (limit = 24) => {
   const { data, error } = await insightsClient().from('tech_articles').select('*').lte('published_at', new Date().toISOString()).order('published_at', { ascending: false }).limit(limit)
