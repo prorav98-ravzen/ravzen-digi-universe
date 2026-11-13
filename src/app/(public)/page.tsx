@@ -96,8 +96,19 @@ export default async function HomePage() {
     { title: 'Upcoming projects', value: settings.studio_upcoming_projects },
     { title: 'Coming to the studio', value: settings.studio_upcoming_features },
   ].map(group => ({ ...group, items: (group.value ?? '').split('\n').map((item: string) => item.trim()).filter(Boolean) })).filter(group => group.items.length)
+  const websiteIdentity = {
+    '@context': 'https://schema.org',
+    '@type': 'WebSite',
+    '@id': `${SITE_CONFIG.url}/#website`,
+    url: `${SITE_CONFIG.url}/`,
+    name: 'RAVZEN Graphic',
+    alternateName: ['RAVZEN', 'RAVZEN DiGi Universe', 'RAVZEN Graphic Design', 'ravzen.vercel.app'],
+    description: SITE_CONFIG.description,
+    inLanguage: 'en',
+  }
   return (
     <main className="studio-home relative isolate min-h-screen text-white selection:bg-[#D88A4E]/35" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteIdentity) }} />
       <StudioMotion />
       <div className="studio-aurora" aria-hidden="true" />
       <header className="studio-site-header fixed inset-x-0 top-0 z-[80] border-b border-white/10 bg-[#090910]/95 shadow-lg shadow-black/20 backdrop-blur-xl">
