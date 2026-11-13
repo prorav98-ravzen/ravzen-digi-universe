@@ -47,6 +47,10 @@ export default function ServicePage() {
           </div>
           <p className="leading-8">For an accurate packaging design discussion, prepare the package dimensions, dieline if available, product information, preferred visual style and printing requirements.</p>
         </section>
+        <section className="mt-12 space-y-4 text-white/75" aria-label="Design planning guidance">
+          <h2 className="text-xl font-semibold text-white">Planning your design brief</h2>
+          <p className="leading-8">Packaging artwork combines visual identity with practical production details. The printer's dieline, finished dimensions, fold and cut areas, colour requirements and material all affect how a layout should be prepared. Product names, ingredient lists, manufacturer details and other required label information should be supplied and checked by the business before printing. Sharing these details early helps avoid artwork revisions after a package layout has been approved.</p>
+        </section>
         <div className="mt-24 border-t border-white/10 pt-6">
           <Link href="/explore" className="text-sm text-white/60 transition-colors hover:text-orange-400">← Explore more services</Link>
         </div>
