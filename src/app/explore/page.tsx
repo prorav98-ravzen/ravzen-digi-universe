@@ -29,6 +29,13 @@ export default function ExplorePage() {
             </Link>
           ))}
         </nav>
+        <section aria-labelledby="explore-studio" className="mt-14 space-y-5 text-white/70">
+          <h2 id="explore-studio" className="text-2xl font-semibold text-white">RAVZEN Graphic — Creative Design in Sri Lanka</h2>
+          <p className="leading-8">RAVZEN Graphic, also known as RAVZEN DiGi Universe, is a creative studio based in Bibile, Sri Lanka. This directory helps businesses and designers find the studio's main design services, portfolio and educational resources in one place.</p>
+          <p className="leading-8">For a new brand, explore logo design and visual identity. For products going to market, explore packaging and label artwork. Businesses preparing Facebook or Instagram campaigns can find social media design services. Designers and students can also browse the available font resources.</p>
+          <h3 className="text-lg font-semibold text-white">How to get started</h3>
+          <p className="leading-8">Choose the service that matches your project, review the relevant work, and contact RAVZEN with your business name, design requirements, preferred visual style and intended use. This helps the studio understand whether your artwork is for print, digital publishing or both.</p>
+        </section>
         <p className="mt-12 text-sm text-white/60">Ready to discuss a design project? <Link href="/#contact" className="font-semibold text-orange-400 hover:underline">Get in touch with RAVZEN</Link>.</p>
       </div>
     </main>
