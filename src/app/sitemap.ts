@@ -12,6 +12,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     { url: new URL('/tech-insights', SITE_CONFIG.url).toString(), changeFrequency: 'weekly', priority: 0.8 },
     ...articles.map(article => ({ url: new URL(`/tech-insights/${article.slug}`, SITE_CONFIG.url).toString(), lastModified: article.published_at, changeFrequency: 'monthly' as const, priority: 0.7 })),
     { url: SITE_CONFIG.url, changeFrequency: 'weekly', priority: 1 },
+    { url: new URL('/about-ravzen', SITE_CONFIG.url).toString(), changeFrequency: 'monthly', priority: 0.9 },
     { url: new URL('/explore', SITE_CONFIG.url).toString(), changeFrequency: 'monthly', priority: 0.9 },
     ...['packaging-design', 'logo-design', 'social-media-design'].map(slug => ({
       url: new URL(`/services/${slug}`, SITE_CONFIG.url).toString(),
