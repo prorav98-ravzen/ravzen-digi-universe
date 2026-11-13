@@ -12,7 +12,8 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   if (!article) return { title: 'ලිපිය හමු නොවුණි', robots: { index: false, follow: false } }
   const url = `/tech-insights/${article.slug}`
   const seoTitle = article.title.length > 52 ? article.title.slice(0, 52).replace(/\s+\S*$/, '').trimEnd() : article.title
-  return { title: { absolute: `${seoTitle} | RAVZEN` }, description: article.excerpt, alternates: { canonical: url }, authors: [{ name: 'RAVZEN Tech Insights' }], openGraph: { type: 'article', locale: 'si_LK', title: article.title, description: article.excerpt, url, publishedTime: article.published_at, images: [SITE_CONFIG.ogImage] }, twitter: { card: 'summary_large_image', title: article.title, description: article.excerpt, images: [SITE_CONFIG.ogImage] } }
+  const seoDescription = article.excerpt.length > 155 ? `${article.excerpt.slice(0, 154).replace(/\s+\S*$/, '').trimEnd()}…` : article.excerpt
+  return { title: { absolute: `${seoTitle} | RAVZEN` }, description: seoDescription, alternates: { canonical: url }, authors: [{ name: 'RAVZEN Tech Insights' }], openGraph: { type: 'article', locale: 'si_LK', title: article.title, description: seoDescription, url, publishedTime: article.published_at, images: [SITE_CONFIG.ogImage] }, twitter: { card: 'summary_large_image', title: article.title, description: seoDescription, images: [SITE_CONFIG.ogImage] } }
 }
 export default async function ArticlePage({ params }: Props) {
   const article = await getArticle((await params).slug)
