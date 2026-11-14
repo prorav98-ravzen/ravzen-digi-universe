@@ -124,10 +124,13 @@ export const viewport: Viewport = {
 const structuredData = {
   '@context': 'https://schema.org',
   '@type':    'Organization',
+  '@id':      `${SITE_CONFIG.url}/#organization`,
   name:        'RAVZEN Graphic',
   alternateName: ['RAVZEN', 'RAVZEN DiGi Universe', 'RAVZEN Graphic Design'],
   url:         SITE_CONFIG.url,
   description: SITE_CONFIG.description,
+  logo: new URL('/images/ravzen-logo.png', SITE_CONFIG.url).toString(),
+  address: { '@type': 'PostalAddress', addressLocality: 'Bibile', addressRegion: 'Uva Province', addressCountry: 'LK' },
   sameAs:     ['https://www.instagram.com/ravzen_graphic/'],
 }
 

@@ -24,6 +24,9 @@ export default function AboutRavzenPage() {
       <p className="mt-12 text-sm font-semibold uppercase tracking-[.2em] text-orange-300">Independent creative studio · Bibile, Sri Lanka</p>
       <h1 className="mt-5 text-4xl font-bold leading-tight sm:text-5xl">About RAVZEN Graphic</h1>
       <p className="mt-8 text-lg leading-9 text-white/80">RAVZEN Graphic is an independent graphic design studio in Bibile, Sri Lanka. The studio also uses the name RAVZEN DiGi Universe. These names refer to the same creative portfolio and design services presented on this website.</p>
+      <h2 className="mt-12 text-2xl font-bold">The designer behind RAVZEN</h2>
+      <p className="mt-5 leading-8 text-white/75">Ravindu Zekara Hemantha is the graphic designer behind RAVZEN Graphic. His creative career began in 2016, with experience in branding, product packaging, stationery and print-ready artwork. His work combines visual design with practical knowledge of print production.</p>
+      <p className="mt-5 leading-8 text-white/75">He worked as a Graphic Designer and Machine Operator at Galgedara Marketing (Pvt) Ltd from 2018 to 2021, and has worked as a Senior Digital &amp; Visual Graphic Designer at Leaves Stationery Company, a business division of Galgedara Marketing (Pvt) Ltd, since 2024.</p>
       <h2 className="mt-12 text-2xl font-bold">What RAVZEN Graphic does</h2>
       <p className="mt-5 leading-8 text-white/75">The studio creates visual communication for businesses, products and promotional campaigns. Work includes logo design, brand identity, packaging and product labels, social media artwork, print-ready marketing materials and other graphic design projects. Browse the portfolio to see actual artwork and the range of styles.</p>
       <h2 className="mt-12 text-2xl font-bold">Design services in Sri Lanka</h2>

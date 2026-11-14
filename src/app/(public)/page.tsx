@@ -27,7 +27,7 @@ const heroFont = Cormorant_Garamond({
 })
 
 export const metadata: Metadata = {
-  title: 'RAVZEN Graphic — Graphic Design Studio in Sri Lanka',
+  title: { absolute: 'RAVZEN Graphic | Graphic Design Studio in Sri Lanka' },
   description: 'RAVZEN Graphic is a creative design studio in Bibile, Sri Lanka. Explore logo design, branding, packaging, labels and social media artwork.',
   alternates: { canonical: '/' },
   openGraph: {
@@ -105,6 +105,7 @@ export default async function HomePage() {
     alternateName: ['RAVZEN', 'RAVZEN DiGi Universe', 'RAVZEN Graphic Design', 'ravzen.vercel.app'],
     description: SITE_CONFIG.description,
     inLanguage: 'en',
+    publisher: { '@id': `${SITE_CONFIG.url}/#organization` },
   }
   return (
     <main className="studio-home relative isolate min-h-screen text-white selection:bg-[#D88A4E]/35" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
@@ -124,11 +125,11 @@ export default async function HomePage() {
         <p className="mb-7 text-xs font-bold uppercase tracking-[.35em] text-[#E9A46B]">Independent creative studio · Sri Lanka</p>
         <div className="flex flex-col items-center justify-center gap-6 sm:flex-row sm:items-center sm:gap-8">
           <Image src="/images/ravzen-header-emblem.svg" alt="RAVZEN logo" width={140} height={115} className="studio-hero-rotating-logo h-auto w-20 shrink-0 object-contain sm:w-28 lg:w-36" unoptimized priority />
-          <h1 className={`${heroFont.className} max-w-5xl text-5xl font-normal leading-[1.12] tracking-[-.025em] text-white md:text-7xl lg:text-8xl`}>
+          <div className={`${heroFont.className} max-w-5xl text-5xl font-normal leading-[1.12] tracking-[-.025em] text-white md:text-7xl lg:text-8xl`}>
           <TypewriterHero />
-        </h1>
         </div>
-        <p className="mx-auto mt-6 max-w-3xl text-sm font-semibold tracking-wide text-white/80 md:text-base">RAVZEN Graphic · RAVZEN DiGi Universe · Graphic Design Studio in Bibile, Sri Lanka</p>
+        </div>
+        <h1 className="mx-auto mt-6 max-w-3xl text-sm font-semibold tracking-wide text-white/80 md:text-base">RAVZEN Graphic — Graphic Design Studio in Bibile, Sri Lanka</h1>
         <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Trusted, premium graphic design services with unique creative concepts in Sri Lanka. Proudly based in Bibile, Sri Lanka."}
         </p>
