@@ -127,6 +127,8 @@ const structuredData = {
   '@id':      `${SITE_CONFIG.url}/#organization`,
   name:        'RAVZEN Graphic',
   alternateName: ['RAVZEN', 'RAVZEN DiGi Universe', 'RAVZEN Graphic Design'],
+  telephone: '+94781556575',
+  founder: { '@type': 'Person', '@id': `${SITE_CONFIG.url}/about-ravzen#designer`, name: 'Ravindu Zekara Hemantha', url: `${SITE_CONFIG.url}/about-ravzen` },
   url:         SITE_CONFIG.url,
   description: SITE_CONFIG.description,
   logo: new URL('/images/ravzen-logo.png', SITE_CONFIG.url).toString(),

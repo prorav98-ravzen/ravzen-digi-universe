@@ -35,7 +35,7 @@ export default function AboutRavzenPage() {
         <Link className="rounded-full border border-white/25 px-5 py-3 hover:border-orange-300" href="/services/logo-design">Logo design</Link>
         <Link className="rounded-full border border-white/25 px-5 py-3 hover:border-orange-300" href="/services/packaging-design">Packaging design</Link>
         <Link className="rounded-full border border-white/25 px-5 py-3 hover:border-orange-300" href="/services/social-media-design">Social media design</Link>
-        <Link className="rounded-full border border-white/25 px-5 py-3 hover:border-orange-300" href="/explore">Explore the portfolio</Link>
+        <Link className="rounded-full border border-white/25 px-5 py-3 hover:border-orange-300" href="/#work">Explore the portfolio</Link>
       </nav>
       <h2 className="mt-12 text-2xl font-bold">Find the official RAVZEN Graphic website</h2>
       <p className="mt-5 leading-8 text-white/75">The official portfolio is <a href={SITE_CONFIG.url} className="text-orange-300 underline">ravzen.vercel.app</a>. For new projects, use the contact options on the homepage. You can also follow the studio's <a className="text-orange-300 underline" href="https://www.instagram.com/ravzen_graphic/" target="_blank" rel="noopener noreferrer">Instagram profile</a> for design updates.</p>

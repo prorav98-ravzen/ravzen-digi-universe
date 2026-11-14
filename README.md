@@ -1,8 +1,17 @@
-# RAVZEN DIGI UNIVERSE
+# RAVZEN Graphic — RAVZEN DiGi Universe
 
-> **"Where Ideas Come Alive."**
+> **Imagine. Create. Evolve.**
 
-An interactive digital universe — cinematic portfolio, product showcase, and creative technology experience built for RAVZEN.
+The website and portfolio of **RAVZEN Graphic**, an independent graphic design studio based in Bibile, Sri Lanka, by **Ravindu Zekara Hemantha**. The studio creates logos, brand identities, packaging, product labels and social media graphics.
+
+**Official website: [ravzen.vercel.app](https://ravzen.vercel.app/)**
+
+- [About RAVZEN Graphic and the designer](https://ravzen.vercel.app/about-ravzen)
+- [Design portfolio](https://ravzen.vercel.app/#work)
+- [Design services and resources](https://ravzen.vercel.app/explore)
+- [RAVZEN Tech Insights](https://ravzen.vercel.app/tech-insights)
+
+This repository contains the website source. The setup and original architecture notes below are intended for developers; some legacy universe sections no longer appear in the current design-focused public site.
 
 ---
 

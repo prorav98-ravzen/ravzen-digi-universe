@@ -4,6 +4,7 @@ import Image from 'next/image'
 import { notFound } from 'next/navigation'
 import { createClient } from '@/lib/supabase/server'
 import GalleryFeedback from '@/components/reviews/GalleryFeedback'
+import { SITE_CONFIG } from '@/config/site'
 
 type Props = { params: Promise<{ slug: string }> }
 type Project = {
@@ -45,7 +46,20 @@ export default async function ProjectCaseStudy({ params }: Props) {
   const project = await getProject(slug)
   if (!project) notFound()
   const images = [...new Set([project.cover_image_url, ...(project.gallery_urls ?? [])].filter((url): url is string => Boolean(url)))]
+  const projectUrl = new URL(`/projects/${encodeURIComponent(project.slug)}`, SITE_CONFIG.url).toString()
+  const projectIdentity = {
+    '@context': 'https://schema.org',
+    '@type': 'CreativeWork',
+    '@id': `${projectUrl}#work`,
+    url: projectUrl,
+    name: project.title,
+    ...(project.short_description ? { description: project.short_description } : {}),
+    ...(images.length ? { image: images.map(image => new URL(image, SITE_CONFIG.url).toString()) } : {}),
+    creator: { '@id': `${SITE_CONFIG.url}/#organization` },
+    mainEntityOfPage: projectUrl,
+  }
   return <main className="min-h-screen bg-[#090910] text-white">
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(projectIdentity).replace(/</g, '\\u003c') }} />
     <header className="border-b border-white/10 px-5 py-5 md:px-10">
       <nav className="mx-auto flex max-w-6xl items-center justify-between gap-4" aria-label="Project navigation">
         <Link href="/" className="font-black tracking-[.2em]">RAVZEN<span className="text-fuchsia-400">.</span></Link>
@@ -55,6 +69,7 @@ export default async function ProjectCaseStudy({ params }: Props) {
     <article className="mx-auto max-w-6xl px-5 py-14 md:px-10 md:py-20">
       <p className="text-xs font-bold uppercase tracking-[.3em] text-fuchsia-300">{project.category?.name ?? 'Creative design'} · Selected work</p>
       <h1 className="mt-5 max-w-4xl text-4xl font-black leading-tight md:text-6xl">{project.title}</h1>
+      <p className="mt-4 text-sm text-white/70">Design by <Link href="/about-ravzen" className="text-fuchsia-200 underline underline-offset-4">RAVZEN Graphic</Link> · Bibile, Sri Lanka</p>
       {project.short_description && <p className="mt-6 max-w-3xl text-lg leading-8 text-white/65">{project.short_description}</p>}
       {project.price !== null && <p className="mt-6 text-sm font-semibold text-fuchsia-200">From {project.currency ?? 'LKR'} {Number(project.price).toLocaleString('en-LK')}</p>}
       {images[0] && <div className="relative mt-12 aspect-[16/10] overflow-hidden rounded-2xl border border-white/10 bg-white/5">
