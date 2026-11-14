@@ -176,11 +176,15 @@ export default async function HomePage() {
 
       <section id="services" data-studio-reveal className="border-y border-white/10 bg-white/[.025]">
         <div className="mx-auto grid max-w-7xl gap-6 px-5 py-10 md:grid-cols-3 md:px-10">
-          {['Brand Identity & Logos', 'Packaging & Product Labels', 'Social & Marketing Design'].map((name, i) => (
-            <div key={name} className="border-l border-[#D88A4E]/40 pl-5">
+          {[
+            { name: 'Brand Identity & Logos', href: '/services/logo-design' },
+            { name: 'Packaging & Product Labels', href: '/services/packaging-design' },
+            { name: 'Social & Marketing Design', href: '/services/social-media-design' },
+          ].map(({ name, href }, i) => (
+            <a key={href} href={href} className="group border-l border-[#D88A4E]/40 pl-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-[#E9A46B]">
               <span className="text-xs text-[#E9A46B]">0{i + 1}</span>
-              <h2 className="mt-2 text-lg font-semibold">{name}</h2>
-            </div>
+              <h2 className="mt-2 text-lg font-semibold group-hover:text-[#E9A46B]">{name} <span aria-hidden="true">↗</span></h2>
+            </a>
           ))}
         </div>
       </section>

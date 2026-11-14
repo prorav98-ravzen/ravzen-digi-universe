@@ -8,10 +8,12 @@ export const metadata: Metadata = {
 }
 
 const links = [
+  { href: '/about-ravzen', name: 'About RAVZEN Graphic', description: 'Meet the designer behind the Bibile-based creative studio.' },
   { href: '/services/packaging-design', name: 'Packaging Design', description: 'Product labels, boxes and print-ready packaging artwork.' },
   { href: '/services/logo-design', name: 'Logo Design', description: 'Distinctive logos and brand identity visuals.' },
   { href: '/services/social-media-design', name: 'Social Media Design', description: 'Facebook, Instagram and promotional graphics.' },
   { href: '/resources/free-sinhala-fonts', name: 'Free Sinhala Fonts', description: 'Explore Sinhala, English and Tamil font resources.' },
+  { href: '/tech-insights', name: 'RAVZEN Tech Insights', description: 'Read articles about design, AI and technology.' },
 ]
 
 export default function ExplorePage() {

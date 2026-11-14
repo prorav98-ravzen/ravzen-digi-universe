@@ -1,6 +1,7 @@
 'use client'
 import { useEffect, useMemo, useRef, useState } from 'react'
 import Image from 'next/image'
+import { SITE_CONFIG } from '@/config/site'
 import GalleryFeedback from '@/components/reviews/GalleryFeedback'
 import ProjectShowcase from '@/components/portfolio/ProjectShowcase'
 import type { ClientStory } from '@/components/portfolio/ClientStories'
@@ -38,7 +39,7 @@ export default function PortfolioExplorer({projects,whatsapp,stories=[]}:{projec
   }
   const selected=projects.filter(p=>favorites.includes(p.id))
   const phone=whatsapp.replace(/\D/g,'')
-  const moodboardText='Hello RAVZEN! I like these portfolio projects and would like to discuss a design:\n'+selected.map((p,i)=>(i+1)+'. '+p.title+' — '+'https://ravzen-digi-universe.vercel.app/projects/'+encodeURIComponent(p.slug)).join('\n')
+  const moodboardText='Hello RAVZEN! I like these portfolio projects and would like to discuss a design:\n'+selected.map((p,i)=>(i+1)+'. '+p.title+' — '+new URL('/projects/'+encodeURIComponent(p.slug), SITE_CONFIG.url).toString()).join('\n')
   return <div>
     <div role="status" aria-live="polite" className={'pointer-events-none fixed bottom-24 left-1/2 z-[90] -translate-x-1/2 rounded-full border border-[#E9A46B]/40 bg-[#17141A]/95 px-5 py-3 text-sm text-[#F5D2B1] shadow-xl backdrop-blur-lg transition-opacity duration-300 '+(notice?'opacity-100':'opacity-0')}>{notice}</div>
     <div className="mb-8 rounded-2xl border border-fuchsia-400/20 bg-white/[.035] p-4 sm:p-6">
