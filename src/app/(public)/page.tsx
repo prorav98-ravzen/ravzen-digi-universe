@@ -165,6 +165,17 @@ export default async function HomePage() {
 
       <ClientStories stories={clientStories} />
 
+      <section aria-label="Review RAVZEN Graphic on Google" data-studio-reveal className="mx-auto max-w-7xl px-5 pb-16 md:px-10">
+        <div className="flex flex-col items-center justify-between gap-5 rounded-2xl border border-[#D88A4E]/25 bg-white/[.035] px-6 py-7 text-center sm:flex-row sm:text-left">
+          <div>
+            <p className="text-xs font-bold uppercase tracking-[.2em] text-[#E9A46B]">Your feedback matters</p>
+            <h2 className="mt-2 text-xl font-bold text-white">Enjoyed working with RAVZEN Graphic?</h2>
+            <p className="mt-2 text-sm text-white/65">Share your experience with us on Google.</p>
+          </div>
+          <a href="https://g.page/r/CXSuUou289ibEBI/review" target="_blank" rel="noopener noreferrer" aria-label="Write a review for RAVZEN Graphic on Google (opens in a new tab)" className="inline-flex shrink-0 items-center justify-center rounded-full bg-[#D88A4E] px-6 py-3 text-sm font-bold text-[#090910] transition hover:bg-[#E9A46B] focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E9A46B]">Review us on Google ↗</a>
+        </div>
+      </section>
+
       <section id="work" data-studio-reveal className="mx-auto max-w-7xl px-5 py-24 md:px-10">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-[#E9A46B]">Selected work</p>
         <div className="mb-10 mt-4 flex flex-wrap items-end justify-between gap-4">
