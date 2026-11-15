@@ -26,91 +26,92 @@ export default function StudioMotion() {
       else item.classList.add('studio-revealed')
     })
 
-    // Layered warm wisps rise, curl and disperse without intercepting input.
-    const fineSmokePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
-    const smokeMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
-    const smokeLayer = document.createElement('div')
-    smokeLayer.dataset.ravzenSmoke = 'rising-cloud'
-    smokeLayer.setAttribute('aria-hidden', 'true')
-    Object.assign(smokeLayer.style, {
+    // Glossy gradient bubbles float upward without intercepting input.
+    const fineBubblePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const bubbleMotion = window.matchMedia('(prefers-reduced-motion: reduce)')
+    const bubbleLayer = document.createElement('div')
+    bubbleLayer.dataset.ravzenBubble = 'rising-bubbles'
+    bubbleLayer.setAttribute('aria-hidden', 'true')
+    Object.assign(bubbleLayer.style, {
       position: 'fixed', inset: '0', pointerEvents: 'none', overflow: 'hidden',
       zIndex: '35', contain: 'layout style paint',
     })
-    document.body.appendChild(smokeLayer)
-    const smokeAnimations = new Set<Animation>()
-    const clearSmoke = () => {
-      smokeAnimations.forEach(animation => animation.cancel())
-      smokeAnimations.clear()
-      smokeLayer.replaceChildren()
+    document.body.appendChild(bubbleLayer)
+    const bubbleAnimations = new Set<Animation>()
+    const clearBubble = () => {
+      bubbleAnimations.forEach(animation => animation.cancel())
+      bubbleAnimations.clear()
+      bubbleLayer.replaceChildren()
     }
-    const onSmokeVisibility = () => { if (document.hidden) clearSmoke() }
-    const onSmokeMotion = () => { if (smokeMotion.matches) clearSmoke() }
-    document.addEventListener('visibilitychange', onSmokeVisibility)
-    smokeMotion.addEventListener('change', onSmokeMotion)
-    let lastSmoke = -Infinity
-    let smokeIndex = 0
+    const onBubbleVisibility = () => { if (document.hidden) clearBubble() }
+    const onBubbleMotion = () => { if (bubbleMotion.matches) clearBubble() }
+    document.addEventListener('visibilitychange', onBubbleVisibility)
+    bubbleMotion.addEventListener('change', onBubbleMotion)
+    let lastBubble = -Infinity
+    let bubbleIndex = 0
     let lastX = -100
     let lastY = -100
-    const emitSmoke = (x: number, y: number, kind: 'mouse' | 'touch' | 'wheel', burst = false) => {
-      if (document.hidden || smokeMotion.matches || typeof Element.prototype.animate !== 'function') return
+    const emitBubble = (x: number, y: number, kind: 'mouse' | 'touch' | 'wheel', burst = false) => {
+      if (document.hidden || bubbleMotion.matches || typeof Element.prototype.animate !== 'function') return
       const now = performance.now()
       const interval = kind === 'mouse' ? 140 : 180
-      if (!burst && now - lastSmoke < interval) return
+      if (!burst && now - lastBubble < interval) return
       if (!burst && kind !== 'wheel' && Math.hypot(x - lastX, y - lastY) < 18) return
-      const limit = fineSmokePointer ? 24 : 16
-      const count = burst ? (fineSmokePointer ? 4 : 3) : 2
-      if (smokeLayer.childElementCount + count > limit) return
-      lastSmoke = now
+      const limit = fineBubblePointer ? 24 : 16
+      const count = burst ? (fineBubblePointer ? 6 : 4) : 2
+      if (bubbleLayer.childElementCount + count > limit) return
+      lastBubble = now
       lastX = x
       lastY = y
-      smokeIndex++
+      bubbleIndex++
       for (let i = 0; i < count; i++) {
-        const wisp = document.createElement('div')
-        const size = (burst ? 120 : 86) + i * 17 + (smokeIndex % 3) * 9
-        const direction = (smokeIndex + i) % 2 ? 1 : -1
-        const drift = direction * (30 + i * 19)
-        const rise = (burst ? 170 : 110) + i * 27
+        const bubble = document.createElement('div')
+        const size = (burst ? 20 : 12) + ((bubbleIndex * 7 + i * 11) % 25)
+        const direction = (bubbleIndex + i) % 2 ? 1 : -1
+        const drift = direction * (24 + i * 16)
+        const rise = (burst ? 160 : 95) + i * 22
         const rotation = direction * (18 + i * 9)
-        Object.assign(wisp.style, {
+        Object.assign(bubble.style, {
           position: 'absolute', left: x + 'px', top: y + 'px',
-          width: size + 'px', height: size * 1.12 + 'px',
-          borderRadius: '46% 54% 62% 38% / 55% 38% 62% 45%',
+          width: size + 'px', height: size + 'px',
+          borderRadius: '50%',
           pointerEvents: 'none', opacity: '0', willChange: 'transform, opacity',
-          // Uneven overlapping lobes keep the cloud from looking like a round flash.
-          background: 'radial-gradient(ellipse at 42% 76%, rgba(255,215,100,.62), rgba(255,153,36,.32) 24%, transparent 51%), radial-gradient(ellipse at 66% 48%, rgba(255,168,38,.42), rgba(246,92,25,.24) 32%, transparent 62%), radial-gradient(ellipse at 32% 30%, rgba(235,65,35,.36), rgba(181,32,35,.15) 34%, transparent 65%)',
-          filter: fineSmokePointer ? 'blur(10px)' : 'blur(8px)',
+          // Bright reflections and a crisp rim give each translucent bubble depth.
+          background: 'radial-gradient(ellipse at 28% 22%, rgba(255,255,255,.95) 0%, rgba(255,250,215,.65) 7%, transparent 22%), radial-gradient(ellipse at 72% 80%, rgba(255,213,79,.5), transparent 48%), linear-gradient(145deg, rgba(255,215,75,.68), rgba(255,142,28,.4) 38%, rgba(255,178,40,.28) 58%, rgba(236,53,49,.62))',
+          border: '1px solid rgba(255,216,128,.65)',
+          boxShadow: 'inset 2px 2px 5px rgba(255,248,205,.3), inset -2px -3px 6px rgba(200,44,35,.28), 0 0 9px rgba(255,157,39,.16)',
           transform: 'translate(-50%, -50%) scale(.28)',
         })
-        smokeLayer.appendChild(wisp)
+        bubbleLayer.appendChild(bubble)
         const pose = (dx: number, dy: number, scale: number, angle: number) =>
           `translate(calc(-50% + ${dx}px), calc(-50% - ${dy}px)) rotate(${angle}deg) scale(${scale})`
-        const animation = wisp.animate([
-          { opacity: 0, transform: pose(0, 0, .28, -rotation) },
-          { opacity: burst ? .78 : .48, offset: .16, transform: pose(-drift * .15, rise * .08, .65, 0) },
-          { opacity: burst ? .55 : .32, offset: .43, transform: pose(drift * .5, rise * .35, 1.05, rotation * .4) },
-          { opacity: .17, offset: .72, transform: pose(-drift * .2, rise * .68, 1.45, rotation) },
-          { opacity: 0, transform: pose(drift, rise, 1.85, rotation * 1.4) },
-        ], { duration: (burst ? 2100 : 1600) + i * 160, delay: i * 65, easing: 'ease-out', fill: 'both' })
-        smokeAnimations.add(animation)
-        const remove = () => { smokeAnimations.delete(animation); wisp.remove() }
+        const animation = bubble.animate([
+          { opacity: 0, transform: pose(0, 0, .35, -rotation) },
+          { opacity: burst ? .9 : .6, offset: .16, transform: pose(-drift * .15, rise * .08, .9, 0) },
+          { opacity: burst ? .8 : .48, offset: .43, transform: pose(drift * .5, rise * .35, 1, rotation * .4) },
+          { opacity: .42, offset: .72, transform: pose(-drift * .2, rise * .68, 1.06, rotation) },
+          { opacity: 0, transform: pose(drift, rise, 1.15, rotation * 1.4) },
+        ], { duration: (burst ? 2400 : 1800) + i * 160, delay: i * 65, easing: 'ease-out', fill: 'both' })
+        bubbleAnimations.add(animation)
+        const remove = () => { bubbleAnimations.delete(animation); bubble.remove() }
         animation.onfinish = remove
         animation.oncancel = remove
       }
     }
-    const onWheelSmoke = (event: WheelEvent) => {
-      if (fineSmokePointer && Math.abs(event.deltaY) > 2) emitSmoke(event.clientX, event.clientY, 'wheel')
+    const onWheelBubble = (event: WheelEvent) => {
+      if (fineBubblePointer && Math.abs(event.deltaY) > 2) emitBubble(event.clientX, event.clientY, 'wheel')
     }
-    const onSmokePointerMove = (event: PointerEvent) => {
-      if (event.pointerType === 'mouse' || event.pointerType === 'pen') emitSmoke(event.clientX, event.clientY, 'mouse')
-      else if (event.pointerType === 'touch' && event.pressure > 0) emitSmoke(event.clientX, event.clientY, 'touch')
+    const onBubblePointerMove = (event: PointerEvent) => {
+      if (event.pointerType === 'mouse' || event.pointerType === 'pen') emitBubble(event.clientX, event.clientY, 'mouse')
+      else if (event.pointerType === 'touch' && event.pressure > 0) emitBubble(event.clientX, event.clientY, 'touch')
     }
-    const onSmokePointerDown = (event: PointerEvent) => {
+    const onBubblePointerDown = (event: PointerEvent) => {
       if (!event.isPrimary || event.button !== 0) return
-      emitSmoke(event.clientX, event.clientY, event.pointerType === 'mouse' ? 'mouse' : 'touch', true)
+      emitBubble(event.clientX, event.clientY, event.pointerType === 'mouse' ? 'mouse' : 'touch', true)
     }
-    window.addEventListener('wheel', onWheelSmoke, { passive: true })
-    window.addEventListener('pointermove', onSmokePointerMove, { passive: true })
-    window.addEventListener('pointerdown', onSmokePointerDown, { passive: true })
+    window.addEventListener('wheel', onWheelBubble, { passive: true })
+    window.addEventListener('pointermove', onBubblePointerMove, { passive: true })
+    window.addEventListener('pointerdown', onBubblePointerDown, { passive: true })
 
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     const cards = finePointer ? Array.from(root.querySelectorAll<HTMLElement>('.studio-glow-card')) : []
@@ -223,7 +224,7 @@ export default function StudioMotion() {
       }
     }
     if (finePointer) root.addEventListener('pointermove',onCursorMove,{passive:true})
-    return () => { clearSmoke(); document.removeEventListener('visibilitychange', onSmokeVisibility); smokeMotion.removeEventListener('change', onSmokeMotion); window.removeEventListener('wheel', onWheelSmoke); window.removeEventListener('pointermove', onSmokePointerMove); window.removeEventListener('pointerdown', onSmokePointerDown); smokeLayer.remove(); root.removeEventListener('pointermove',onCursorMove); cursorLabel.remove(); artworkObserver.disconnect(); buttonCleanup.forEach(fn=>fn()); root.removeEventListener('click',onArtworkClick); root.removeEventListener('pointermove',onPointer); cancelAnimationFrame(spotFrame); spotlight.remove(); observer?.disconnect(); cleanups.forEach(cleanup => cleanup());  }
+    return () => { clearBubble(); document.removeEventListener('visibilitychange', onBubbleVisibility); bubbleMotion.removeEventListener('change', onBubbleMotion); window.removeEventListener('wheel', onWheelBubble); window.removeEventListener('pointermove', onBubblePointerMove); window.removeEventListener('pointerdown', onBubblePointerDown); bubbleLayer.remove(); root.removeEventListener('pointermove',onCursorMove); cursorLabel.remove(); artworkObserver.disconnect(); buttonCleanup.forEach(fn=>fn()); root.removeEventListener('click',onArtworkClick); root.removeEventListener('pointermove',onPointer); cancelAnimationFrame(spotFrame); spotlight.remove(); observer?.disconnect(); cleanups.forEach(cleanup => cleanup());  }
   }, [])
   return null
 }
