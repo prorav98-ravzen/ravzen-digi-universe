@@ -21,8 +21,21 @@ jobs:
           node-version: '22'
           cache: npm
       - run: npm ci --ignore-scripts
-      - name: Audit production dependencies
+      - name: Generate dependency vulnerability reports
+        shell: bash
+        run: |
+          npm audit --omit=dev --json > audit-production.json || true
+          npm audit --json > audit-all.json || true
+      - name: Upload vulnerability reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: dependency-audit-reports
+          path: |
+            audit-production.json
+            audit-all.json
+          retention-days: 14
+      - name: Enforce production security gate
         run: npm audit --omit=dev --audit-level=high
-      - name: Audit all dependencies
+      - name: Enforce full dependency security gate
         if: always()
         run: npm audit --audit-level=high
