@@ -27,30 +27,34 @@ export default function CredentialsSection() {
           <p className="text-3xl font-black text-orange-300">{item.value}</p><p className="mt-3 text-sm leading-6 text-white/60">{item.label}</p>
         </div>)}
       </div>
-      <div className="mt-10 grid gap-4 md:grid-cols-2">
-        {credentials.map(item => <article key={item.title} className="group rounded-2xl border border-white/15 bg-white/[.055] backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.18)] p-6 md:p-7 transition-all duration-300 motion-safe:hover:-translate-y-1 hover:border-orange-400/35 hover:shadow-[0_18px_45px_rgba(249,115,22,0.10)]">
-          <div className="flex flex-wrap items-center justify-between gap-2"><span className="text-xs font-bold uppercase tracking-widest text-orange-300">{item.year}</span><span className="rounded-full border border-white/15 px-3 py-1 text-[11px] text-white/55">{item.tag}</span></div>
-          <h3 className="mt-4 text-lg font-bold">{item.title}</h3><p className="mt-3 text-sm leading-7 text-white/60">{item.description}</p>
-        </article>)}
+      <div className="mt-10 grid gap-3 md:grid-cols-2" aria-label="Expandable creative milestones">
+        {credentials.map(item => <details key={item.title} className="group h-fit rounded-2xl border border-white/15 bg-white/[.055] backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.18)] transition-colors duration-300 hover:border-orange-400/35 open:border-orange-400/40 open:bg-white/[.075]">
+          <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-2xl p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-orange-300 [&::-webkit-details-marker]:hidden md:p-6">
+            <span className="min-w-0 flex-1"><span className="flex flex-wrap items-center gap-2"><span className="text-xs font-bold uppercase tracking-widest text-orange-300">{item.year}</span><span className="rounded-full border border-white/15 px-2.5 py-1 text-[10px] text-white/55">{item.tag}</span></span><span className="mt-3 block text-base font-bold leading-snug text-white md:text-lg">{item.title}</span></span>
+            <span aria-hidden="true" className="mt-2 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-orange-400/30 text-xl leading-none text-orange-300 transition-transform duration-300 group-open:rotate-45">+</span>
+          </summary>
+          <div className="border-t border-white/10 px-5 pb-6 pt-4 text-sm leading-7 text-white/65 md:px-6">{item.description}</div>
+        </details>)}
       </div>
       <div className="mt-16" aria-labelledby="experience-heading">
         <p className="text-xs font-bold uppercase tracking-[.3em] text-orange-300">Professional background</p>
         <h3 id="experience-heading" className="mt-3 text-3xl font-bold md:text-4xl">Professional <span className="text-orange-300">Work Experience.</span></h3>
         <p className="mt-3 text-sm leading-7 text-white/60">Digital Marketing &amp; Product Designer</p>
-        <div className="mt-8 grid gap-4 md:grid-cols-2">
-          <article className="rounded-2xl border border-white/15 bg-white/[.055] backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.18)] p-6 md:p-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-orange-300">2024 – Present</p>
-            <h4 className="mt-4 text-xl font-bold">Senior Digital &amp; Visual Graphic Designer</h4>
-            <p className="mt-2 font-medium text-white/80">Leaves Stationery Company</p>
-            <p className="mt-1 text-xs text-white/50">A business division of Galgedara Marketing (Pvt) Ltd</p>
-            <p className="mt-5 text-sm leading-7 text-white/60">Specializing in digital and visual graphic design, product branding, packaging design, advertising, and creative marketing solutions. Focused on developing high-quality visual content, enhancing product presentation, and maintaining consistent brand identities across digital and print media.</p>
-          </article>
-          <article className="rounded-2xl border border-white/15 bg-white/[.055] backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.18)] p-6 md:p-8">
-            <p className="text-xs font-bold uppercase tracking-widest text-orange-300">2018 – 2021</p>
-            <h4 className="mt-4 text-xl font-bold">Graphic Designer &amp; Machine Operator</h4>
-            <p className="mt-2 font-medium text-white/80">Galgedara Marketing (Pvt) Ltd</p>
-            <p className="mt-5 text-sm leading-7 text-white/60">Gained hands-on experience in commercial graphic design, printing technology, and machine operations. Responsible for preparing print-ready artwork, operating production equipment, maintaining print quality, and supporting efficient production workflows.</p>
-          </article>
+        <div className="mt-8 grid gap-3 md:grid-cols-2">
+          <details className="group h-fit rounded-2xl border border-white/15 bg-white/[.055] transition-colors duration-300 hover:border-orange-400/35 open:border-orange-400/40">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-2xl p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-300 [&::-webkit-details-marker]:hidden md:p-7">
+              <span className="min-w-0"><span className="text-xs font-bold uppercase tracking-widest text-orange-300">2024 – Present</span><span className="mt-3 block text-lg font-bold leading-snug">Senior Digital &amp; Visual Graphic Designer</span><span className="mt-2 block text-sm text-white/75">Leaves Stationery Company</span></span>
+              <span aria-hidden="true" className="mt-2 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-orange-400/30 text-xl text-orange-300 transition-transform duration-300 group-open:rotate-45">+</span>
+            </summary>
+            <div className="border-t border-white/10 px-5 pb-6 pt-4 md:px-7"><p className="text-xs text-white/50">A business division of Galgedara Marketing (Pvt) Ltd</p><p className="mt-3 text-sm leading-7 text-white/65">Specializing in digital and visual graphic design, product branding, packaging design, advertising, and creative marketing solutions. Focused on developing high-quality visual content, enhancing product presentation, and maintaining consistent brand identities across digital and print media.</p></div>
+          </details>
+          <details className="group h-fit rounded-2xl border border-white/15 bg-white/[.055] transition-colors duration-300 hover:border-orange-400/35 open:border-orange-400/40">
+            <summary className="flex cursor-pointer list-none items-start justify-between gap-4 rounded-2xl p-5 focus-visible:outline focus-visible:outline-2 focus-visible:outline-orange-300 [&::-webkit-details-marker]:hidden md:p-7">
+              <span className="min-w-0"><span className="text-xs font-bold uppercase tracking-widest text-orange-300">2018 – 2021</span><span className="mt-3 block text-lg font-bold leading-snug">Graphic Designer &amp; Machine Operator</span><span className="mt-2 block text-sm text-white/75">Galgedara Marketing (Pvt) Ltd</span></span>
+              <span aria-hidden="true" className="mt-2 grid h-8 w-8 shrink-0 place-items-center rounded-full border border-orange-400/30 text-xl text-orange-300 transition-transform duration-300 group-open:rotate-45">+</span>
+            </summary>
+            <p className="border-t border-white/10 px-5 pb-6 pt-4 text-sm leading-7 text-white/65 md:px-7">Gained hands-on experience in commercial graphic design, printing technology, and machine operations. Responsible for preparing print-ready artwork, operating production equipment, maintaining print quality, and supporting efficient production workflows.</p>
+          </details>
         </div>
       </div>
       <div className="mt-12 rounded-2xl border border-white/15 bg-white/[.055] backdrop-blur-xl shadow-[0_12px_36px_rgba(0,0,0,0.18)] p-7 md:p-9">
