@@ -75,7 +75,7 @@ export default function StudioMotion() {
     }
     const onSmokePointerMove = (event: PointerEvent) => {
       if (event.pointerType === 'mouse' || event.pointerType === 'pen') emitSmoke(event.clientX, event.clientY, 'mouse')
-      else if (event.pointerType === 'touch' && event.buttons > 0) emitSmoke(event.clientX, event.clientY, 'touch')
+      else if (event.pointerType === 'touch' && event.pressure > 0) emitSmoke(event.clientX, event.clientY, 'touch')
     }
     const onSmokePointerDown = (event: PointerEvent) => {
       if (event.pointerType === 'touch' || event.pointerType === 'pen') {
