@@ -660,14 +660,37 @@ a,
 /* RAVZEN Premium Studio: progressive, reduced-motion-safe enhancements */
 .studio-home { overflow: clip; }
 .studio-home > :not(.studio-aurora):not(.studio-contact-dock):not(.studio-site-header) { position: relative; }
+/* A viewport-sized decorative layer: only transforms and opacity animate. */
 .studio-aurora {
-  position: absolute; inset: 0 0 auto; height: min(950px, 120vh);
-  pointer-events: none; z-index: -1; overflow: hidden;
-  background: radial-gradient(ellipse 48% 38% at 16% 24%, rgba(216,138,78,.14), transparent 78%),
-              radial-gradient(ellipse 42% 45% at 85% 48%, rgba(233,164,107,.045), transparent 78%);
-  animation: studio-aurora-drift 16s ease-in-out infinite alternate;
+  position: fixed; inset: 0; pointer-events: none; z-index: -1;
+  overflow: hidden; contain: strict;
 }
-@keyframes studio-aurora-drift { from { opacity: .7; transform: translate3d(-1%,0,0); } to { opacity: 1; transform: translate3d(1%,2%,0); } }
+.studio-aurora::before,
+.studio-aurora::after {
+  content: ''; position: absolute; width: min(66vw, 760px);
+  aspect-ratio: 1; border-radius: 50%; filter: blur(28px);
+  will-change: transform, opacity;
+}
+.studio-aurora::before {
+  top: -12%; left: -16%; opacity: .65;
+  background: radial-gradient(ellipse at 42% 44%, rgba(255,115,38,.32), rgba(222,74,29,.16) 32%, rgba(176,57,30,.04) 55%, transparent 72%);
+  animation: studio-smoke-orange 32s ease-in-out -9s infinite;
+}
+.studio-aurora::after {
+  bottom: -20%; right: -12%; opacity: .5;
+  background: radial-gradient(ellipse at 55% 48%, rgba(255,183,75,.26), rgba(235,125,40,.13) 35%, rgba(205,86,30,.035) 56%, transparent 72%);
+  animation: studio-smoke-amber 38s ease-in-out -19s infinite;
+}
+@keyframes studio-smoke-orange {
+  0%, 100% { transform: translate3d(0,0,0) scale(1); opacity: .5; }
+  35% { transform: translate3d(25vw,14vh,0) scale(1.15); opacity: .9; }
+  70% { transform: translate3d(8vw,37vh,0) scale(.92); opacity: .28; }
+}
+@keyframes studio-smoke-amber {
+  0%, 100% { transform: translate3d(0,0,0) scale(1.05); opacity: .6; }
+  40% { transform: translate3d(-25vw,-29vh,0) scale(.92); opacity: .25; }
+  75% { transform: translate3d(-7vw,-45vh,0) scale(1.15); opacity: .85; }
+}
 .studio-gradient-heading {
   background: linear-gradient(105deg, #fff 8%, #fff 36%, #D88A4E 49%, #86e8f4 59%, #fff 75%);
   background-size: 210% 100%; background-position: 100% 50%;
@@ -901,18 +924,32 @@ a,
 }
 
 
-/* Premium RAVZEN aurora: behind content, minimal GPU load. */
+/* Third, softly glowing ember; shares the existing isolated background stack. */
 .studio-home::before {
-  content:''; position:absolute; inset:0 0 auto; height:min(850px,110vh);
-  pointer-events:none; z-index:-1; opacity:.58;
-  background:radial-gradient(ellipse 45% 55% at 20% 28%,rgba(255,94,19,.16),transparent 75%),
-             radial-gradient(ellipse 40% 50% at 80% 24%,rgba(236,169,93,.11),transparent 75%);
-  background-size:120% 110%;
-  animation:ravzen-aurora-drift 19s ease-in-out infinite alternate;
+  content: ''; position: fixed; top: 3vh; right: -8vw;
+  width: min(56vw, 680px); aspect-ratio: 1; border-radius: 50%;
+  pointer-events: none; z-index: -1; opacity: .45; filter: blur(32px);
+  background: radial-gradient(ellipse, rgba(224,73,54,.22), rgba(227,104,48,.09) 36%, transparent 70%);
+  will-change: transform, opacity;
+  animation: studio-smoke-ember 29s ease-in-out -15s infinite;
 }
-@keyframes ravzen-aurora-drift {
-  from {background-position:0% 0%; opacity:.42}
-  to {background-position:100% 25%; opacity:.65}
+@keyframes studio-smoke-ember {
+  0%, 100% { transform: translate3d(0,0,0) scale(.95); opacity: .4; }
+  45% { transform: translate3d(-28vw,25vh,0) scale(1.15); opacity: .75; }
+  80% { transform: translate3d(-8vw,45vh,0) scale(1); opacity: .2; }
+}
+@media (max-width: 767px) {
+  .studio-home::before { display: none; }
+  .studio-aurora::before, .studio-aurora::after {
+    width: 105vw; max-width: 560px; filter: blur(18px);
+  }
+  .studio-aurora::before { top: 3%; left: -40%; }
+  .studio-aurora::after { bottom: 5%; right: -40%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .studio-aurora::before, .studio-aurora::after, .studio-home::before {
+    animation: none !important; will-change: auto; opacity: .45;
+  }
 }
 .ravzen-cursor-label {
   position:fixed; left:0; top:0; z-index:100; pointer-events:none;
