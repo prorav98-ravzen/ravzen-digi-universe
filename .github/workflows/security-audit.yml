@@ -41,12 +41,12 @@ jobs:
               out.push('| Package | Severity | Direct | Fix available |', '|---|---|---|---|');
               for (const [name, issue] of Object.entries(audit.vulnerabilities || {}).sort((a,b) => ({critical:4,high:3,moderate:2,low:1}[b[1].severity]||0)-({critical:4,high:3,moderate:2,low:1}[a[1].severity]||0))) {
                 const fix = issue.fixAvailable === false ? 'No' : issue.fixAvailable === true ? 'Yes' : issue.fixAvailable?.name ? issue.fixAvailable.name + '@' + issue.fixAvailable.version : 'Unknown';
-                out.push('| ' + name.replace(/\\|/g,'') + ' | ' + issue.severity + ' | ' + (issue.isDirect?'Yes':'No') + ' | ' + String(fix).replace(/\\|/g,'') + ' |');
+                out.push('| ' + name.replace(/[|]/g,'') + ' | ' + issue.severity + ' | ' + (issue.isDirect?'Yes':'No') + ' | ' + String(fix).replace(/[|]/g,'') + ' |');
               }
               out.push('');
             } catch (error) { out.push('Audit report could not be parsed: ' + String(error), ''); }
           }
-          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, out.join('\\n') + '\\n');
+          fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, out.join('\n') + '\n');
           NODE
       - name: Upload vulnerability reports
         uses: actions/upload-artifact@v4
