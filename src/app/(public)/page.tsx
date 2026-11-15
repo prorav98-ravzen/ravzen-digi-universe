@@ -129,7 +129,7 @@ export default async function HomePage() {
           <TypewriterHero />
         </div>
         </div>
-        <h1 className="mx-auto mt-6 max-w-3xl text-sm font-semibold tracking-wide text-white/80 md:text-base">RAVZEN Graphic — Graphic Design Studio in Bibile, Sri Lanka</h1>
+        <h1 className="mx-auto mt-8 flex max-w-3xl flex-col items-center gap-2 text-center"><span className="text-xs font-bold uppercase tracking-[.3em] text-[#E9A46B] sm:text-sm">RAVZEN GRAPHIC</span><span className="text-[11px] font-medium tracking-[.08em] text-white/55 sm:text-xs">Independent Creative Studio · Bibile, Sri Lanka</span><span className="sr-only">Graphic Design Studio in Bibile, Sri Lanka</span></h1>
         <p className="mx-auto mt-8 max-w-2xl text-base leading-8 text-white/60 md:text-lg">
           {settings.studio_hero_description ?? "Trusted, premium graphic design services with unique creative concepts in Sri Lanka. Proudly based in Bibile, Sri Lanka."}
         </p>
