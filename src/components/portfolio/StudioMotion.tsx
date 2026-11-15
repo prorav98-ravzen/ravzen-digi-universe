@@ -26,6 +26,49 @@ export default function StudioMotion() {
       else item.classList.add('studio-revealed')
     })
 
+    // Subtle orange smoke wisps follow desktop wheel scrolling, without blocking UI.
+    // Skip touch devices, reduced motion and hidden tabs; cap active particles for performance.
+    const smokeEnabled = window.matchMedia('(hover: hover) and (pointer: fine)').matches
+    const smokeLayer = document.createElement('div')
+    smokeLayer.setAttribute('aria-hidden', 'true')
+    Object.assign(smokeLayer.style, {
+      position: 'fixed', inset: '0', pointerEvents: 'none', overflow: 'hidden',
+      zIndex: '35', contain: 'layout style paint',
+    })
+    if (smokeEnabled) document.body.appendChild(smokeLayer)
+    let lastSmoke = 0
+    let smokeIndex = 0
+    const onWheelSmoke = (event: WheelEvent) => {
+      if (!smokeEnabled || document.hidden || Math.abs(event.deltaY) < 2) return
+      const now = performance.now()
+      if (now - lastSmoke < 90 || smokeLayer.childElementCount >= 8) return
+      lastSmoke = now
+      smokeIndex++
+      const wisp = document.createElement('div')
+      const size = 90 + (smokeIndex % 3) * 20
+      const x = Math.max(0, Math.min(window.innerWidth, event.clientX))
+      const y = Math.max(0, Math.min(window.innerHeight, event.clientY))
+      Object.assign(wisp.style, {
+        position: 'absolute', left: x + 'px', top: y + 'px',
+        width: size + 'px', height: size * .65 + 'px', borderRadius: '50%',
+        pointerEvents: 'none', opacity: '0',
+        background: 'radial-gradient(ellipse, rgba(233,164,107,.22) 0%, rgba(216,138,78,.11) 38%, rgba(216,138,78,0) 72%)',
+        filter: 'blur(13px)', transform: 'translate(-50%, -50%)',
+        willChange: 'transform, opacity',
+      })
+      smokeLayer.appendChild(wisp)
+      const drift = event.deltaY > 0 ? -55 : 55
+      const sideways = (smokeIndex % 2 ? 1 : -1) * 32
+      const animation = wisp.animate([
+        { opacity: 0, transform: 'translate(-50%, -50%) scale(.55)' },
+        { opacity: .65, offset: .25, transform: 'translate(calc(-50% + ' + sideways * .3 + 'px), calc(-50% + ' + drift * .3 + 'px)) scale(.9)' },
+        { opacity: 0, transform: 'translate(calc(-50% + ' + sideways + 'px), calc(-50% + ' + drift + 'px)) scale(1.5)' },
+      ], { duration: 1100, easing: 'ease-out' })
+      animation.onfinish = () => wisp.remove()
+      animation.oncancel = () => wisp.remove()
+    }
+    if (smokeEnabled) window.addEventListener('wheel', onWheelSmoke, { passive: true })
+
     const finePointer = window.matchMedia('(hover: hover) and (pointer: fine)').matches
     const cards = finePointer ? Array.from(root.querySelectorAll<HTMLElement>('.studio-glow-card')) : []
     const cleanups = cards.map(card => {
@@ -137,7 +180,7 @@ export default function StudioMotion() {
       }
     }
     if (finePointer) root.addEventListener('pointermove',onCursorMove,{passive:true})
-    return () => { root.removeEventListener('pointermove',onCursorMove); cursorLabel.remove(); artworkObserver.disconnect(); buttonCleanup.forEach(fn=>fn()); root.removeEventListener('click',onArtworkClick); root.removeEventListener('pointermove',onPointer); cancelAnimationFrame(spotFrame); spotlight.remove(); observer?.disconnect(); cleanups.forEach(cleanup => cleanup());  }
+    return () => { window.removeEventListener('wheel', onWheelSmoke); smokeLayer.remove(); root.removeEventListener('pointermove',onCursorMove); cursorLabel.remove(); artworkObserver.disconnect(); buttonCleanup.forEach(fn=>fn()); root.removeEventListener('click',onArtworkClick); root.removeEventListener('pointermove',onPointer); cancelAnimationFrame(spotFrame); spotlight.remove(); observer?.disconnect(); cleanups.forEach(cleanup => cleanup());  }
   }, [])
   return null
 }
