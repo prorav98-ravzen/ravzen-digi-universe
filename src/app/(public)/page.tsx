@@ -240,6 +240,9 @@ export default async function HomePage() {
 
       <StudioFAQ />
       <ProjectInquiry whatsapp={settings.whatsapp_primary || SITE_CONFIG.whatsapp || ""} email={settings.email_primary || SITE_CONFIG.email || ""} />
+      <div className="mx-auto max-w-7xl px-5 pb-12 text-center md:px-10">
+        <a href="https://maps.app.goo.gl/xjwiWCN8RjmPrEdw6" target="_blank" rel="noopener noreferrer" aria-label="View RAVZEN Graphic on Google Maps (opens in a new tab)" className="inline-flex items-center justify-center rounded-full border border-[#D88A4E]/40 bg-[#D88A4E]/10 px-6 py-3 text-sm font-semibold text-[#F3C6A0] transition hover:border-[#E9A46B] hover:bg-[#D88A4E]/20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-[#E9A46B]">View on Google Maps ↗</a>
+      </div>
 
       <div className="studio-contact-dock" aria-label="Quick contact">
         <details className="studio-contact-menu">
