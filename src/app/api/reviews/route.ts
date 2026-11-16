@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/security/json'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
@@ -24,7 +25,7 @@ export async function POST(req: NextRequest) {
   const origin = req.headers.get('origin')
   if (origin && origin !== req.nextUrl.origin) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   let json: unknown
-  try { json = await req.json() } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
+  try { json = await readBoundedJson(req) } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
   const parsed = schema.safeParse(json)
   if (!parsed.success) return NextResponse.json({ error: 'Invalid review details' }, { status: 400 })
   const input = parsed.data

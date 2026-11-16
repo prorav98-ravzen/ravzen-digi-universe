@@ -30,7 +30,7 @@ export default function FreeSinhalaFontsPage() {
           <p className="leading-8">Sinhala typography can be used in posters, educational materials, invitations, labels and digital graphics. Before choosing a font, check that its Sinhala letters, vowel signs and combined characters display correctly in your preferred design software. Test a complete sentence rather than only a few individual letters.</p>
           <h3 className="text-lg font-semibold text-white">Font licensing and practical checks</h3>
           <p className="leading-8">A font that is free to download is not necessarily licensed for commercial use. Read the license provided with each font and check whether printing, client projects, embedding or redistribution are permitted. Keep the original license information with downloaded font files.</p>
-          <p className="leading-8">For print work, inspect readability at the intended size and confirm that exported PDF artwork preserves the correct glyphs. For websites and digital projects, check language support, loading performance and compatibility across devices. You can browse the font resources available in the RAVZEN website's Resources section.</p>
+          <p className="leading-8">For print work, inspect readability at the intended size and confirm that exported PDF artwork preserves the correct glyphs. For websites and digital projects, check language support, loading performance and compatibility across devices. You can browse the font resources available in the RAVZEN website&apos;s Resources section.</p>
         </section>
         <div className="mt-24 border-t border-white/10 pt-6"><Link href="/explore" className="text-sm text-white/60 hover:text-orange-400">← Explore more resources</Link></div>
       </div>

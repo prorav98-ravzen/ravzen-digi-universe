@@ -53,15 +53,11 @@ export default async function HomePage() {
     .order('created_at', { ascending: false })
     .order('id', { ascending: true })
   const projects = error ? [] : (data ?? []) as unknown as Project[]
-  const { data: approvedRatings } = await supabase.from('artwork_reviews').select('rating').eq('status', 'approved')
-  const ratings = (approvedRatings ?? []).map(row => Number(row.rating)).filter(rating => Number.isFinite(rating) && rating >= 1 && rating <= 5)
+  const { data: feed } = await supabase.rpc('review_public_feed')
+  const approvedReviews = (feed ?? []) as { id: string; artwork_id: string; reviewer_name: string; rating: number; body: string; admin_reply: string | null; verified_client: boolean; created_at: string }[]
+  const ratings = approvedReviews.map(row => Number(row.rating)).filter(rating => Number.isFinite(rating) && rating >= 1 && rating <= 5)
   const averageRating = ratings.length ? ratings.reduce((sum, rating) => sum + rating, 0) / ratings.length : null
-
-  const { data: approvedStories } = await supabase.from('artwork_reviews')
-    .select('id,reviewer_name,rating,body,admin_reply,verified_client,created_at,artwork_id')
-    .eq('status', 'approved')
-    .order('created_at', { ascending: false })
-    .limit(18)
+  const approvedStories = approvedReviews.slice(0, 18)
   const projectById = new Map(projects.map(project => [project.id, project]))
   const clientStories: (ClientStory & {artworkId:string})[] = (approvedStories ?? [])
     .filter(review => typeof review.body === 'string' && review.body.trim().length > 0)
@@ -87,11 +83,6 @@ export default async function HomePage() {
     { label: 'Years of experience', value: settings.studio_experience_years ?? '9+' },
     { label: 'Satisfied clients', value: settings.studio_client_count ?? '100+' },
   ].filter(stat => stat.value.trim())
-  const reviews = [1, 2, 3].map(i => ({
-    name: settings[`studio_review_${i}_name`]?.trim(),
-    quote: settings[`studio_review_${i}_quote`]?.trim(),
-    rating: Number(settings[`studio_review_${i}_rating`]),
-  })).filter(review => review.name && review.quote)
   const upcoming = [
     { title: 'Upcoming projects', value: settings.studio_upcoming_projects },
     { title: 'Coming to the studio', value: settings.studio_upcoming_features },
@@ -109,7 +100,7 @@ export default async function HomePage() {
   }
   return (
     <main className="studio-home relative isolate min-h-screen text-white selection:bg-[#D88A4E]/35" style={{ backgroundColor: background, ["--studio-font-scale" as string]: fontScale / 100, ["--studio-accent" as string]: accent }}>
-      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteIdentity) }} />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteIdentity).replace(/</g, '\\u003c') }} />
       <StudioMotion />
       <div className="studio-aurora" aria-hidden="true" />
       <header className="studio-site-header fixed inset-x-0 top-0 z-[80] border-b border-white/10 bg-[#090910]/95 shadow-lg shadow-black/20 backdrop-blur-xl">

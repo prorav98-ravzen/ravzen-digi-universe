@@ -11,6 +11,7 @@
  *   - Error messages are generic (no user enumeration).
  */
 
+import { safeAdminRedirect } from '@/lib/security/guards'
 import { useState, useCallback }    from 'react'
 import { useRouter, useSearchParams } from 'next/navigation'
 import { Eye, EyeOff, Lock, Mail }    from 'lucide-react'
@@ -21,7 +22,7 @@ import { cn }                         from '@/lib/utils/cn'
 export default function AdminLoginForm() {
   const router       = useRouter()
   const params       = useSearchParams()
-  const redirectTo   = params.get('redirectTo') ?? '/admin/dashboard'
+  const redirectTo   = safeAdminRedirect(params.get('redirectTo'))
   const errorParam   = params.get('error')
 
   const [email,    setEmail]    = useState('')
@@ -38,7 +39,7 @@ export default function AdminLoginForm() {
 
     const parsed = LoginSchema.safeParse({ email, password })
     if (!parsed.success) {
-      setError(parsed.error.errors[0]?.message ?? 'Invalid input')
+      setError(parsed.error.issues[0]?.message ?? 'Invalid input')
       return
     }
 

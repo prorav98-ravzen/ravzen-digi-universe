@@ -1,14 +1,15 @@
+import { readBoundedJson } from '@/lib/security/json'
 import { NextRequest, NextResponse } from 'next/server'
 import { revalidatePath } from 'next/cache'
 import { requireEditor } from '@/lib/auth/requireEditor'
 import { CatalogSchema, RESOURCE_KEY } from '@/lib/resources/catalog'
 
 export async function PUT(request: NextRequest) {
-  const { user, supabase } = await requireEditor()
+  const { user, supabase } = await requireEditor(request)
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (user.role !== 'SUPER_ADMIN') return NextResponse.json({ error: 'Only the site owner can manage resources' }, { status: 403 })
   try {
-    const body = await request.json()
+    const body = await readBoundedJson(request) as Record<string, unknown>
     const parsed = CatalogSchema.safeParse(body.items)
     if (!parsed.success) return NextResponse.json({ error: parsed.error.issues.map(i => `${i.path.join('.')}: ${i.message}`).join('; ') }, { status: 400 })
     const value = JSON.stringify(parsed.data)

@@ -1,3 +1,4 @@
+import { isEditorRole, isSameOriginMutation } from '@/lib/security/guards'
 /**
  * requireEditor — server-side auth + role guard for API routes.
  *
@@ -16,11 +17,15 @@
 import { createClient }    from '@/lib/supabase/server'
 import type { AuthUser }   from '@/types/auth'
 
-export async function requireEditor(): Promise<{
+export async function requireEditor(request?: Request): Promise<{
   user:    AuthUser | null
   supabase: Awaited<ReturnType<typeof createClient>>
 }> {
   const supabase = await createClient()
+  if (request) {
+    const h = request.headers
+    if (!isSameOriginMutation(h.get('origin'), h.get('host'), h.get('sec-fetch-site'))) return { user: null, supabase }
+  }
   const { data: { user: authUser } } = await supabase.auth.getUser()
 
   if (!authUser) return { user: null, supabase }
@@ -31,7 +36,7 @@ export async function requireEditor(): Promise<{
     .eq('id', authUser.id)
     .single()
 
-  if (!profile?.is_active) return { user: null, supabase }
+  if (!profile?.is_active || !isEditorRole(profile.role)) return { user: null, supabase }
 
   const user: AuthUser = {
     id:        authUser.id,

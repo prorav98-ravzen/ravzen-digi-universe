@@ -12,7 +12,7 @@
  *   middleware is defence-in-depth, not the sole guard.
  */
 
-import { createServerClient } from '@supabase/ssr'
+import { createServerClient, type CookieOptions } from '@supabase/ssr'
 import { NextResponse, type NextRequest } from 'next/server'
 
 export async function updateSession(request: NextRequest) {
@@ -26,7 +26,7 @@ export async function updateSession(request: NextRequest) {
         getAll() {
           return request.cookies.getAll()
         },
-        setAll(cookiesToSet) {
+        setAll(cookiesToSet: { name: string; value: string; options: CookieOptions }[]) {
           cookiesToSet.forEach(({ name, value }) =>
             request.cookies.set(name, value)
           )
@@ -54,7 +54,7 @@ export async function updateSession(request: NextRequest) {
   }
 
   // Already authenticated → redirect away from login page
-  if (isLoginRoute && user) {
+  if (isLoginRoute && user && !request.nextUrl.searchParams.has('error')) {
     return NextResponse.redirect(new URL('/admin/dashboard', request.url))
   }
 

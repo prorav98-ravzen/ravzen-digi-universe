@@ -1,11 +1,12 @@
+import { readBoundedJson } from '@/lib/security/json'
 import { NextRequest, NextResponse } from 'next/server'
 import { requireEditor } from '@/lib/auth/requireEditor'
 
 export async function POST(request: NextRequest) {
-  const { user, supabase } = await requireEditor()
+  const { user, supabase } = await requireEditor(request)
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   try {
-    const body = await request.json() as { projectId?: string; mediaIds?: string[]; setCover?: boolean }
+    const body = await readBoundedJson(request) as { projectId?: string; mediaIds?: string[]; setCover?: boolean }
     const ids = [...new Set(body.mediaIds ?? [])]
     if (!body.projectId || ids.length === 0 || ids.length > 50 || ids.some(id => !/^[0-9a-f-]{36}$/i.test(id))) {
       return NextResponse.json({ error: 'Choose a project and 1–50 valid images.' }, { status: 400 })

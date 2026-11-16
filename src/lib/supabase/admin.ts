@@ -1,3 +1,4 @@
+import 'server-only'
 /**
  * Supabase ADMIN client — service-role key.
  *

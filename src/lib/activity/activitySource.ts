@@ -35,19 +35,14 @@ const SupabaseActivitySource: ActivitySource = {
     const { createClient } = await import('@/lib/supabase/server')
     const supabase = await createClient()
 
-    const staleThreshold = new Date(Date.now() - 5 * 60 * 1000).toISOString()
-
-    const { count, error } = await supabase
-      .from('active_sessions')
-      .select('*', { count: 'exact', head: true })
-      .gte('last_seen_at', staleThreshold)
+    const { data: count, error } = await supabase.rpc('active_session_count')
 
     if (error) {
       // Never crash the page over a broken counter
       return { raw: 0, displayed: 0, multiplier: ACTIVITY_MULTIPLIER }
     }
 
-    const raw = count ?? 0
+    const raw = Number(count) || 0
     return {
       raw,
       displayed:  raw * ACTIVITY_MULTIPLIER,

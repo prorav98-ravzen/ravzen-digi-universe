@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/security/json'
 import { NextResponse } from 'next/server'
 import { createClient } from '@/lib/supabase/server'
 
@@ -15,7 +16,7 @@ export async function POST(request: Request) {
   const origin = request.headers.get('origin')
   if (origin && origin !== new URL(request.url).origin) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   let body: unknown
-  try { body = await request.json() } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
+  try { body = await readBoundedJson(request) } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
   const visitorId = (body as { visitorId?: unknown } | null)?.visitorId
   if (typeof visitorId !== 'string' || !/^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(visitorId)) return NextResponse.json({ error: 'Invalid visitor' }, { status: 400 })
   const db = await createClient()

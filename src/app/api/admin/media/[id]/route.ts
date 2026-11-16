@@ -6,10 +6,10 @@ import { NextRequest, NextResponse } from 'next/server'
 import { requireEditor } from '@/lib/auth/requireEditor'
 
 export async function DELETE(
-  _request: NextRequest,
+  request: NextRequest,
   { params }: { params: Promise<{ id: string }> }
 ) {
-  const { user, supabase } = await requireEditor()
+  const { user, supabase } = await requireEditor(request)
   if (!user) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
   if (user.role === 'EDITOR') return NextResponse.json({ error: 'Insufficient permissions' }, { status: 403 })
 

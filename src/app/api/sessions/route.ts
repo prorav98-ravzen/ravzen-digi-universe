@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/security/json'
 /**
  * POST /api/sessions — Upsert an active session (heartbeat).
  * GET  /api/sessions — Intentionally not implemented; use /api/activity.
@@ -10,12 +11,12 @@ import { z }                          from 'zod'
 import { createClient }               from '@/lib/supabase/server'
 
 const HeartbeatSchema = z.object({
-  session_token: z.string().min(1).max(200),
+  session_token: z.string().uuid(),
 })
 
 export async function POST(request: NextRequest) {
   try {
-    const body   = await request.json()
+    const body   = await readBoundedJson(request)
     const parsed = HeartbeatSchema.safeParse(body)
 
     if (!parsed.success) {
@@ -24,13 +25,7 @@ export async function POST(request: NextRequest) {
 
     const supabase = await createClient()
 
-    // Upsert — creates or refreshes last_seen_at
-    const { error } = await supabase
-      .from('active_sessions')
-      .upsert(
-        { session_token: parsed.data.session_token, last_seen_at: new Date().toISOString() },
-        { onConflict: 'session_token' }
-      )
+    const { error } = await supabase.rpc('session_heartbeat', { p_token: parsed.data.session_token, p_end: false })
 
     if (error) {
       return NextResponse.json({ ok: false }, { status: 500 })

@@ -1,3 +1,4 @@
+import { isEditorRole } from '@/lib/security/guards'
 /**
  * Admin layout — Server Component.
  *
@@ -29,7 +30,7 @@ export default async function AdminLayout({
     .eq('id', user.id)
     .single()
 
-  if (!profile?.is_active) redirect('/admin/login?error=inactive')
+  if (!profile?.is_active || !isEditorRole(profile.role)) redirect('/admin/login?error=inactive')
 
   const authUser: AuthUser = {
     id:        user.id,

@@ -19,7 +19,7 @@ const SlugSchema = z
   .max(120)
   .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/, 'Slug must be lowercase alphanumeric with hyphens')
 
-const UrlSchema   = z.string().url().nullable().optional().or(z.literal('').transform(() => null))
+const UrlSchema   = z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed').nullable().optional().or(z.literal('').transform(() => null))
 const PriceSchema = z.number().min(0).max(999_999_999).nullable()
 const CurrencySchema = z.enum(['USD', 'EUR', 'GBP', 'NGN', 'AED', 'INR', 'free']).nullable()
 const PublishSchema  = z.enum(['draft', 'published', 'archived']).default('draft')
@@ -33,8 +33,8 @@ export const DesignProjectSchema = z.object({
   short_description:z.string().max(500).nullable().optional(),
   full_description: z.string().max(20_000).nullable().optional(),
   cover_image_url:  UrlSchema,
-  gallery_urls:     z.array(z.string().url()).max(30).nullable().optional(),
-  screenshot_urls:  z.array(z.string().url()).max(30).nullable().optional(),
+  gallery_urls:     z.array(z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed')).max(30).nullable().optional(),
+  screenshot_urls:  z.array(z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed')).max(30).nullable().optional(),
   video_url:        UrlSchema,
   price:            PriceSchema,
   currency:         CurrencySchema,
@@ -60,7 +60,7 @@ export const AndroidAppSchema = z.object({
   full_description:       z.string().max(20_000).nullable().optional(),
   icon_url:               UrlSchema,
   cover_image_url:        UrlSchema,
-  screenshot_urls:        z.array(z.string().url()).max(30).nullable().optional(),
+  screenshot_urls:        z.array(z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed')).max(30).nullable().optional(),
   video_url:              UrlSchema,
   apk_url:                UrlSchema,
   play_store_url:         UrlSchema,
@@ -92,8 +92,8 @@ export const SoftwareProductSchema = z.object({
   short_description:    z.string().max(500).nullable().optional(),
   full_description:     z.string().max(20_000).nullable().optional(),
   cover_image_url:      UrlSchema,
-  screenshot_urls:      z.array(z.string().url()).max(30).nullable().optional(),
-  gallery_urls:         z.array(z.string().url()).max(30).nullable().optional(),
+  screenshot_urls:      z.array(z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed')).max(30).nullable().optional(),
+  gallery_urls:         z.array(z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed')).max(30).nullable().optional(),
   video_url:            UrlSchema,
   download_url:         UrlSchema,
   demo_url:             UrlSchema,
@@ -124,8 +124,8 @@ export const SystemSchema = z.object({
   short_description: z.string().max(500).nullable().optional(),
   full_description:  z.string().max(20_000).nullable().optional(),
   cover_image_url:   UrlSchema,
-  screenshot_urls:   z.array(z.string().url()).max(30).nullable().optional(),
-  diagram_urls:      z.array(z.string().url()).max(20).nullable().optional(),
+  screenshot_urls:   z.array(z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed')).max(30).nullable().optional(),
+  diagram_urls:      z.array(z.string().url().refine(value => /^https?:\/\//i.test(value), 'Only HTTP(S) URLs are allowed')).max(20).nullable().optional(),
   video_url:         UrlSchema,
   features:          z.array(z.string().max(500)).max(50).nullable().optional(),
   tech_stack:        z.array(z.string().max(100)).max(50).nullable().optional(),

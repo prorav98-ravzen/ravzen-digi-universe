@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/security/json'
 /**
  * POST /api/sessions/end — Remove an active session on page unload.
  * Called via navigator.sendBeacon so it fires even as the tab closes.
@@ -8,18 +9,17 @@ import { z }                          from 'zod'
 import { createClient }               from '@/lib/supabase/server'
 
 const EndSchema = z.object({
-  session_token: z.string().min(1).max(200),
+  session_token: z.string().uuid(),
 })
 
 export async function POST(request: NextRequest) {
   try {
-    const body   = await request.json()
+    const body   = await readBoundedJson(request)
     const parsed = EndSchema.safeParse(body)
     if (!parsed.success) return NextResponse.json({ ok: true })
 
     const supabase = await createClient()
-    await supabase.from('active_sessions').delete()
-      .eq('session_token', parsed.data.session_token)
+    await supabase.rpc('session_heartbeat', { p_token: parsed.data.session_token, p_end: true })
 
     return NextResponse.json({ ok: true })
   } catch {

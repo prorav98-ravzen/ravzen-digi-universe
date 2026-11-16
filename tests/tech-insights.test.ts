@@ -1,8 +1,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert/strict'
-// @ts-ignore Node's built-in TS runner requires explicit .ts extensions.
+// @ts-expect-error Node's built-in TS runner requires explicit .ts extensions.
 import { publicationSlot, validateArticle, overlapsSource } from '../src/lib/insights/schema.ts'
-// @ts-ignore Node's built-in TS runner requires explicit .ts extensions.
+// @ts-expect-error Node's built-in TS runner requires explicit .ts extensions.
 import { canonicalSource, parseFeed, plainText, FEEDS } from '../src/lib/insights/sources.ts'
 
 test('publication window uses Sri Lanka Saturday and schedules 09:00', () => {

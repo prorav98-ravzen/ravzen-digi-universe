@@ -1,3 +1,4 @@
+import { readBoundedJson } from '@/lib/security/json'
 /**
  * POST /api/analytics
  *
@@ -29,7 +30,7 @@ const AnalyticsEventSchema = z.object({
 
 export async function POST(request: NextRequest) {
   try {
-    const body   = await request.json()
+    const body   = await readBoundedJson(request)
     const parsed = AnalyticsEventSchema.safeParse(body)
 
     if (!parsed.success) {

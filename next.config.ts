@@ -16,12 +16,13 @@ const devImagePatterns = isProd
     ]
 
 const nextConfig: NextConfig = {
+  poweredByHeader: false,
   images: {
     remotePatterns: [
-      // Supabase Storage — allow all project subdomains
+      // Supabase Storage — this project only
       {
         protocol: 'https',
-        hostname: '*.supabase.co',
+        hostname: 'vcgmxsbckiodxzxpmiay.supabase.co',
         port:     '',
         pathname: '/storage/v1/object/public/**',
       },
@@ -73,6 +74,7 @@ const nextConfig: NextConfig = {
       {
         source: '/(.*)',
         headers: [
+          { key: 'Content-Security-Policy', value: "base-uri 'self'; object-src 'none'; frame-ancestors 'none'; form-action 'self'" },
           // Prevent clickjacking
           { key: 'X-Frame-Options',        value: 'DENY' },
           // Prevent MIME sniffing

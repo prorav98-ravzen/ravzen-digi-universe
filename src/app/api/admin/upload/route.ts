@@ -1,3 +1,4 @@
+import { imageSignatureMatches } from '@/lib/security/guards'
 import { NextRequest, NextResponse } from 'next/server'
 import { requireEditor } from '@/lib/auth/requireEditor'
 
@@ -12,7 +13,7 @@ const ALLOWED = new Map([
 ])
 
 export async function POST(request: NextRequest) {
-  const { user, supabase } = await requireEditor()
+  const { user, supabase } = await requireEditor(request)
   if (!user) return NextResponse.json({ error: 'Please sign in as an administrator.' }, { status: 401 })
 
   try {
@@ -27,6 +28,7 @@ export async function POST(request: NextRequest) {
     const filename = file.name.slice(0, 240)
     const path = `portfolio/${user.id}/${crypto.randomUUID()}.${extension}`
     const bytes = new Uint8Array(await file.arrayBuffer())
+    if (!imageSignatureMatches(bytes, file.type)) return NextResponse.json({ error: 'Image contents do not match its file type.' }, { status: 415 })
     const { error: uploadError } = await supabase.storage.from('media').upload(path, bytes, {
       contentType: file.type,
       cacheControl: '3600',

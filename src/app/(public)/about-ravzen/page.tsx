@@ -18,7 +18,7 @@ const identity = {
 }
 export default function AboutRavzenPage() {
   return <main className="min-h-screen bg-[#090910] px-5 py-20 text-white sm:py-28">
-    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(identity) }} />
+    <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(identity).replace(/</g, '\\u003c') }} />
     <div className="mx-auto max-w-3xl">
       <Link href="/" className="text-sm text-orange-300 hover:underline">← RAVZEN Graphic homepage</Link>
       <p className="mt-12 text-sm font-semibold uppercase tracking-[.2em] text-orange-300">Independent creative studio · Bibile, Sri Lanka</p>
@@ -38,7 +38,7 @@ export default function AboutRavzenPage() {
         <Link className="rounded-full border border-white/25 px-5 py-3 hover:border-orange-300" href="/#work">Explore the portfolio</Link>
       </nav>
       <h2 className="mt-12 text-2xl font-bold">Find the official RAVZEN Graphic website</h2>
-      <p className="mt-5 leading-8 text-white/75">The official portfolio is <a href={SITE_CONFIG.url} className="text-orange-300 underline">ravzen.vercel.app</a>. For new projects, use the contact options on the homepage. You can also follow the studio's <a className="text-orange-300 underline" href="https://www.instagram.com/ravzen_graphic/" target="_blank" rel="noopener noreferrer">Instagram profile</a> for design updates.</p>
+      <p className="mt-5 leading-8 text-white/75">The official portfolio is <a href={SITE_CONFIG.url} className="text-orange-300 underline">ravzen.vercel.app</a>. For new projects, use the contact options on the homepage. You can also follow the studio&apos;s <a className="text-orange-300 underline" href="https://www.instagram.com/ravzen_graphic/" target="_blank" rel="noopener noreferrer">Instagram profile</a> for design updates.</p>
     </div>
   </main>
 }

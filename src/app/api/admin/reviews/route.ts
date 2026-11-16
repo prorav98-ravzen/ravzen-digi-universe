@@ -1,3 +1,5 @@
+import { readBoundedJson } from '@/lib/security/json'
+import { isSameOriginMutation } from '@/lib/security/guards'
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { createClient } from '@/lib/supabase/server'
@@ -20,10 +22,10 @@ export async function GET() {
 const schema = z.object({ id: z.string().uuid(), status: z.enum(['pending','approved','rejected']), adminReply: z.string().max(2000).nullable(), verifiedClient: z.boolean() })
 export async function PATCH(req: NextRequest) {
   const origin = req.headers.get('origin')
-  if (origin && origin !== req.nextUrl.origin) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
+  if (!isSameOriginMutation(origin, req.headers.get('host'), req.headers.get('sec-fetch-site'))) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 })
   if (!await authorize()) return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   let input: unknown
-  try { input = await req.json() } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
+  try { input = await readBoundedJson(req) } catch { return NextResponse.json({ error: 'Invalid JSON' }, { status: 400 }) }
   const parsed = schema.safeParse(input)
   if (!parsed.success) return NextResponse.json({ error: 'Invalid update' }, { status: 400 })
   const { id, status, adminReply, verifiedClient } = parsed.data
